@@ -1,0 +1,75 @@
+! 
+! problem type definition
+! 
+BURN   ! Burner Stabilized Flame
+MIX   ! Use Mixture-averaged Transport
+TDIF   ! Use Thermal Diffusion (Soret Effect)
+TGIV   ! Fix Gas Temperature
+VCOR   ! Use Correction Velocity Formalism
+!
+! physical property
+!
+FLRT 0.026549   ! Mass Flow Rate (g/cm2-sec)
+PRES 0.992105   ! Pressure (atm)
+TPRO 2.1 606.29   ! Temperature (K)
+TPRO 2.2 602.1   ! Temperature (K)
+TPRO 2.3 601.03   ! Temperature (K)
+
+!
+! reactor dimension definition
+!
+CURV 0.9   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.9   ! Adaptive Grid Control Based On Solution Gradient
+NPTS 6   ! Number of Uniform Grid Points
+NTOT 1500   ! Maximum Number of Grid Points Allowed
+XEND 2.0   ! Ending Axial Position (cm)
+XSTR 0.0   ! Starting Axial Position (cm)
+!
+! species property
+!
+MOLE   ! Print Mole Fractions
+PRMN 0.0   ! Minimum for Product Estimates (mole fraction)
+REAC NH3 3.798289357   ! Reactant Fraction (mole fraction)
+REAC CH4 1   ! Reactant Fraction (mole fraction)
+REAC N2 17.36302475   ! Reactant Fraction (mole fraction)
+REAC O2 4.617825731   ! Reactant Fraction (mole fraction)
+!
+! solver control
+!
+XIMN 1.0E-12   ! Minimum for Estimated Intermediate Fraction (mole fraction)
+ATIM 1.0E-8   ! Absolute Tolerance for Pseudo Timestepping
+ATOL 1.0E-9   ! Absolute Tolerance
+RTIM 1.0E-8   ! Relative Tolerance for Pseudo Timestepping
+RTOL 0.0001   ! Relative Tolerance
+SFLR -0.001   ! Minimum Bounds on Species Fractions
+SPOS 1.0E-12   ! Positive Value to Reset Species Fractions
+TIM1 100.0 1.0E-6   ! Pseudo Time Steps (Fixed Temperature) (none, sec)
+WDIF   ! Windward Differencing
+GFAC 1.0   ! Gas Reaction Rate Multiplier
+PRNT 1.0   ! Print Level Control
+!
+! grid property continuation
+!
+! Number of Continuation 5   ! Continuation Count
+CNTN   ! Continuation
+END   ! End
+CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.5   ! Adaptive Grid Control Based On Solution Gradient
+XEND 2.0   ! Ending Axial Position (cm)
+CNTN   ! Continuation
+END   ! End
+CURV 0.1   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.1   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.02   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.02   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.01   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.01   ! Adaptive Grid Control Based On Solution Gradient
+END
