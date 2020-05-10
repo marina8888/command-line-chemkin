@@ -10,7 +10,7 @@ This is because the imported temperature profile will allow for the consideratio
 
 In this experimental set-up, the wall surface temperature is used as an input condition for Premixed Laminar Burner-Stabilized Flame Model. 
 Hence the layout of the input file for this model (followingt the ANSYS example guide) would be as follows (where ! are comments and capitalised words e.g BURN are input variables):
-
+```
 ! 
 ! problem type definition
 ! 
@@ -96,3 +96,4 @@ GRAD 0.01   ! Adaptive Grid Control Based On Solution Gradient
 END
 
 
+```
