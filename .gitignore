@@ -4,7 +4,7 @@
 *.frm
 *.xls*
 
-
+import_files/
 excel_external/
 chemin_external/
 bin/
