@@ -1,20 +1,3 @@
-##Burner Stabilized Stagnation Models
-To run the burner-stabilized stagnation flame model can be used to plot strain stabilized flat flames.
-Take product gases at the XEND position. In the template file included below, the key parameters that need to be modified for every run are: 
-
-PRES = (room pressure converted into atm)
-TINF = (room temperature converted to K)
-TINL = (stagnation plate temperature converted to K)
-TMAX = (adiabatic Tmax temperature (from conditions calcs) +200 degrees to K)
-
-TINL C1_Inlet1 = (inlet temperature as T1 in K)
-UINL C1_Inlet1  = (inlet velocity in cm/s)
-REAC C1_Inlet1 N2 = (molar fraction N2)
-REAC C1_Inlet1 NH3  = (molar fraction NH3)
-REAC C1_Inlet1 CH4  = (molar fraction CH4)
-REAC C1_Inlet1 O2 = (molar fraction O2)
-
-```
 ! 
 ! problem type definition
 ! 
@@ -46,7 +29,7 @@ XEND 2.0   ! Ending Axial Position (cm)
 ! output control and other misc. property
 ! 
 GFAC 1.0   ! Gas Reaction Rate Multiplier
-PRNT 1.0   ! Print Level Control
+PRNT 2.0   ! Print Level Control
 ! 
 ! physical property
 ! 
@@ -84,5 +67,3 @@ CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
 GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
 CNTN   ! Continuation
 END   ! End
-
-```
