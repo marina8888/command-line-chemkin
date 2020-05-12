@@ -67,7 +67,6 @@ INLET C1_Inlet1 1   ! Inlet Stream
 INLET StagPlane 1
 !
 ! grid property continuation
-!
 ! Number of Continuation 5   ! Continuation Count
 CNTN   ! Continuation
 END   ! End
@@ -84,5 +83,12 @@ CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
 GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
 CNTN   ! Continuation
 END   ! End
+CURV 0.02   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.02   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.01   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.01   ! Adaptive Grid Control Based On Solution Gradient
+END
 
 ```
