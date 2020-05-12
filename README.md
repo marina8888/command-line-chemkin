@@ -16,8 +16,9 @@ Note only the generation of the input.inp file is considered in the script and t
 - [ ] Add input for experimental results on the same graph 
 - [ ] Add suitable plotting functions with parameters for legend, title, axies titles, conditions used.
 - [ ] Add template.csv to notes folder and tutorial file 
-- [ ] Check all temperature inputs of experiment excel sheets and other data, then run programme with a new BigWorkbook
-
+- [ ] Check all temperature inputs of experiment excel sheets and other data, then run programme with a new BigWorkbook (including Tw calculation)
+- [ ] Add sensitivity printing options to file 
+- [ ] Test max temp, stag temp, and inlet velocity effect  on output.  
 ### Functions
 To complete
 

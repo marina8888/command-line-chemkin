@@ -3,16 +3,15 @@ To run the burner-stabilized stagnation flame model can be used to plot strain s
 Take product gases at the XEND position. In the template file included below, the key parameters that need to be modified for every run are: 
 
 PRES = (room pressure converted into atm)
-TINF = (room temperature converted to K)
-TINL = (stagnation plate temperature converted to K)
+TINL StagPlane = (stagnation plate temperature converted to K)
 TMAX = (adiabatic Tmax temperature (from conditions calcs) +200 degrees to K)
 
 TINL C1_Inlet1 = (inlet temperature as T1 in K)
 UINL C1_Inlet1  = (inlet velocity in cm/s)
-REAC C1_Inlet1 N2 = (molar fraction N2)
 REAC C1_Inlet1 NH3  = (molar fraction NH3)
 REAC C1_Inlet1 CH4  = (molar fraction CH4)
 REAC C1_Inlet1 O2 = (molar fraction O2)
+REAC C1_Inlet1 N2 = (molar fraction N2)
 
 ```
 ! 
@@ -28,7 +27,7 @@ STAGNATION_FLAME   ! Stagnation Flame Reactor
 ! physical property
 ! 
 PRES 1.0   ! Pressure (atm)
-TINF 300   ! Ambient Temperature (K)
+TINF 297.0   ! Ambient Temperature (K) - set to 24 degrees
 TINL StagPlane 700.0   ! Stagnation Plane Temperature (K)
 TMAX 2800.0   ! Maximum Temperature for Initial Profile (K)
 ! 
@@ -56,10 +55,10 @@ UINL C1_Inlet1 90.34   ! Inlet Velocity (cm/sec)
 ! 
 ! species property
 ! 
-REAC C1_Inlet1 N2 8.31342   ! Reactant Fraction (mole fraction)
 REAC C1_Inlet1 NH3 0.28135   ! Reactant Fraction (mole fraction)
 REAC C1_Inlet1 CH4 1   ! Reactant Fraction (mole fraction)
 REAC C1_Inlet1 O2 2.21101   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 N2 8.31342   ! Reactant Fraction (mole fraction)
 INLET C1_Inlet1 1   ! Inlet Stream
 ! 
 ! physical property

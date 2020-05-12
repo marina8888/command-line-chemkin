@@ -15,7 +15,7 @@ https://github.com/marina8888/gas-analysis-dilution-method
     create_workbook.create_workbook(object_name)
     object_name.df.to_csv('../file-to-path/file-name.csv')" in the main.py file.
 
-Then open the resulting .csv file and remove [‚ÑÉ] from the T1-T9 columns as .csv conversion corrupted this symbol. Rename column A to 'i'.
+Then open the resulting .csv file and remove [‚ÑÉ] from the T1 column as .csv conversion corrupted this symbol. Rename column A to any unused string name (e.g 'first_col').
 Most suitable if user already has experimental data was collected in the excel template format provided by marina8888/gas-analysis-dilution-method
 
 """
@@ -46,9 +46,9 @@ def generate_new_inp(df: pd.DataFrame, row_number: int, path_to_inp_file: str):
     :param path_to_inp_file: Use the stagnation_template.inp file for the stagnation flame model, included in /chemkin_launch_files directory.
     :return: None
     """
-    inp_vals = ['PRES', 'TINF', 'TINL', 'TMAX', 'TINL C1_Inlet1', 'UINL C1_Inlet1', 'REAC C1_Inlet1 N2',
-                'REAC C1_Inlet1 NH3', 'REAC C1_Inlet1 CH4', 'REAC C1_Inlet1 O2']
-    corresponding_df_col_headers = ['pressure_atm', ]
+    inp_vals = ['PRES', 'TINL StagPlane', 'TMAX', 'TINL C1_Inlet1', 'UINL C1_Inlet1',
+                'REAC C1_Inlet1 NH3', 'REAC C1_Inlet1 CH4', 'REAC C1_Inlet1 O2', 'REAC C1_Inlet1 N2',]
+    corresponding_df_col_headers = ['pressure_atm', 'Tw[K]', 'Tmax', 'T1', 'Uout[m/s]', 'Reac_NH3', 'Reac_NH4', 'Reac_O2', 'Reac_N2']
     with open(path_to_inp_file, 'r') as file:
         filedata = file.read()
 
@@ -59,3 +59,11 @@ def generate_new_inp(df: pd.DataFrame, row_number: int, path_to_inp_file: str):
     # Write the file out again
     with open(path_to_inp_file, 'w') as file:
         file.write(filedata)
+
+def add_inp_col_to_df(df: pd.DataFrame):
+    """
+    Add columns to dataframe to include (the new) columns needed for generating an input file.
+    :param df: DataFrame generated from input csv file
+    :return df: updated DataFrame
+    """
+    return df
