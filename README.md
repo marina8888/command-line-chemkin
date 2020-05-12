@@ -14,7 +14,8 @@ Note only the generation of the input.inp file is considered in the script and t
 - [ ] Add a final job file to project that produces an output file named and containing the details of the conditions used. It should include - eq, heat ratio and mechanism used. 
 - [ ] Generate a python file that takes an input of chemkin (output) results files and sorts them for plotting 
 - [ ] Add input for experimental results on the same graph 
-- [ ] Add suitable plotting functions with parameters for legend, title, axies titles, conditions used. 
+- [ ] Add suitable plotting functions with parameters for legend, title, axies titles, conditions used.
+- [ ] Add template.csv to notes folder and tutorial file 
 
 ### Functions
 To complete
