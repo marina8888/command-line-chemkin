@@ -48,7 +48,7 @@ def generate_new_inp(df: pd.DataFrame, row_number: int, path_to_inp_file: str):
     """
     inp_vals = ['PRES', 'TINF', 'TINL', 'TMAX', 'TINL C1_Inlet1', 'UINL C1_Inlet1', 'REAC C1_Inlet1 N2',
                 'REAC C1_Inlet1 NH3', 'REAC C1_Inlet1 CH4', 'REAC C1_Inlet1 O2']
-    corresponding_df_col_headers = []
+    corresponding_df_col_headers = ['pressure_atm', ]
     with open(path_to_inp_file, 'r') as file:
         filedata = file.read()
 
