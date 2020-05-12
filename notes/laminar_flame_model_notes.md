@@ -1,4 +1,4 @@
-## CHEMKIN Model Notes
+## Laminar Flame Models
 
 To launch equations governing steady, isobaric, quasi-one-dimensional flame propagation, CHEMKIN gives a choice of two options: 
 1. Premixed Laminar Burner-stabilized Flame

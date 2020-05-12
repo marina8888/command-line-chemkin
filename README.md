@@ -8,7 +8,8 @@ When complete, this script should allow for excel spreadsheet input of condition
 Note only the generation of the input.inp file is considered in the script and the mechanism, thermal and transport data for the considered flame should be aquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
 
 ### To Do:
-- [x] Generate input file that launches the correct solver with the suitable temperature conditions. 
+- [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
+- [ ] Generate an excel spreadsheet that includes all the conditions required for input. Use the BigWorkbook class excel format from the marina888/dilution-gas repo. 
 - [ ] Generate this same input file from python file parsing an excel spreadsheet with these conditions. 
 - [ ] Add a final job file to project that produces an output file named and containing the details of the conditions used. It should include - eq, heat ratio and mechanism used. 
 - [ ] Generate a python file that takes an input of chemkin (output) results files and sorts them for plotting 
