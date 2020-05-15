@@ -11,15 +11,13 @@ class ChemkinModel():
 
     def __init__(self, path_to_spreadsheet: str, path_to_inp_file: str):
         """
-        Initalise a parent class for all flame models to inherit from.
-        Use inp_vals and corresponding_df_col_headers to define a string list of input variables and their respective col headers in the spreadsheet.
         :param path_to_spreadsheet: input data spreadsheet file path
         :param path_to_inp_file: input file path
         """
         self.sheet = path_to_spreadsheet
         self.inp = path_to_inp_file
         self.df = self.sheet_to_df()
-        self.inp_vals: str = []
+        self.check_df_col()
 
     def sheet_to_df(self):
         """
@@ -28,7 +26,7 @@ class ChemkinModel():
         :param: None
         :return df: DataFrame
         """
-        df = pd.read_excel(self.sheet, sheet_name = 'Sheet1', header = 0)
+        df = pd.read_excel(self.sheet, sheet_name = 'Sheet1')
 
         dup_cols: pd.Series = (df.columns[df.columns.duplicated(keep=False)])
         if dup_cols.empty == False:
@@ -37,21 +35,8 @@ class ChemkinModel():
         return df
 
 
-
-class BurnerStabilizedStagnationFlame(ChemkinModel):
-    def __init__(self, path_to_spreadsheet: str, path_to_inp_file: str):
-        super().__init__(path_to_spreadsheet, path_to_inp_file)
-
-        self.inp_vals = ['PRES', 'TINL StagPlane', 'TMAX', 'TINL C1_Inlet1', 'UINL C1_Inlet1',
-                         'REAC C1_Inlet1 NH3', 'REAC C1_Inlet1 CH4', 'REAC C1_Inlet1 O2', 'REAC C1_Inlet1 N2']
-        self.check_df_col()
-
-
-
     def generate_new_inp(df: pd.DataFrame, row_number: int, path_to_inp_file: str):
         """
-        Replace stagnation flame reactor model input (.inp) file to use conditions from a specific row of the dataframe.
-        Modify this function if writing modifying input file for a different flame reactor model or using a different format.
         :param df:
         :param row_number: take data from this row
         :param path_to_inp_file: Use the stagnation_template.inp file for the stagnation flame model, included in /chemkin_launch_files directory.
@@ -68,23 +53,28 @@ class BurnerStabilizedStagnationFlame(ChemkinModel):
         with open(path_to_inp_file, 'w') as file:
 
             file.write(filedata)
+
+
     def check_df_col(self):
         """
         Function to check that DataFrame has all the information (and in the right format). Will raise errors if there are any issues with the data.
         This includes any #REF #ERR type cells in the spreadsheet and wrongly typed cells. Also checks all
         :return: None
         """
-        for i in self.inp_vals:
+        bad_type = self.df.loc[:, self.df.dtypes != np.float64]
+        bad_type = bad_type.loc[:, bad_type.dtypes != np.int64]
+
+        if bad_type.empty is False:
+            raise NameError('Columns: ' + str(bad_type.dtypes) + ' contain non-integer values')
+        if self.df.isnull().values.any():
+            raise NameError('There are columns with null values in your spreadsheet')
+
+        for i in self.df.columns:
             if self.df[i].empty:
                 raise NameError('Column ' + str(i) + ' is empty in your spreadsheet')
-            if self.df.columns.to_series().groupby(self.df.dtypes).groupsnp.float64 or np.int64 is False:
-                raise NameError('Column ' + str(i) + ' contains non-integer values')
-            if self.df.isnull().values.any():
-                print(self.df[i])
-                raise NameError('Column ' + str(i) + ' has null values in your spreadsheet')
-            if (self.df[self.df[i]>=0]).empty:
-                print(self.df[i]>0)
+
+            other_bad_values = np.where(self.df[i] < 0)
+
+            if len(other_bad_values[0])!=0:
                 raise NameError('Colummn ' + str(i) + ' has negative values in your spreadsheet')
-            # for row in range(0,len(self.df),1):
-            #      if self.df.iloc[row][i] <= 0 or self.df.dtypes(self.df.iloc[i]) is not int:
-            #         raise TypeError('Your column' + str(i) + 'contains invalid data')
+

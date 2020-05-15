@@ -2,7 +2,7 @@ from IO_files_creator import classes
 
 
 def main():
-    instance = classes.BurnerStabilizedStagnationFlame('/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/test.xlsx',
+    instance = classes.BurnerStabilizedStagnationFlame('/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/stagnation_file.xlsx',
                                                            'chemkin_launch_files/stagnation_template.inp')
 
 
