@@ -1,6 +1,8 @@
 ##Burner Stabilized Stagnation Models
-To run the burner-stabilized stagnation flame model can be used to plot strain stabilized flat flames.
-Take product gases at the XEND position. In the template file included below, the key parameters that need to be modified for every run are: 
+To run the burner-stabilized stagnation flame model can be used to plot strain stabilized flat flames. 
+In CHEMKIN this model is the opposed-flow (diffusion) flame but with different boundary counditions. 
+Instead of two inlets (a fuel and an oxidizer one), there is one premixed inlet while the other boundary is a wall (stagnation plate).
+ In the template file included below, the key parameters that need to be set in the excel input file are: 
 
 PRES = (room pressure converted into atm)
 TINL StagPlane = (stagnation plate temperature converted to K)
