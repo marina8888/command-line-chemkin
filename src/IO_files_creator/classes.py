@@ -1,13 +1,12 @@
 """
 This file generates the input conditions that are parsed into the .inp file. This .inp file is the input file for the solver used in job.sh.
 The input conditions change for every run/new set of experimental conditions that are numerically simulated.
-These definitions are covered in the stagnation_model_notes.
-This file takes in a spreadsheet of conditions, given a spreadsheet using template.xls format as included in the /notes directory.
+This file takes in a values from 'Sheet1' of conditions, given a spreadsheet using template.xls format as included in the /notes directory.
 """
 import pandas as pd
 import numpy as np
 
-class ChemkinModel():
+class InpGenerator():
 
     def __init__(self, path_to_spreadsheet: str, path_to_inp_file: str):
         """
@@ -16,8 +15,11 @@ class ChemkinModel():
         """
         self.sheet = path_to_spreadsheet
         self.inp = path_to_inp_file
+        self.content=[]
+
         self.df = self.sheet_to_df()
         self.check_df_col()
+        self.generate_new_inp()
 
     def sheet_to_df(self):
         """
@@ -27,7 +29,7 @@ class ChemkinModel():
         :return df: DataFrame
         """
         df = pd.read_excel(self.sheet, sheet_name = 'Sheet1')
-
+        print("Reading input values from 'Sheet1' of your excel spreadsheet...")
         dup_cols: pd.Series = (df.columns[df.columns.duplicated(keep=False)])
         if dup_cols.empty == False:
             raise AssertionError('these duplicate columns need renaming: ' + str(dup_cols))
@@ -35,24 +37,22 @@ class ChemkinModel():
         return df
 
 
-    def generate_new_inp(df: pd.DataFrame, row_number: int, path_to_inp_file: str):
+    def generate_new_inp(self):
         """
+        A function that generates a new input file based on a dataframe input, where column headers are the variables replaced.
         :param df:
         :param row_number: take data from this row
-        :param path_to_inp_file: Use the stagnation_template.inp file for the stagnation flame model, included in /chemkin_launch_files directory.
+        :param path_to_inp_file: Use the modelname_template.inp file.
         :return: None
         """
-        with open(path_to_inp_file, 'r') as file:
-            filedata = file.read()
+        for row in range (0, len(self.df),1):
+            new_inp_file_name=str('__')+str(round(self.df['name1'][row],2))+str('__')+str(round(self.df['name2'][row],2))
+            with open(self.inp, 'w') as f:
+            #     self.content = [line.strip() for line in f]
+            #     # replace input file data with a new value:
+            # for line in self.content:
+            #     print(line)
 
-        # replace input file data with a new value:
-
-        filedata = filedata.replace('ram', 'abcd')
-
-        # Write the file out again
-        with open(path_to_inp_file, 'w') as file:
-
-            file.write(filedata)
 
 
     def check_df_col(self):
@@ -76,5 +76,5 @@ class ChemkinModel():
             other_bad_values = np.where(self.df[i] < 0)
 
             if len(other_bad_values[0])!=0:
-                raise NameError('Colummn ' + str(i) + ' has negative values in your spreadsheet')
+                raise NameError('Column ' + str(i) + ' has negative values in your spreadsheet')
 
