@@ -101,19 +101,23 @@ class InpGenerator():
         # open old input file and write each line to content:
         with open(self.inp, 'rt') as f:
             self.content = [line.strip() for line in f]
-
+        row_num = 5
         # look up the spreadsheet column headers in the old inp file, extract the number in the corresponding row following it.
         # Replace this with a new number from a spreadsheet row_num
-        with open('haha.inp','w') as new_f:
+        with open('haha.inp', 'w') as new_f:
             for l in self.content:
-                for row in enumerate(self.df):
-                    if row[1] in l:
+                for col in enumerate(self.df):
+                    if col[1] in l:
                         number_in_text = re.findall(r"\b(\d+(?:\.\d*)?|\.\d+)\b", l)
+                        if len(number_in_text) == 0:
+                            raise TypeError(
+                                'please ensure that you have placeholder numerical values in your input file for all variables that you are modifying')
                         if len(number_in_text) != 1:
                             raise TypeError(
                                 'ensure that inp file only contains one space seperated number per line (which is the variable value).')
                         if round_val is -1:
-                            l = l.replace(" " + number_in_text[0] + " ", " " + str(self.df[row[1]][row_num]) + " ", 1)
+                            l = l.replace(" " + number_in_text[0] + " ", " " + str(self.df[col[1]][row_num]) + " ", 1)
                         else:
-                            l = l.replace(" " + number_in_text[0] + " ", " " + str(round(float(self.df[row[1]][5]), round_val)) + " ", 1)
-                new_f.write("\n"+l)
+                            l = l.replace(" " + number_in_text[0] + " ",
+                                          " " + str(round(float(self.df[col[1]][row_num]), round_val)) + " ", 1)
+                new_f.write("\n" + l)
