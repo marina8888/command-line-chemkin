@@ -29,7 +29,7 @@ XEND 2.0   ! Ending Axial Position (cm)
 ! output control and other misc. property
 !
 GFAC 1.0   ! Gas Reaction Rate Multiplier
-PRNT 1.0   ! Print Level Control
+PRNT 0.0   ! Print Level Control
 !
 ! physical property
 !

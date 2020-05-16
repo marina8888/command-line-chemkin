@@ -103,7 +103,7 @@ class InpGenerator():
     def create_new_inp(self, round_val: int = -1):
         """
         A function that generates a new input file based on a dataframe input, where column headers are the variables replaced.
-        :param round_val:
+        :param round_val: round input values to a certain number of decimal places.
         :return:
         """
 
