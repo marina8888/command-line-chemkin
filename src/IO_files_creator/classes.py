@@ -133,3 +133,4 @@ class InpGenerator():
                                 l = l.replace(" " + number_in_text[0] + " ",
                                               " " + str(round(float(self.df[col[1]][row_num[0]]), round_val)) + " ", 1)
                     new_f.write("\n" + l)
+        print('You can now find the new input files in the .chemkin_launch_files/input_files folder')

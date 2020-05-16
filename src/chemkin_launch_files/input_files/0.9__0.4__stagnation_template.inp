@@ -1,3 +1,4 @@
+
 !
 ! problem type definition
 !
@@ -10,10 +11,10 @@ STAGNATION_FLAME   ! Stagnation Flame Reactor
 !
 ! physical property
 !
-PRES 1.0  ! Pressure (atm)
+PRES 0.99526  ! Pressure (atm)
 TINF 298   ! Ambient Temperature (K)
-TINL StagPlane 700.0   ! Stagnation Plane Temperature (K)
-TMAX 2800.0   ! Maximum Temperature for Initial Profile (K)
+TINL StagPlane 583.378947   ! Stagnation Plane Temperature (K)
+TMAX 1784.112   ! Maximum Temperature for Initial Profile (K)
 !
 ! reactor dimension definition
 !
@@ -34,15 +35,15 @@ PRNT 1.0   ! Print Level Control
 ! physical property
 !
 AINL C1_Inlet1 0.0   ! Radial Gradient in Inlet Velocity (1/sec)
-TINL C1_Inlet1 293.0   ! Inlet Temperature (K)
-UINL C1_Inlet1 90.34   ! Inlet Velocity (cm/sec)
+TINL C1_Inlet1 298.215789   ! Inlet Temperature (K)
+UINL C1_Inlet1 30.538725   ! Inlet Velocity (cm/sec)
 !
 ! species property
 !
-REAC C1_Inlet1 N2 8.31342   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 NH3 0.28135   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 CH4 1   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 O2 2.21101   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 N2 8.08293   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 NH3 1.0   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 CH4 0.592372   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 O2 2.149715   ! Reactant Fraction (mole fraction)
 INLET C1_Inlet1 1   ! Inlet Stream
 !
 ! physical property
