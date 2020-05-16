@@ -9,14 +9,14 @@ Note only the generation of the input.inp file is considered in the script and t
 
 ### To Do:
 - [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
-- [x] Generate an csv file that includes all the conditions required for input. Use the BigWorkbook class excel format from the marina888/dilution-gas repo. 
-- [ ] Use python to create new input (.inp) files from the BigWorkbook csv file.
-- [ ] Add a final job file to project that produces an output file named and containing the details of the conditions used. It should include - eq, heat ratio and mechanism used. 
-- [ ] Generate a python file that takes an input of chemkin (output) results files and sorts them for plotting 
-- [ ] Add input for experimental results on the same graph 
-- [ ] Add suitable plotting functions with parameters for legend, title, axies titles, conditions used.
-- [ ] Add template.csv to notes folder and tutorial file 
-- [ ] Check all temperature inputs of experiment excel sheets and other data, then run programme with a new BigWorkbook (including Tw calculation)
+- [x] Generate an csv file that includes all the conditions required for input. 
+- [x] Use python to create new input (.inp) files from the BigWorkbook csv file.
+- [ ] Generate a bash file that launches all files in input folder
+- [ ] Generate a class for sorting the solution to dataframe
+- [ ] Generate a class for plotting solution (with optional legend, title, axies titles, conditions used)
+- [ ] Add capability for plotting experimental results on same graph 
+- [ ] Rearrange folders and filepaths for ease of use
+- [ ] Add website, tutorial and launch documentation 
 - [ ] Add sensitivity printing options to file 
 - [ ] Test max temp, stag temp, and inlet velocity effect  on output.  
 ### Functions
