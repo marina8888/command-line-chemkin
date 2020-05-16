@@ -1,4 +1,4 @@
-# Chemkin Plot Premix
+# Chemkin Plot Premix - Due to be completed 20th May 2020
 
 ### Overview
 In ANSYS CHEMKIN modelling, often a range of input conditions need to be tested for an overall impression of flame bahaviour. The process can be accelerated through generating a spreadsheet with all required conditions and launching them to command line. Furthermore, post-processing CHEMKIN files to extract the critical information can be time consuming. 
