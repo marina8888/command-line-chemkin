@@ -6,7 +6,8 @@ This file takes in a values from 'Sheet1' of conditions, given a spreadsheet usi
 import pandas as pd
 import numpy as np
 import os.path
-from shutil import copyfile
+import re
+
 
 class InpGenerator():
 
@@ -23,7 +24,7 @@ class InpGenerator():
         self.df = self.sheet_to_df()
         self.check_df_col()
         self.get_name()
-        self.create_new_inp()
+        self.create_new_inp(4)
 
     def sheet_to_df(self):
         """
@@ -90,23 +91,29 @@ class InpGenerator():
             round(self.df['name2'][row], round2)) + '__' + self.inp_name
         return new_inp_file_name
 
-    def create_new_inp(self):
+    def create_new_inp(self, round_val: int = -1):
         """
         A function that generates a new input file based on a dataframe input, where column headers are the variables replaced.
-        :param df:
-        :param row_number: take data from this row
-        :param path_to_inp_file: Use the modelname_template.inp file.
-        :return: None
+        :param round_val:
+        :return:
         """
+
         # open old input file and write each line to content:
         with open(self.inp, 'rt') as f:
             self.content = [line.strip() for line in f]
 
-        for l in self.content:
-            for row in enumerate(self.df):
-                if row[1] in l:
-                    pass
-
-            # replace input file data with a new value:
-            # for line in self.content:
-            #     print(line)
+        # look up the spreadsheet column headers in the old inp file, extract the number in the corresponding row following it.
+        # Replace this with a new number from a spreadsheet row_num
+        with open('haha.inp','w') as new_f:
+            for l in self.content:
+                for row in enumerate(self.df):
+                    if row[1] in l:
+                        number_in_text = re.findall(r"\b(\d+(?:\.\d*)?|\.\d+)\b", l)
+                        if len(number_in_text) != 1:
+                            raise TypeError(
+                                'ensure that inp file only contains one space seperated number per line (which is the variable value).')
+                        if round_val is -1:
+                            l = l.replace(" " + number_in_text[0] + " ", " " + str(self.df[row[1]][row_num]) + " ", 1)
+                        else:
+                            l = l.replace(" " + number_in_text[0] + " ", " " + str(round(float(self.df[row[1]][5]), round_val)) + " ", 1)
+                new_f.write("\n"+l)
