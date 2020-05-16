@@ -15,6 +15,9 @@ REAC C1_Inlet1 CH4  = (molar fraction CH4)
 REAC C1_Inlet1 O2 = (molar fraction O2)
 REAC C1_Inlet1 N2 = (molar fraction N2)
 
+
+Below is the back-up template text for stagnation_template.inp, in case of problems during copying/reading file. 
+Please do not delete this text:  
 ```
 ! 
 ! problem type definition

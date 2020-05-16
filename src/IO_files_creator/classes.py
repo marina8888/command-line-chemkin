@@ -6,7 +6,7 @@ This file takes in a values from 'Sheet1' of conditions, given a spreadsheet usi
 import pandas as pd
 import numpy as np
 import os.path
-
+from shutil import copyfile
 
 class InpGenerator():
 
@@ -23,7 +23,7 @@ class InpGenerator():
         self.df = self.sheet_to_df()
         self.check_df_col()
         self.get_name()
-        self.get_inp_name(5)
+        self.create_new_inp()
 
     def sheet_to_df(self):
         """
@@ -88,10 +88,9 @@ class InpGenerator():
         """
         new_inp_file_name = str(round(self.df['name1'][row], round1)) + '__' + str(
             round(self.df['name2'][row], round2)) + '__' + self.inp_name
-        print(new_inp_file_name)
         return new_inp_file_name
 
-    def generate_new_inp(self):
+    def create_new_inp(self):
         """
         A function that generates a new input file based on a dataframe input, where column headers are the variables replaced.
         :param df:
@@ -99,12 +98,15 @@ class InpGenerator():
         :param path_to_inp_file: Use the modelname_template.inp file.
         :return: None
         """
-        for row in enumerate(self.df):
-            print(row[1])
+        # open old input file and write each line to content:
+        with open(self.inp, 'rt') as f:
+            self.content = [line.strip() for line in f]
 
-            with open(self.inp, 'w') as f:
-                pass
-                #     self.content = [line.strip() for line in f]
-                #     # replace input file data with a new value:
-                # for line in self.content:
-                #     print(line)
+        for l in self.content:
+            for row in enumerate(self.df):
+                if row[1] in l:
+                    pass
+
+            # replace input file data with a new value:
+            # for line in self.content:
+            #     print(line)
