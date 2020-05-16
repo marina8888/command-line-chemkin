@@ -21,10 +21,15 @@ class InpGenerator():
         self.inp_name = os.path.basename(path_to_inp_file)
         self.content = []
 
+        # get df and check it for errors:
         self.df = self.sheet_to_df()
         self.check_df_col()
+
+        # get file names for naming:
         self.get_name()
-        self.create_new_inp(4)
+
+        # create a folder of input files:
+        self.create_new_inp(6)
 
     def sheet_to_df(self):
         """
@@ -64,6 +69,10 @@ class InpGenerator():
             if len(other_bad_values[0]) != 0:
                 raise NameError('Column ' + str(i) + ' has negative values in your spreadsheet')
 
+    @staticmethod
+    def round_to_nearest(value, base=5):
+        return base * round(value / base)
+
     def get_name(self):
         """
         If name1 and name2 columns (which are used for naming solution.out files and filtering data) do not exist,
@@ -87,7 +96,7 @@ class InpGenerator():
         :param round2: rounding value for name2 column (WARNING: too low of a number might overwrite an input file due to duplicate names!)
         :return new_inp_name: a new name for the input file.
         """
-        new_inp_file_name = str(round(self.df['name1'][row], round1)) + '__' + str(
+        new_inp_file_name = './chemkin_launch_files/input_files/'+ str(round(self.df['name1'][row], round1)) + '__' + str(
             round(self.df['name2'][row], round2)) + '__' + self.inp_name
         return new_inp_file_name
 
@@ -101,23 +110,26 @@ class InpGenerator():
         # open old input file and write each line to content:
         with open(self.inp, 'rt') as f:
             self.content = [line.strip() for line in f]
-        row_num = 5
+
+        for row_num in enumerate(self.df.index):
         # look up the spreadsheet column headers in the old inp file, extract the number in the corresponding row following it.
         # Replace this with a new number from a spreadsheet row_num
-        with open('haha.inp', 'w') as new_f:
-            for l in self.content:
-                for col in enumerate(self.df):
-                    if col[1] in l:
-                        number_in_text = re.findall(r"\b(\d+(?:\.\d*)?|\.\d+)\b", l)
-                        if len(number_in_text) == 0:
-                            raise TypeError(
-                                'please ensure that you have placeholder numerical values in your input file for all variables that you are modifying')
-                        if len(number_in_text) != 1:
-                            raise TypeError(
-                                'ensure that inp file only contains one space seperated number per line (which is the variable value).')
-                        if round_val is -1:
-                            l = l.replace(" " + number_in_text[0] + " ", " " + str(self.df[col[1]][row_num]) + " ", 1)
-                        else:
-                            l = l.replace(" " + number_in_text[0] + " ",
-                                          " " + str(round(float(self.df[col[1]][row_num]), round_val)) + " ", 1)
-                new_f.write("\n" + l)
+            name = self.get_inp_name(row_num[0])
+            with open(name, 'w') as new_f:
+
+                for l in self.content:
+                    for col in enumerate(self.df):
+                        if col[1] in l:
+                            number_in_text = re.findall(r"\b(\d+(?:\.\d*)?|\.\d+)\b", l)
+                            if len(number_in_text) == 0:
+                                raise TypeError(
+                                    'please ensure that you have placeholder numerical values in your input file for all variables that you are modifying')
+                            if len(number_in_text) != 1:
+                                raise TypeError(
+                                    'ensure that inp file only contains one space seperated number per line (which is the variable value).')
+                            if round_val is -1:
+                                l = l.replace(" " + number_in_text[0] + " ", " " + str(self.df[col[1]][row_num[0]]) + " ", 1)
+                            else:
+                                l = l.replace(" " + number_in_text[0] + " ",
+                                              " " + str(round(float(self.df[col[1]][row_num[0]]), round_val)) + " ", 1)
+                    new_f.write("\n" + l)
