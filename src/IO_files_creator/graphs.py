@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
-from classes import InpGenerator
 import pandas as pd
 from os import listdir, path
 
-class SolutionwithX():
+class Solution():
     """
     Solution class takes all files from solution folder and transfers all values after if it exists. If not, assume the run failed.
     Create 2 new dataframe columns for name1 and name2 as additional filtering criteria.
@@ -24,24 +23,41 @@ class SolutionwithX():
 
     def import_sol(self):
         """
-        populate a dictionary of dataframes, where the filename is the key.
+        populate a dictionary of dataframes, where the filename is the key. Add name1 and name2 as a filtering parameter.
         :return:
         """
         for file in listdir(self.sol, "r"):
+            print(file)
             name=file.strip(".out")
-            self.df_dict[name]=pd.DataFrame(file)
+            df=pd.DataFrame(file)
 
-    def create_name1_name2(self):
-        pass
+            file_name_as_list = file.split(__)
+            name1 = file_name_as_list[0]
+            name2 = file_name_as_list[1]
+            df['name1'] = name1
+            df['name2'] = name2
 
-    def sol_to_df(self):
-        pass
-
-    def all_sol_to_df(self):
-        pass
+            self.df_dict[name]=df
 
 class SolutionAtX():
- pass
+    def __init__(self, path_to_solution_folder):
+        self.sol=path_to_solution_folder
+        self.df=pd.DataFrame()
 
-class Graphs():
-pass
+    def failed_runs(self):
+        for file in listdir(self.sol, "r"):
+            pass
+
+    def import_sol(self):
+        pass
+
+class Graph():
+    def __init__(self):
+        fig=fig #create figure
+
+
+class ExpGraph(Graph):
+    def __init__(self):
+        super.__init__():
+
+
