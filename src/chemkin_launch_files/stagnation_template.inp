@@ -1,3 +1,4 @@
+
 !
 ! problem type definition
 !
@@ -10,18 +11,18 @@ STAGNATION_FLAME   ! Stagnation Flame Reactor
 !
 ! physical property
 !
-PRES 1.0  ! Pressure (atm)
+PRES 1.00026  ! Pressure (atm)
 TINF 298   ! Ambient Temperature (K)
-TINL StagPlane 700.0   ! Stagnation Plane Temperature (K)
-TMAX 2800.0   ! Maximum Temperature for Initial Profile (K)
+TINL StagPlane 535.91323   ! Stagnation Plane Temperature (K)
+TMAX 1853.142   ! Maximum Temperature for Initial Profile (K)
 !
 ! reactor dimension definition
 !
-CURV 0.9   ! Adaptive Grid Control Based On Solution Curvature
-GRAD 0.9   ! Adaptive Grid Control Based On Solution Gradient
-NADP 10   ! Number of Adaptive Grid Points
-NPTS 100   ! Number of Uniform Grid Points
-NTOT 500   ! Maximum Number of Grid Points Allowed
+CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.5   ! Adaptive Grid Control Based On Solution Gradient
+NADP 100   ! Number of Adaptive Grid Points
+NPTS 1000   ! Number of Uniform Grid Points
+NTOT 1500   ! Maximum Number of Grid Points Allowed
 PCAD 0.75   ! Percent of Grids for Adaptation
 RGTC 1.0   ! Ratio of Gradient to Curvature Adaptation
 XEND 2.0   ! Ending Axial Position (cm)
@@ -29,20 +30,21 @@ XEND 2.0   ! Ending Axial Position (cm)
 ! output control and other misc. property
 !
 GFAC 1.0   ! Gas Reaction Rate Multiplier
-PRNT 0.0   ! Print Level Control
+PRNT 1.0   ! Print Level Control
+ASEN TEMP ! Temperature Sensitivities
 !
 ! physical property
 !
 AINL C1_Inlet1 0.0   ! Radial Gradient in Inlet Velocity (1/sec)
-TINL C1_Inlet1 293.0   ! Inlet Temperature (K)
-UINL C1_Inlet1 90.34   ! Inlet Velocity (cm/sec)
+TINL C1_Inlet1 298.886082   ! Inlet Temperature (K)
+UINL C1_Inlet1 34.283317   ! Inlet Velocity (cm/sec)
 !
 ! species property
 !
-REAC C1_Inlet1 N2 8.31342   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 NH3 0.28135   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 CH4 1   ! Reactant Fraction (mole fraction)
-REAC C1_Inlet1 O2 2.21101   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 N2 45.458187   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 NH3 1.0   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 CH4 3.554232   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 O2 12.089943   ! Reactant Fraction (mole fraction)
 INLET C1_Inlet1 1   ! Inlet Stream
 !
 ! physical property
@@ -54,13 +56,12 @@ INLET StagPlane 1
 ! Number of Continuation 5   ! Continuation Count
 CNTN   ! Continuation
 END   ! End
-CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
-GRAD 0.5   ! Adaptive Grid Control Based On Solution Gradient
-XEND 2.0   ! Ending Axial Position (cm)
-CNTN   ! Continuation
-END   ! End
 CURV 0.1   ! Adaptive Grid Control Based On Solution Curvature
 GRAD 0.1   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.07   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.07   ! Adaptive Grid Control Based On Solution Gradient
 CNTN   ! Continuation
 END   ! End
 CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
