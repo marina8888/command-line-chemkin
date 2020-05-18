@@ -12,7 +12,7 @@ class Solution():
         self.sol=path_to_solution_folder
         self.df_dict={}
         self.failed_runs()
-        # self.import_sol()
+        self.import_sol()
 
     def failed_runs(self):
         """
@@ -24,8 +24,8 @@ class Solution():
             with open(full_path, "r") as f:
                 lines = f.readlines()
                 if not any("ERROR" in s for s in lines):
-                    whole_doc = lines.join()
-                    whole_doc.split(' TWOPNT: ', 1)[0]
+                    whole_doc = "".join(lines)
+                    whole_doc = whole_doc.split(' TWOPNT: ', 1)[0]
                     with open(full_path, "w") as f:
                          f.write(whole_doc)
 
@@ -34,10 +34,12 @@ class Solution():
         populate a dictionary of dataframes, where the filename is the key. Add name1 and name2 as a filtering parameter.
         :return:
         """
-        for file in listdir(self.sol, "r"):
+        for file in listdir(self.sol):
             print(file)
-            name=file.strip(".out")
-            df=pd.DataFrame(file)
+            name = file.strip(".out")
+            txt_name = name + ".txt"
+            full_path = path.join(self.sol, file)
+            df = pd.DataFrame(full_path)
 
             file_name_as_list = file.split('__')
             name1 = file_name_as_list[0]
