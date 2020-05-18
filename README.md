@@ -11,13 +11,14 @@ Note only the generation of the input.inp file is considered in the script and t
 - [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
 - [x] Generate an csv file that includes all the conditions required for input. 
 - [x] Use python to create new input (.inp) files from the BigWorkbook csv file.
-- [ ] Generate a bash file that launches all files in input folder
+- [x] Generate a bash file that launches all files in input folder
 - [ ] Generate a class for sorting the solution to dataframe
 - [ ] Generate a class for plotting solution (with optional legend, title, axies titles, conditions used)
 - [ ] Add capability for plotting experimental results on same graph 
 - [ ] Rearrange folders and filepaths for ease of use
 - [ ] Add website, tutorial and launch documentation 
 - [ ] Add sensitivity printing options to file 
+- [ ] Add interface
 - [ ] Test max temp, stag temp, and inlet velocity effect  on output.  
 ### Functions
 To complete

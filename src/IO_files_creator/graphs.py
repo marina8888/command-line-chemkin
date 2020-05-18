@@ -24,7 +24,7 @@ class Solution():
             with open(full_path, "r") as f:
                 lines = f.readlines()
                 if not any("ERROR" in s for s in lines):
-                    whole_doc = '\n'.join(lines)
+                    whole_doc = lines.join()
                     whole_doc.split(' TWOPNT: ', 1)[0]
                     with open(full_path, "w") as f:
                          f.write(whole_doc)
@@ -59,13 +59,18 @@ class SolutionAtX():
     def import_sol(self):
         pass
 
-# class Graph():
-#     def __init__(self):
-#         fig=fig #create figure
-#
-#
-# class ExpGraph(Graph):
-#     def __init__(self):
-#         super.__init__():
+class Graph():
+    def __init__(self, x_graph_size, y_graph_size):
+        self.fig = plt.figure(x_graph_size, y_graph_size)
+
+    def add_format(self, x_name, y_name, title):
+        pass
+
+    def add_scatter_dict(self, path_to_sheet, x, y, legend = None, colour = None, filter_condition=None, filter_value=None):
+        # use self.fig as a parameter
+        pass
 
 
+    def add_best_fit_line(self, path_to_sheet, x, y,xerr, yerr, legend = None, colour = None, filter_condition=None, filter_value=None):
+        # use self.fig as a parameter
+        pass
