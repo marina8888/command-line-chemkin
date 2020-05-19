@@ -76,10 +76,8 @@ class Solution():
                         whole_doc = ' '.join(lines)
                         whole_doc = whole_doc.split(' TWOPNT: ', 1)[0]
 
-                        #create inital dataframe from the first title
+                        #create inital dataframe and merge all following dataframes to it
                         i = 0
-                        # key_list, col_list = self.filter_txt(filtered_lines)
-                        # self.df_dict[file] = pd.DataFrame(col_list, columns=key_list)
                         filtered_lines = whole_doc.split("MOLE FRACTION")
                         for i in range(len(filtered_lines)):
                             split_filtered = filtered_lines[i].split('\n')
@@ -90,11 +88,13 @@ class Solution():
                             else:
                                 key_list, col_list = self.filter_txt(split_filtered, add_X_col=True)
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
-                                list = [new_df, super_new_df]
-                                new_df=pd.append(super_new_df)
-                        print(new_df['H2O'])
+                                super_new_df.drop('Index', axis=1, inplace=True)
+                                new_df = new_df.merge(super_new_df,on = 'X(cm)')
+                                # new_df = new_df.reset_index(drop=True)
+                        print(new_df)
+                        print(new_df['T(K)'])
                         self.df_dict[file] = new_df
-                        # print(self.df_dict[file])
+                    print(self.df_dict[file])
 
 
 
