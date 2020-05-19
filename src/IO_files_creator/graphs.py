@@ -27,7 +27,7 @@ class Solution():
         previous:str = ""
         row = []
         for line in enumerate(lines):
-            if line[1].startswith("   1   "):
+            if line[1].startswith('    1   '):
                 # get list of keys from row above the row starting with "    1   "
                 new_key_list = re.findall(r"\b[A-Z]{1}[\S]*",previous)
                 new_key_list.insert(0, "Index")
@@ -51,6 +51,7 @@ class Solution():
         prints all failed files to a text file and cleans the other files ready to be transferred to a dataframe.
         :return:
         """
+        new_df=pd.DataFrame()
         #initalise an error file:
         txt_path = path.join(self.sol, "ERROR_RUNS.txt")
         with open (txt_path, "w") as error_file:
@@ -70,12 +71,27 @@ class Solution():
                     else:
                         # usable_line = [lines.rsplit("   1   ").str[-1]]
                         # for u in usable_line:
-                        whole_doc = "".join(lines)
+                        whole_doc = ' '.join(lines)
                         whole_doc = whole_doc.split(' TWOPNT: ', 1)[0]
-                        filtered_lines = re.search("   1   ;(.*)\n\n",whole_doc)
-                        key_list, col_list = self.filter_txt(filtered_lines)
-                        self.df_dict[file]=pd.DataFrame(col_list, columns = key_list)
 
+                        #create inital dataframe from the first title
+                        i = 0
+                        # key_list, col_list = self.filter_txt(filtered_lines)
+                        # self.df_dict[file] = pd.DataFrame(col_list, columns=key_list)
+
+                        while True:
+                            filtered_lines = whole_doc.split("MOLE FRACTION")[i]
+                            filtered_lines = filtered_lines.split('\n')
+                            key_list, col_list = self.filter_txt(filtered_lines)
+                            if i!=0:
+                                new_df = pd.DataFrame(col_list, columns=key_list)
+                            else:
+                                super_new_df = pd.DataFrame(col_list, columns=key_list)
+                                list = [new_df, super_new_df]
+                                new_df=pd.concat(list)
+                            i += 1
+
+                        self.df_dict[file] = new_df
                         print(self.df_dict[file])
 
 
