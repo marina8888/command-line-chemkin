@@ -13,6 +13,7 @@ class InpGenerator():
 
     def __init__(self, path_to_spreadsheet: str, path_to_inp_file: str):
         """
+        Takes in an input of a spreadsheet of conditions and returns a folder of chemkin input files.
         :param path_to_spreadsheet: input data spreadsheet file path
         :param path_to_inp_file: input file path
         """
