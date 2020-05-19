@@ -15,7 +15,7 @@ class Solution():
         self.failed_runs()
         # self.import_sol()
 
-    def filter_txt(self, lines):
+    def filter_txt(self, lines, add_X_col:bool=False):
         """
         Pass in lines of .sol files. Use Regex expression to find keys and column values saved as two lists
         :param lines:
@@ -30,6 +30,8 @@ class Solution():
             if line[1].startswith('    1   '):
                 # get list of keys from row above the row starting with "    1   "
                 new_key_list = re.findall(r"\b[A-Z]{1}[\S]*",previous)
+                if add_X_col==True:
+                    new_key_list.insert(0,'X(cm)')
                 new_key_list.insert(0, "Index")
                 key_list = new_key_list
 
@@ -78,21 +80,21 @@ class Solution():
                         i = 0
                         # key_list, col_list = self.filter_txt(filtered_lines)
                         # self.df_dict[file] = pd.DataFrame(col_list, columns=key_list)
+                        filtered_lines = whole_doc.split("MOLE FRACTION")
+                        for i in range(len(filtered_lines)):
+                            split_filtered = filtered_lines[i].split('\n')
 
-                        while True:
-                            filtered_lines = whole_doc.split("MOLE FRACTION")[i]
-                            filtered_lines = filtered_lines.split('\n')
-                            key_list, col_list = self.filter_txt(filtered_lines)
-                            if i!=0:
+                            if i==0:
+                                key_list, col_list = self.filter_txt(split_filtered, add_X_col=False)
                                 new_df = pd.DataFrame(col_list, columns=key_list)
                             else:
+                                key_list, col_list = self.filter_txt(split_filtered, add_X_col=True)
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
                                 list = [new_df, super_new_df]
-                                new_df=pd.concat(list)
-                            i += 1
-
+                                new_df=pd.append(super_new_df)
+                        print(new_df['H2O'])
                         self.df_dict[file] = new_df
-                        print(self.df_dict[file])
+                        # print(self.df_dict[file])
 
 
 
