@@ -1,0 +1,50 @@
+     *****************************************************************
+     *                         CHEMKIN 19.0                          *
+     *                      OPPDIF Application                       *
+     *              OPPOSED-FLOW DIFFUSION FLAME MODEL               *
+     *              Copyright(c) 2008-2017 ANSYS, Inc.               *             
+     *****************************************************************
+
+
+
+Running CHEMKIN-PRO
+Running Multi-threaded mode
+
+          / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+
+                WORKING SPACE REQUIREMENTS
+                 PROVIDED        REQUIRED 
+ LOGICAL                9              9
+ INTEGER            47058          47058
+ REAL             2395241        2395241
+ CHARACTER            131            131
+
+This problem requires     18.274MB of memory for the REAL array.
+There may be up to an additional    144.989Mb of memory required during the solution.
+
+Initializing CHEMKIN Gas-phase Library a component of CHEMKIN 19.0, Build date: Dec 16, 2017
+This and All Other CHEMKIN(R) Libraries are Copyright (c) 2008-2017 Ansys, Inc.  Unauthorized use, distribution, or duplication is prohibited.This product is subject to U.S. laws governing export andre-export.  For full Legal Notice, see documentation.
+
+
+LICENSE INFORMATION: 
+ 
+
+LicNum: 425864.  License for aa_r_cfd is obtained from the ANSYS license service running on afimgr001.
+                                                                                                                                                                                                                                                                                                                                                                                                                         
+
+Initializing TRANSPORT Library a component of CHEMKIN 19.0, Build date: Dec 16, 2017
+This and All Other CHEMKIN(R) Libraries are Copyright (c) 2008-2017 Ansys, Inc.  Unauthorized use, distribution, or duplication is prohibited.This product is subject to U.S. laws governing export andre-export.  For full Legal Notice, see documentation.
+
+  Error reading Transport linkfile...
+
+OPPDIF: Error initializing transport linkfile...tran.asc
+
+***NOTE:  There are ERROR messages in the printout above***
+
+ERROR condition returned from OPPDIF
+
+
+ Total CPUtime: 2 (seconds)
+ERROR condition returned from OPPDIF
+
+Licenses Released
