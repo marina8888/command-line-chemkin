@@ -7,6 +7,7 @@
 #IDE metadata
 **.idea/**
 
+src/chemkin_launch_files/graphs
 import_files/
 excel_external/
 chemin_external/

@@ -1,7 +1,10 @@
-import matplotlib.pyplot as plt
 import pandas as pd
 from os import listdir, path
 import re
+import matplotlib.pyplot as plt
+
+# set a global style for all graphs:
+plt.style.use('seaborn-notebook')
 
 
 class Solution():
@@ -50,7 +53,6 @@ class Solution():
 
         return key_list, col_list
 
-
     def add_name_cols(self, out_file_name, df: pd.DataFrame):
         """
         Add name1 and name2 columns to dataframe for filtering purposes. Use the actual name of the file to extract them.
@@ -64,7 +66,6 @@ class Solution():
         df['name1'] = name1
         df['name2'] = name2
         return df
-
 
     def sol_to_df(self):
         """
@@ -113,22 +114,54 @@ class Solution():
                     self.df_dict[file] = new_df
                     print(self.df_dict[file])
 
-class Workbook():
-    def __init__(self, path_to_excel_workbook):
-        pass
 
 class Graph():
-    def __init__(self, x_graph_size, y_graph_size):
-        self.fig = plt.figure(x_graph_size, y_graph_size)
+    def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
+                 y_graph_size: int = 6.5):
+        """
+        Initialise a graph, based on object arguments. One figure is created per new graph object.
+        Any data added will be plotted on same graph. Call the add_scatter() and add_line_of_best_fit() for every set of data you intend to plot.
+        :param x_axis_label:
+        :param y_axis_label:
+        :param title: the title that will be set for the graph
+        :param x_graph_size: default to almost square size 6 (increase number to change size ratio or increase resolution)
+        :param y_graph_size: and default to almost square size 6.5 (increase number to change size ratio or increase resolution)
+        """
+        self.fig = plt.figure(figsize=(x_graph_size, y_graph_size))
 
-    def add_format(self, x_name, y_name, title):
-        pass
+        # set format variables and format the figure:
+        self.x_axis_label = x_axis_label
+        self.y_axis_label = y_axis_label
+        self.title = title
 
-    def add_scatter_dict(self, path_to_sheet, x, y, legend=None, colour=None, filter_condition=None, filter_value=None):
+        self.add_format()
+
+    def add_format(self):
+        """
+        Format graph. Add title, axies, tight layout, padding and grid.
+        :return:
+        """
+        # add title, axies names and layout:
+        plt.title(self.title, pad=15, figure=self.fig)
+        plt.xlabel(self.x_axis_label, figure=self.fig)
+        plt.ylabel(self.y_axis_label, figure=self.fig)
+        plt.tight_layout()
+
+        # Turn on the minor TICKS, which are required for the minor GRID:
+        plt.minorticks_on()
+        # Customize the major and minor grids:
+        plt.grid(which='major', linestyle='-', linewidth='0.5', color='darkgrey', zorder=0, figure=self.fig)
+        plt.grid(which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
+
+    def add_scatter(self, path_to_sheet:str, x:str, y:str, legend=None, colour=None, filter_condition=None, filter_value=None, X_value = None):
         # use self.fig as a parameter
         pass
 
-    def add_best_fit_line(self, path_to_sheet, x, y, xerr, yerr, legend=None, colour=None, filter_condition=None,
+    def add_best_fit_line(self, path_to_sheet, x, y, x_error, y_error, legend=None, colour=None, filter_condition=None,
                           filter_value=None):
         # use self.fig as a parameter
         pass
+
+    def show_and_save(self, path_of_save_folder: str, name: str):
+        plt.show()
+        plt.savefig(path_of_save_folder + name)
