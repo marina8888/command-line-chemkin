@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from os import listdir, path
 import re
-import ast
 
 
 class Solution():
@@ -17,8 +16,7 @@ class Solution():
 
         # dictionary to store dataframes:
         self.df_dict = {}
-        self.failed_runs()
-        self.import_sol()
+        self.sol_to_df()
 
     def filter_txt(self, lines, add_X_col: bool = False):
         """
@@ -52,7 +50,23 @@ class Solution():
 
         return key_list, col_list
 
-    def failed_runs(self):
+
+    def add_name_cols(self, out_file_name, df: pd.DataFrame):
+        """
+        Add name1 and name2 columns to dataframe for filtering purposes. Use the actual name of the file to extract them.
+        :param out_file_name: The name of solution .out file for processing
+        :param df: The dataframe.
+        :return:
+        """
+        name = out_file_name.strip(".out")
+        name1 = name.split('__')[0]
+        name2 = name.split('__')[1]
+        df['name1'] = name1
+        df['name2'] = name2
+        return df
+
+
+    def sol_to_df(self):
         """
         prints all failed files to a text file and transfers all other files to a DataFrame. Initialises an ERROR_RUNS.TXT file.
         Writes all file names with errors to these files instead of converting them to a DataFrame.
@@ -95,27 +109,13 @@ class Solution():
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
                                 super_new_df.drop('Index', axis=1, inplace=True)
                                 new_df = new_df.merge(super_new_df, on='X(cm)')
+                    new_df = self.add_name_cols(file, new_df)
                     self.df_dict[file] = new_df
                     print(self.df_dict[file])
 
-    def import_sol(self):
-        """
-        populate a dictionary of dataframes, where the filename is the key. Add name1 and name2 as a filtering parameter.
-        :return:
-        """
-        for file in listdir(self.sol):
-            name = file.strip(".out")
-            txt_name = name + ".txt"
-            txt_full_path = path.join(self.sol, txt_name)
-            df = pd.DataFrame([ast.literal_eval(line) for line in open(txt_full_path)])
-            file_name_as_list = file.split('__')
-            name1 = file_name_as_list[0]
-            name2 = file_name_as_list[1]
-            df['name1'] = name1
-            df['name2'] = name2
-
-            self.df_dict[name] = df
-
+class Workbook():
+    def __init__(self, path_to_excel_workbook):
+        pass
 
 class Graph():
     def __init__(self, x_graph_size, y_graph_size):
