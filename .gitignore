@@ -12,3 +12,5 @@ env/
 include/
 lib/
 __pycache__/
+src/chemkin_launch_files/solutions
+src/chemkin_launch_files/input_files
