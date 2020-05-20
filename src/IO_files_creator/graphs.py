@@ -2,7 +2,8 @@ import pandas as pd
 from os import listdir, path
 import re
 import matplotlib.pyplot as plt
-import numpy as np
+
+
 
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
@@ -148,7 +149,6 @@ class Graph():
         plt.title(self.title, pad=15, figure=self.fig)
         plt.xlabel(self.x_axis_label, figure=self.fig)
         plt.ylabel(self.y_axis_label, figure=self.fig)
-        plt.tight_layout()
 
         # Turn on the minor TICKS, which are required for the minor GRID:
         plt.minorticks_on()
@@ -183,11 +183,13 @@ class Graph():
                 x_data = data[x]
                 y_data = data[y]
             else:
-                x_data = np.where(data[my_filter_condition] == my_filter_value, data[x], None)
-                y_data = np.where(data[my_filter_condition] == my_filter_value, data[y], None)
+                x_data = (data[x][(data[filter_condition] == filter_value)])
+                y_data = (data[y][(data[filter_condition] == filter_value)])
 
         # for if an input is a dictionary of dataframes:
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+        # locator = MaxNLocator(prune='both', nbins=5)
+        # plt.ylabel.set_major_locator(locator)
         if legend != "":
             plt.legend(loc="upper left")
 
@@ -201,18 +203,15 @@ class Graph():
                 IndexError("No file was found. Check the name doesn't contain a file extension")
 
             if filter_condition is None:
-                x_data = df[x]
-                y_data = df[y]
-                print('whats this')
+                x_data = df[x][(df.index % 30 == 1)]
+                y_data = df[y][(df.index % 30 == 1)]
             else:
-                # x_data = np.where(df[filter_condition] == filter_value, df[x], None)
-                # y_data = np.where(df[filter_condition] == filter_value, df[y], None)
-                x_data = np.where(df[filter_condition] == filter_value, df[x], None)
-                drop(N)
-                print('printing')
-                print(type(x_data))
-                print(x_data)
-        # plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+                x_data = (df[x][(df[filter_condition] == filter_value)])
+                y_data = (df[y][(df[filter_condition] == filter_value)])
+                print(x_data, y_data)
+
+        plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+
         if legend != "":
             plt.legend(loc="upper left")
 
