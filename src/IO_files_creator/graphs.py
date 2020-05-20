@@ -111,9 +111,10 @@ class Solution():
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
                                 super_new_df.drop('Index', axis=1, inplace=True)
                                 new_df = new_df.merge(super_new_df, on='X(cm)')
+                    name = file.strip('.out')
                     new_df = self.add_name_cols(file, new_df)
-                    self.df_dict[file] = new_df
-                    print(self.df_dict[file])
+                    self.df_dict[name] = new_df
+                    print(self.df_dict[name])
 
 
 class Graph():
@@ -137,6 +138,7 @@ class Graph():
 
         self.add_format()
 
+
     def add_format(self):
         """
         Format graph. Add title, axies, tight layout, padding and grid.
@@ -154,12 +156,18 @@ class Graph():
         plt.grid(which='major', linestyle='-', linewidth='0.5', color='darkgrey', zorder=0, figure=self.fig)
         plt.grid(which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
 
-    def add_scatter(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey', filter_condition=None,
-                    filter_value=None, X_value=None, round_filter_to_dp:int = None):
+
+    def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
+                                filter_condition=None,
+                                filter_value=None, X_value=None, round_filter_to_dp: int = None):
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
         my_filter_value = filter_value
         data = pd.DataFrame()
+
+        if X_value is not None:
+            my_filter_condition = 'X(cm)'
+            my_filter_value = X_value
 
         # if data input is an excel or csv spreadsheet:
         if 'xls' in path_to_sheet:
@@ -168,28 +176,47 @@ class Graph():
             data = pd.read_csv(path_to_sheet)
 
         if 'xls' or 'csv' in path_to_sheet:
-            if X_value is not None:
-                my_filter_condition = 'X(cm)'
-                my_filter_value = X_value
             if round_filter_to_dp is not None:
                 series = data[my_filter_condition]
-                data[my_filter_condition] = series.round(decimals = round_filter_to_dp)
+                data[my_filter_condition] = series.round(decimals=round_filter_to_dp)
             if filter_condition is None:
                 x_data = data[x]
                 y_data = data[y]
             else:
-                x_data = np.where(data[my_filter_condition]==my_filter_value, data[x], None)
-                y_data = np.where(data[my_filter_condition]==my_filter_value, data[y], None)
-
-        if type(path_to_sheet) == Solution:
-            pass
-
+                x_data = np.where(data[my_filter_condition] == my_filter_value, data[x], None)
+                y_data = np.where(data[my_filter_condition] == my_filter_value, data[y], None)
 
         # for if an input is a dictionary of dataframes:
-
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
         if legend != "":
             plt.legend(loc="upper left")
+
+
+    def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey', filter_condition=None,
+                        filter_value=None, X_value=None, round_filter_to_dp: int = None):
+        # input type is the name of a file/df stored in a dictionary:
+        if name != "":
+            df = solution.df_dict.get(name, 'no such value')
+            if df is 'no such value':
+                IndexError("No file was found. Check the name doesn't contain a file extension")
+
+            if filter_condition is None:
+                x_data = df[x]
+                y_data = df[y]
+                print('whats this')
+            else:
+                # x_data = np.where(df[filter_condition] == filter_value, df[x], None)
+                # y_data = np.where(df[filter_condition] == filter_value, df[y], None)
+                x_data = np.where(df[filter_condition] == filter_value, df[x], None)
+                drop(N)
+                print('printing')
+                print(type(x_data))
+                print(x_data)
+        # plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+        if legend != "":
+            plt.legend(loc="upper left")
+
+
 
     def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None,
                           filter_condition=None,
@@ -200,4 +227,3 @@ class Graph():
     def show_and_save(self, path_of_save_folder: str, name: str):
         plt.show()
         plt.savefig(path_of_save_folder + name)
-
