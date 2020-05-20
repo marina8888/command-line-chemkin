@@ -4,6 +4,9 @@
 *.frm
 *.xls*
 
+#IDE metadata
+**.idea/**
+
 import_files/
 excel_external/
 chemin_external/
