@@ -2,6 +2,7 @@ import pandas as pd
 from os import listdir, path
 import re
 import matplotlib.pyplot as plt
+import numpy as np
 
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
@@ -153,11 +154,44 @@ class Graph():
         plt.grid(which='major', linestyle='-', linewidth='0.5', color='darkgrey', zorder=0, figure=self.fig)
         plt.grid(which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
 
-    def add_scatter(self, path_to_sheet:str, x:str, y:str, legend=None, colour=None, filter_condition=None, filter_value=None, X_value = None):
-        # use self.fig as a parameter
-        pass
+    def add_scatter(self, path_to_sheet: str, x: str, y: str, legend=None, colour='darkgrey', filter_condition=None,
+                    filter_value=None, X_value=None, round_filter_to_dp:int = None):
+        # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
+        my_filter_condition = filter_condition
+        my_filter_value = filter_value
+        data = pd.DataFrame()
 
-    def add_best_fit_line(self, path_to_sheet, x, y, x_error, y_error, legend=None, colour=None, filter_condition=None,
+        # if data input is an excel or csv spreadsheet:
+        if 'xls' in path_to_sheet:
+            data = pd.read_excel(path_to_sheet, path_to_sheet='Sheet1')
+        elif 'csv' in path_to_sheet:
+            data = pd.read_csv(path_to_sheet)
+
+        if 'xls' or 'csv' in path_to_sheet:
+            if X_value is not None:
+                my_filter_condition = 'X(cm)'
+                my_filter_value = X_value
+            if round_filter_to_dp is not None:
+                series = data[my_filter_condition]
+                data[my_filter_condition] = series.round(decimals = round_filter_to_dp)
+            if filter_condition is None:
+                x_data = data[x]
+                y_data = data[y]
+            else:
+                x_data = np.where(data[my_filter_condition]==my_filter_value, data[x], None)
+                y_data = np.where(data[my_filter_condition]==my_filter_value, data[y], None)
+
+        if type(path_to_sheet) == Solution:
+            pass
+
+
+        # for if an input is a dictionary of dataframes:
+
+        plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+        plt.legend(loc="upper left")
+
+    def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None,
+                          filter_condition=None,
                           filter_value=None):
         # use self.fig as a parameter
         pass
@@ -165,3 +199,4 @@ class Graph():
     def show_and_save(self, path_of_save_folder: str, name: str):
         plt.show()
         plt.savefig(path_of_save_folder + name)
+
