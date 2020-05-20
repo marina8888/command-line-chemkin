@@ -154,7 +154,7 @@ class Graph():
         plt.grid(which='major', linestyle='-', linewidth='0.5', color='darkgrey', zorder=0, figure=self.fig)
         plt.grid(which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
 
-    def add_scatter(self, path_to_sheet: str, x: str, y: str, legend=None, colour='darkgrey', filter_condition=None,
+    def add_scatter(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey', filter_condition=None,
                     filter_value=None, X_value=None, round_filter_to_dp:int = None):
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
@@ -188,7 +188,8 @@ class Graph():
         # for if an input is a dictionary of dataframes:
 
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
-        plt.legend(loc="upper left")
+        if legend != "":
+            plt.legend(loc="upper left")
 
     def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None,
                           filter_condition=None,
