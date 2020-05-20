@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/chemkin-flat-flame-simulations.iml" filepath="$PROJECT_DIR$/.idea/chemkin-flat-flame-simulations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gas-analysis-dilution-method/.idea/gas-analysis-dilution-method.iml" filepath="$PROJECT_DIR$/../gas-analysis-dilution-method/.idea/gas-analysis-dilution-method.iml" />
+    </modules>
+  </component>
+</project>
