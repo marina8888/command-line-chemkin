@@ -2,9 +2,8 @@ import pandas as pd
 from os import listdir, path
 import re
 import matplotlib.pyplot as plt
-
-
-
+import matplotlib.ticker as plticker
+import numpy as np
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
 
@@ -115,7 +114,6 @@ class Solution():
                     name = file.strip('.out')
                     new_df = self.add_name_cols(file, new_df)
                     self.df_dict[name] = new_df
-                    print(self.df_dict[name])
 
 
 class Graph():
@@ -132,12 +130,16 @@ class Graph():
         """
         self.fig = plt.figure(figsize=(x_graph_size, y_graph_size))
 
+        # get access to axies functions:
+        self.ax = self.fig.gca()
+
         # set format variables and format the figure:
         self.x_axis_label = x_axis_label
         self.y_axis_label = y_axis_label
         self.title = title
 
         self.add_format()
+        self.set_grid_ticks()
 
 
     def add_format(self):
@@ -145,16 +147,23 @@ class Graph():
         Format graph. Add title, axies, tight layout, padding and grid.
         :return:
         """
-        # add title, axies names and layout:
+        # add title, names and layout:
         plt.title(self.title, pad=15, figure=self.fig)
         plt.xlabel(self.x_axis_label, figure=self.fig)
         plt.ylabel(self.y_axis_label, figure=self.fig)
+        plt.tight_layout()
 
-        # Turn on the minor TICKS, which are required for the minor GRID:
-        plt.minorticks_on()
-        # Customize the major and minor grids:
-        plt.grid(which='major', linestyle='-', linewidth='0.5', color='darkgrey', zorder=0, figure=self.fig)
-        plt.grid(which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
+    def set_grid_ticks(self):
+        # set ticks based on a maximum number:
+        self.ax.get_xaxis().set_major_locator(plticker.MaxNLocator(10, prune = None))
+        self.ax.get_yaxis().set_major_locator(plticker.MaxNLocator(10, prune = None))
+        self.ax.get_xaxis().set_minor_locator(plticker.MaxNLocator(50))
+        self.ax.get_yaxis().set_minor_locator(plticker.MaxNLocator(50))
+
+        self.ax.grid(b=True, which='major', linestyle='-', linewidth='1.0', color='gainsboro', zorder=0, figure=self.fig)
+        self.ax.grid(b=True, which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
+        # plt.gca().yaxis.set_major_formatter(plticker.StrMethodFormatter('{x:.1f}'))
+        plt.xticks(rotation=70)
 
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
@@ -181,21 +190,23 @@ class Graph():
                 data[my_filter_condition] = series.round(decimals=round_filter_to_dp)
             if filter_condition is None:
                 x_data = data[x]
+                x_data = x_data.astype('float64')
                 y_data = data[y]
+                y_data = y_data.astype('float64')
             else:
                 x_data = (data[x][(data[filter_condition] == filter_value)])
+                x_data = x_data.astype('float64')
                 y_data = (data[y][(data[filter_condition] == filter_value)])
+                y_data = y_data.astype('float64')
 
         # for if an input is a dictionary of dataframes:
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
-        # locator = MaxNLocator(prune='both', nbins=5)
-        # plt.ylabel.set_major_locator(locator)
         if legend != "":
             plt.legend(loc="upper left")
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey', filter_condition=None,
-                        filter_value=None, X_value=None, round_filter_to_dp: int = None):
+                        filter_value=None, X_value=None, round_filter_to_dp: int = None, number_of_points = 20):
         # input type is the name of a file/df stored in a dictionary:
         if name != "":
             df = solution.df_dict.get(name, 'no such value')
@@ -203,15 +214,17 @@ class Graph():
                 IndexError("No file was found. Check the name doesn't contain a file extension")
 
             if filter_condition is None:
-                x_data = df[x][(df.index % 30 == 1)]
-                y_data = df[y][(df.index % 30 == 1)]
+                x_data = df[x][(df.index % number_of_points == 1)]
+                x_data = x_data.astype('float64')
+                y_data = df[y][(df.index % number_of_points == 1)]
+                y_data = y_data.astype('float64')
             else:
                 x_data = (df[x][(df[filter_condition] == filter_value)])
+                x_data = x_data.astype('float64')
                 y_data = (df[y][(df[filter_condition] == filter_value)])
-                print(x_data, y_data)
+                y_data = y_data.astype('float64')
 
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
-
         if legend != "":
             plt.legend(loc="upper left")
 
