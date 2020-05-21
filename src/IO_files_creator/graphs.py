@@ -4,6 +4,7 @@ import re
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import numpy as np
+
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
 
@@ -141,7 +142,6 @@ class Graph():
         self.add_format()
         self.set_grid_ticks()
 
-
     def add_format(self):
         """
         Format graph. Add title, axies, tight layout, padding and grid.
@@ -155,20 +155,20 @@ class Graph():
 
     def set_grid_ticks(self):
         # set ticks based on a maximum number:
-        self.ax.get_xaxis().set_major_locator(plticker.MaxNLocator(10, prune = None))
-        self.ax.get_yaxis().set_major_locator(plticker.MaxNLocator(10, prune = None))
+        self.ax.get_xaxis().set_major_locator(plticker.MaxNLocator(10, prune=None))
+        self.ax.get_yaxis().set_major_locator(plticker.MaxNLocator(10, prune=None))
         self.ax.get_xaxis().set_minor_locator(plticker.MaxNLocator(50))
         self.ax.get_yaxis().set_minor_locator(plticker.MaxNLocator(50))
 
-        self.ax.grid(b=True, which='major', linestyle='-', linewidth='1.0', color='gainsboro', zorder=0, figure=self.fig)
+        self.ax.grid(b=True, which='major', linestyle='-', linewidth='1.0', color='gainsboro', zorder=0,
+                     figure=self.fig)
         self.ax.grid(b=True, which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
         # plt.gca().yaxis.set_major_formatter(plticker.StrMethodFormatter('{x:.1f}'))
         plt.xticks(rotation=70)
 
-
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition=None,
-                                filter_value=None, X_value=None, round_filter_to_dp: int = None):
+                                filter_value=None, X_value: int = None, round_filter_to_dp: int = None):
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
         my_filter_value = filter_value
@@ -176,7 +176,7 @@ class Graph():
 
         if X_value is not None:
             my_filter_condition = 'X(cm)'
-            my_filter_value = X_value
+            my_filter_value = str(X_value)
 
         # if data input is an excel or csv spreadsheet:
         if 'xls' in path_to_sheet:
@@ -194,9 +194,9 @@ class Graph():
                 y_data = data[y]
                 y_data = y_data.astype('float64')
             else:
-                x_data = (data[x][(data[filter_condition] == filter_value)])
+                x_data = (data[x][(data[my_filter_condition] == my_filter_value)])
                 x_data = x_data.astype('float64')
-                y_data = (data[y][(data[filter_condition] == filter_value)])
+                y_data = (data[y][(data[my_filter_condition] == my_filter_value)])
                 y_data = y_data.astype('float64')
 
         # for if an input is a dictionary of dataframes:
@@ -204,15 +204,14 @@ class Graph():
         if legend != "":
             plt.legend(loc="upper left")
 
-
-    def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey', filter_condition=None,
-                        filter_value=None, X_value=None, round_filter_to_dp: int = None, number_of_points = 20):
+    def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
+                        filter_condition=None,
+                        filter_value=None, X_value: int = None, round_filter_to_dp: int = None, number_of_points=1):
         # input type is the name of a file/df stored in a dictionary:
         if name != "":
             df = solution.df_dict.get(name, 'no such value')
-            if df is 'no such value':
-                IndexError("No file was found. Check the name doesn't contain a file extension")
-
+            if 'no such value' in df:
+                raise IndexError("No file was found. Check the name doesn't contain a file extension")
             if filter_condition is None:
                 x_data = df[x][(df.index % number_of_points == 1)]
                 x_data = x_data.astype('float64')
@@ -223,12 +222,21 @@ class Graph():
                 x_data = x_data.astype('float64')
                 y_data = (df[y][(df[filter_condition] == filter_value)])
                 y_data = y_data.astype('float64')
+        elif name == "" and X_value != None:
+            df_dict = solution.df_dict
+            # for key, df in df_dict.items():
+            df = pd.concat(df_dict)
+            x_data = (df[x][(df['X(cm)'] == str(X_value))])
+            x_data = x_data.astype('float64')
+            y_data = (df[y][(df['X(cm)'] == str(X_value))])
+            y_data = y_data.astype('float64')
+
+        else:
+            raise IndexError("Please input a filename or an X value")
 
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
         if legend != "":
             plt.legend(loc="upper left")
-
-
 
     def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None,
                           filter_condition=None,
