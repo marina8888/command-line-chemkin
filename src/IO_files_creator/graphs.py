@@ -4,6 +4,7 @@ import re
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import numpy as np
+import scipy.interpolate as CubicSpline
 
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
@@ -169,7 +170,7 @@ class Graph():
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition=None,
                                 filter_value=None, X_value: int = None, round_filter_to_dp: int = None,
-                                y_error: str = None, error_colour='darkgray'):
+                                y_error: str = None, error_colour='darkgray', best_fit_line: bool = False):
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
         my_filter_value = filter_value
@@ -209,11 +210,11 @@ class Graph():
         if y_error is not None and filter_condition is not None:
             error = (data[y_error][(data[my_filter_condition] == my_filter_value)])
             error = error.astype('float64')
-            print(x_data)
-            print(y_data)
-            print(error)
 
             self.add_error_bar(x_data, y_data, error, error_colour)
+
+        if best_fit_line is True:
+            self.add_best_fit_line(x_data, y_data, colour = colour)
 
         elif y_error is not None and filter_condition is None:
             error = data[y_error]
@@ -222,7 +223,7 @@ class Graph():
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
                         filter_condition=None,
-                        filter_value=None, X_value: int = None, round_filter_to_dp: int = None, number_of_points=1):
+                        filter_value=None, X_value: int = None, round_filter_to_dp: int = None, number_of_points=1, best_fit_line: bool= False):
         # input type is the name of a file/df stored in a dictionary:
         if name != "":
             df = solution.df_dict.get(name, 'no such value')
@@ -254,36 +255,49 @@ class Graph():
         if legend != "":
             plt.legend(loc="upper left")
 
-    def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None, filter_condition=None, filter_value=None):
-        def polyfit_xy(d: dict, figure, colour=None):
-            # convert dictionary to dataframe columns, round the values and group them then take the mean
-            # round,mean used to smooth duplicate x values so that polyfit will take the mean y of every x value
-            local_dataframe = pd.DataFrame({'n_x2_val': d['x2_val'], 'n_y2_val': d['y2_val']}).copy(deep=True)
-            local_dataframe['n_x2_val'] = local_dataframe['n_x2_val'].round(2)
-            local_dataframe = local_dataframe.groupby('n_x2_val').mean()
-            n_x2_val = local_dataframe.index.to_list()
-            n_y2_val = local_dataframe['n_y2_val'].to_list()
-            list_x_val = []
-            list_y_val = []
-            # concat list
-            list_x_val = d.get('x0_val', None) + d.get('x1_val') + n_x2_val
-            list_y_val = d.get('y0_val', None) + d.get('y1_val') + n_y2_val
+        if best_fit_line is True:
+            self.add_best_fit_line(x_data, y_data, solution = solution, colour = colour)
 
-            # sort it in order of x for polyfit 😜
-            tuples = list(zip(list_x_val, list_y_val))
-            tuples = sorted(tuples, key=lambda tup: tup[0])
-            list_x_val = [tup[0] for tup in tuples]
-            list_y_val = [tup[1] for tup in tuples]
+    def add_best_fit_line(self, x_data, y_data, solution_or_path = None, colour=None):
 
-            # polyfit to assign coefficients from an x,y dataset
-            # poly1d to create a polynomial line from coefficient inputs
-            if list_x_val and list_y_val is not None:
-                trend = np.polyfit(list_x_val, list_y_val, 32)
-                trendpoly = np.poly1d(trend)
+            if solution_or_path is not Solution:
+                def split_df_mode2(self):
+                    # create a new empty dataframe with same columns and number of columns as previous dataframe
+                    df_2 = pd.DataFrame().reindex_like(self.df).apply(copy.deepcopy)
+                    df_2 = df_2.iloc[0:0].apply(copy.deepcopy)
+                    # initalising first and second col values to check
+                    last_tgt = ''
+                    this_tgt = ''
 
-                # plot polyfit line:
-                plt.plot(list_x_val, trendpoly(list_x_val), linestyle=':', dashes=(6, 5), linewidth='1.3',
-                         color='gray' if colour is None else colour, zorder=9, figure=figure)
+                    # go over all rows in df.values
+                    for row_id in range(0, len(self.df.values)):
+                        this_tgt = self.df.iloc[row_id]['Tracer gas type']
+                        # leave out the first row for comparison
+                        if (last_tgt != ''):
+                            # if the last tgt was 1 and this is 2 then write both rows to the new dataset
+                            if (this_tgt == '2' and last_tgt == '1'):
+                                df_2.loc[len(df_2)] = self.df.iloc[row_id - 1].apply(copy.deepcopy)
+                                df_2.loc[len(df_2)] = self.df.iloc[row_id].apply(copy.deepcopy)
+                        last_tgt = this_tgt
+                    return df_2
+
+            # convert data lists to arrays
+            x, y = np.array(x_data), np.array(y_data)
+
+            # sort x and y by x value
+            order = np.argsort(x)
+            xsort, ysort = x[order], y[order]
+
+            cs = CubicSpline(xsort, ysort)
+            x_range = np.arange(x_data.min(), x_data.max(), 10)
+            plt.plot(x_range, cs(x_range), label='Cubic Spline')
+
+            # # poly1d to create a polynomial line from coefficient inputs:
+            # trend = np.polyfit(x_data, y_data, 8)
+            # trendpoly = np.poly1d(trend)
+            # # plot polyfit line:
+            # plt.plot(x_data, trendpoly(x_data), linestyle=':', dashes=(6, 5), linewidth='1.3',
+            #              color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: str, y: str, y_error: str, colour):
         plt.errorbar(x=x, y=y, yerr=y_error, fmt='none', color=colour, zorder=8,
