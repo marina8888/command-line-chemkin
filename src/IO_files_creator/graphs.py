@@ -168,7 +168,8 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition=None,
-                                filter_value=None, X_value: int = None, round_filter_to_dp: int = None):
+                                filter_value=None, X_value: int = None, round_filter_to_dp: int = None,
+                                y_error: str = None, error_colour='darkgray'):
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
         my_filter_value = filter_value
@@ -201,8 +202,23 @@ class Graph():
 
         # for if an input is a dictionary of dataframes:
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+
         if legend != "":
             plt.legend(loc="upper left")
+
+        if y_error is not None and filter_condition is not None:
+            error = (data[y_error][(data[my_filter_condition] == my_filter_value)])
+            error = error.astype('float64')
+            print(x_data)
+            print(y_data)
+            print(error)
+
+            self.add_error_bar(x_data, y_data, error, error_colour)
+
+        elif y_error is not None and filter_condition is None:
+            error = data[y_error]
+            error = error.astype('float64')
+            self.add_error_bar(x_data, y_data, error, error_colour)
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
                         filter_condition=None,
@@ -238,11 +254,40 @@ class Graph():
         if legend != "":
             plt.legend(loc="upper left")
 
-    def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None,
-                          filter_condition=None,
-                          filter_value=None):
-        # use self.fig as a parameter
-        pass
+    def add_best_fit_line(self, path_to_sheet, x, y, x_error=None, y_error=None, legend=None, colour=None, filter_condition=None, filter_value=None):
+        def polyfit_xy(d: dict, figure, colour=None):
+            # convert dictionary to dataframe columns, round the values and group them then take the mean
+            # round,mean used to smooth duplicate x values so that polyfit will take the mean y of every x value
+            local_dataframe = pd.DataFrame({'n_x2_val': d['x2_val'], 'n_y2_val': d['y2_val']}).copy(deep=True)
+            local_dataframe['n_x2_val'] = local_dataframe['n_x2_val'].round(2)
+            local_dataframe = local_dataframe.groupby('n_x2_val').mean()
+            n_x2_val = local_dataframe.index.to_list()
+            n_y2_val = local_dataframe['n_y2_val'].to_list()
+            list_x_val = []
+            list_y_val = []
+            # concat list
+            list_x_val = d.get('x0_val', None) + d.get('x1_val') + n_x2_val
+            list_y_val = d.get('y0_val', None) + d.get('y1_val') + n_y2_val
+
+            # sort it in order of x for polyfit 😜
+            tuples = list(zip(list_x_val, list_y_val))
+            tuples = sorted(tuples, key=lambda tup: tup[0])
+            list_x_val = [tup[0] for tup in tuples]
+            list_y_val = [tup[1] for tup in tuples]
+
+            # polyfit to assign coefficients from an x,y dataset
+            # poly1d to create a polynomial line from coefficient inputs
+            if list_x_val and list_y_val is not None:
+                trend = np.polyfit(list_x_val, list_y_val, 32)
+                trendpoly = np.poly1d(trend)
+
+                # plot polyfit line:
+                plt.plot(list_x_val, trendpoly(list_x_val), linestyle=':', dashes=(6, 5), linewidth='1.3',
+                         color='gray' if colour is None else colour, zorder=9, figure=figure)
+
+    def add_error_bar(self, x: str, y: str, y_error: str, colour):
+        plt.errorbar(x=x, y=y, yerr=y_error, fmt='none', color=colour, zorder=8,
+                     figure=self.fig, elinewidth=1)
 
     def show_and_save(self, path_of_save_folder: str, name: str):
         plt.show()
