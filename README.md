@@ -3,37 +3,52 @@
 ## Overview
 When conducting combustion analysis with CHEMKIN software, often a range of input conditions need to be tested. 
 
-This code accelerates this process. The user a inputs a spreadsheet with all required conditions (or values aquired from an experiment). These values can be used to automatically generate input files and launch all the files to chemkin through the command line. Furthermore, post-processing CHEMKIN files to extract the critical information can be time consuming. 
+This code accelerates this process. The user a inputs a spreadsheet with all required conditions (or values aquired from an experiment). These values can be used to automatically generate input files and launch all the files to chemkin through the command line.  
 
-This code also includes capability for post-processing and plotting the data. Filtering data for a certain X value (reaction chamber depth) or by other parameters (including custom added parameters) is possible. Plotting options allow for the selection of a legend, colour settings and for the numerical results to be plotted against experimental results. 
+This code also helps avoid the process of sorting, joining and filtering many excel spreadsheets. This code converts a file of CHEMKIN solution.out files so that they can easily be plotted or potentially be automatically filtered, joined and saved to one excel spreadsheet. Filtering data for a certain X value (reaction chamber depth) or by other parameters (including custom added parameters) is possible. Plotting options allow for the selection of a legend, colour settings and for the numerical results to be plotted against experimental results. 
 
-Note only the generation of the input.inp file is considered in the script. The mechanism, thermal, transport and .dtd files for the considered flame should be acquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
+Please note that only the generation of the input.inp file is considered in the script. The mechanism, thermal, transport and .dtd files for the considered flame should be acquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
 
-Please note that this code is a personal open-source project and is intended to act as a helper tool for users that already have licenses and an installation of CHEMKIN software. This project is not created by ANSYS and is no way affiliated with this company. It is a personal project and not intended to perform to commerical standards. 
+Also, please note that this code is a personal open-source project and is intended to act as a helper tool for users that already have licenses and an installation of CHEMKIN software. This project is not created by ANSYS and is no way affiliated with this company. It is a personal project and not intended to perform to commerical standards. 
 
 
 ## To Install and Use
 1. Install Python3 (if you havn't installed it before) : <https://www.python.org/downloads/>
-2. Install pip (if you havn't installed it before) by typing `pip install pip` in MacOS, For further information: <https://pypi.org/project/pip/> ; or in Windows use `python get-pip.py`. For further information: <https://www.liquidweb.com/kb/install-pip-windows/>
+
+2. Install pip (if you havn't installed it before) by typing `pip install pip` in MacOS. For further information: <https://pypi.org/project/pip/> ; or in Windows use `python get-pip.py`. For further information: <https://www.liquidweb.com/kb/install-pip-windows/>
+
 3. If using a Windows computer, set up git for your operating system by following the video tutorials: <https://confluence.atlassian.com/bitbucket/clone-a-repository-223217891.html>. If MacOS, git should already be installed. 
-4. Go to the directory where you want to save the project folder by typing : `cd path/to/directory/`.
+
+4. Go to the directory where you want to save the project folder by typing : `cd path/to/directory/`
+
 5. In your terminal/command line type : `git clone https://github.com/marina8888/command-line-chemkin.git`
+
 6. If you do not have an environment module that you already use, it is recommended to install one by typing: `pip3 install virtualenv`
-7. Once installed, set up an environment so that all the libraries you install for this project do not potentially interfere with other code. In the terminal/cmd go to the folder where the project is stored: `cd path/to/directory/command-line-chemkin` and create the environemnt by typing `virtualenv --python=python3.7 .`
-8. Finally, in the same directory, activate the environment by typing `source bin/activate`.
+
+7. Once installed, set up an environment so that all the libraries you install for this project do not potentially interfere with other code. In the terminal/cmd go to the folder where the project is stored: `cd path/to/directory/command-line-chemkin` and create the environemnt by typing `virtualenv --python=python3.7 .` (Don't forget the end dot!)
+
+8. Finally, in the same directory, activate the environment by typing `source bin/activate`
+
 9. To install all libraries and modules used in the project, type: `pip install -r requirements.txt`
+
 10. You should now be set up to run the code. Choose an text editor of your choice (PyCharm, Atom, Sublime Text...) and open the project. The source directory is src and the project is run from the src/main.py file. Ensure that the text editor is configured to recognise the environment, source directory etc.
+
 11. By typing different options in the main function in main.py, it is now possible to run this code.  
 
 ## Functions
 ### For Generating Input Files From Spreadsheet
 Generating chemkin input files from spreadsheets: 
 1. Create/load a spreadsheet with all the conditions you want to test. Every row of the file will be an input for a chemkin file. Ensure that the format (usually requires 'number' to be set in excel) matches the format of the chemiin input file. Column headers should correspond to the exact variable name in the chemkin file (try to avoid additional whitespaces after the column name). Name1 and name2 columns should be populated with two names that can later be used to filter and/or identify each file generated. If name1 and name2 are both identical to those in another row, only one version of a file will be generated. For example, I use equivalence ratios and heat ratios as name1 and name2.  
+
 2. Go to chemkin and run your desired model/reactor network once with 'save intermediate file options' activated. In the folder where the files are saved, you should find a chemkin.inp file that is in a similar format to the template files provided in the notes directory. Check that this file contains all the parameters you wish to modify. 
+
 3. In the src/main.py file type:
 `random_instance_name = classes.InpGenerator(path/to/excel/file/name_of_spreadsheet.xlsx, path/to/chemkin/input/file/template/templatename.inp)`
-4. A folder of input files will be generated in src/chemkin_launch_files/input_files directory and these can be launched with  
-5. Go the source directory from which you will be running the job (for example through logging into the supercomputer and finding your user directory). Add a folder named solutions to this folder. Go back to the source directory add another folder named input_files. Drop all the recently created input files into the input_files folder. Also add a job_files folder. 
+
+4. A folder of input files will be generated in src/chemkin_launch_files/input_files directory and these can be launched with chemkin from the command line.
+
+5. Go the source directory from which you will be running the job (for example through logging into the supercomputer and finding your user directory). Add a folder named solutions to this folder. Go back to the source directory add another folder named input_files. Drop all the recently created input files into the input_files folder. Also add a job_files folder.
+
 6. Return to your source directory and add the following relevant files:
 - run_jobs.sh file (copy from the src/chemkin_launch_files directory)
 - build_jobs.sh file (copy from the src/chemkin_launch_files directory)
@@ -53,10 +68,13 @@ Generating chemkin input files from spreadsheets:
 ### For Plotting Data From Solution.Out Files
 The following guide gives a list of commands to type into the src/main.py file. 
 1. Add the solutions folder to the src/chemkin_launch_files directory. For multiple runs, feel free to add multiple folders. 
+
 2. To postprocess the solutions files so that they can be plotted:
 `solutions1 = graphs.Solution(path/to/solutions/folder)`
+
 3. To create a graph, see below. Note that this can be used to create multiple graphs as long as the names (e.g graph1, graph2..) are different:
 `graph1 = graphs.Graph('X Axis Name Here', 'Y Axis Name Here', 'My Title')`
+
 4. To add solution.out data to the graph1 plot, see below. Note that multiple data with legends and colours can be added to the same plot:
 `graph1.add_scatter_sol(solutions1, x='name2', y='H2O', colour='steelblue', X_value = 1.4995, best_fit_line= True)`
 
