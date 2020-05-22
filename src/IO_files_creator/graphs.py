@@ -176,6 +176,23 @@ class Graph():
                                 filter_condition=None,
                                 filter_value=None, X_value: int = None, round_filter_to_dp: int = None,
                                 y_error: str = None, error_colour='darkgray', best_fit_line: bool = False):
+        """
+        Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
+        Can be used to plot multiple datasets on the same graph
+        :param path_to_sheet: full path as string including extension .csv or .xls*
+        :param x: exact name of column in spreadsheet for the x data
+        :param y: exact name of column in spreadsheet for the y data
+        :param legend: legend label
+        :param colour: of line and if selected, line of best fit
+        :param filter_condition: name of spreadsheet column used as a filter for values
+        :param filter_value: the value the filter_column should have for plotting data
+        :param X_value: assumes filter condition is X(cm) and filter value is the X_value. For specialist spreadsheets only.
+        :param round_filter_to_dp: rounds the filter column values to number of decimal places. Use negative values for 0s (nearest 10, 100 etc)
+        :param y_error: column name for y error bars - if present will add error bars to plot
+        :param error_colour: error bar colour
+        :param best_fit_line: if True will add a line of best fit
+        :return:
+        """
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
         my_filter_value = filter_value
@@ -228,7 +245,22 @@ class Graph():
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
                         filter_condition=None,
-                        filter_value=None, X_value: int = None, round_filter_to_dp: int = None, number_of_points=1, best_fit_line: bool= False):
+                        filter_value=None, X_value: int = None, number_of_points=1, best_fit_line: bool= False):
+        """
+
+        :param solution: name of instance when generating the data from the Solution() class (used for chemkin output folder data)
+        :param x: exact name of column for the x data
+        :param y: exact name of column for the y data
+        :param name: if present, will search and plot data from a specific .out file. Must remove .out file extension - just write the file name
+        :param legend: legend label
+        :param colour: colour of line and if selected, line of best fit
+        :param filter_condition: name of column used as a filter for values
+        :param filter_value: the value the filter_column should have for plotting data
+        :param X_value: assumes filter condition is X(cm) and filter value is the X_value.
+        :param number_of_points: repressents n for plotting every nth point in the data. Use for very large datasets
+        :param best_fit_line: if True will add a line of best fit
+        :return:
+        """
         # input type is the name of a file/df stored in a dictionary:
         if name != "":
             df = solution.df_dict.get(name, 'no such value')
@@ -264,6 +296,13 @@ class Graph():
             self.add_best_fit_line(x_data, y_data, colour = colour)
 
     def add_best_fit_line(self, x, y, colour=None):
+        """
+        converts x and y data to np.array, sorts in order of x, converts to dataframe, removes duplicate x values and plots a polyfit line.
+        :param x: x data list/set/Series
+        :param y: x data list/set/Series
+        :param colour: colour of line
+        :return:
+        """
             #convert data into numpy arrays:
             array_x, array_y = np.array(x), np.array(y)
             # sort x and y by x value
@@ -286,9 +325,25 @@ class Graph():
                          color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: str, y: str, y_error: str, colour):
+        """
+        adds error bars
+        :param self:
+        :param x: x data as Series/list/array
+        :param y: y data as Series/list/array
+        :param y_error: y error data as Series/list/array
+        :param colour: colour of error bars
+        :return:
+        """
         plt.errorbar(x=x, y=y, yerr=y_error, fmt='none', color=colour, zorder=8,
                      figure=self.fig, elinewidth=1)
 
     def show_and_save(self, path_of_save_folder: str, name: str):
+        """
+        shows and saves the figure - must be called to show the figure at the end of plotting
+        :param self:
+        :param path_of_save_folder: save figures to this folder
+        :param name: save figures under this name
+        :return:
+        """
         plt.show()
         plt.savefig(path_of_save_folder + name)
