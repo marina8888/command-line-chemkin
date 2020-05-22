@@ -6,4 +6,5 @@
 #$ -l h_vmem=300g
 #$ -l h_rt=2:00:00
 #$
-python ./test.py
+python ./Main5-forLinux.py
+echo

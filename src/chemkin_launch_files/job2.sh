@@ -16,5 +16,5 @@ module load python3/3.7.3
 chem -i ./chem.inp -d ./thermo.dat -o ./chem.out
 tran -i ./trans.dat > trans.out
 
-CKReactorBurnerStabilizedStagnationFlame < 0.65__0.1__stagnation_template.inp > ./solutions/solution2.out
+CKReactorBurnerStabilizedStagnationFlame < ./input_files/1.4__0.4__stagnation_template.inp > ./solutions/solution2.out
 python3.7 ./filter.py
