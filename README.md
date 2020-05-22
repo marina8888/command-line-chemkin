@@ -3,14 +3,18 @@
 ## Overview
 When conducting combustion analysis with CHEMKIN software, often a range of input conditions need to be tested. 
 
-This code accelerates this process. The user a inputs a spreadsheet with all required conditions (or values aquired from an experiment). These values can be used to automatically generate input files and launch all the files to chemkin through the command line.  
+This code accelerates this process. The user can input a spreadsheet with all required chemkin conditions (or values aquired from an experiment). These values can be used to automatically generate input files and launch all the files to chemkin through the command line.  
 
-This code also helps avoid the process of sorting, joining and filtering many excel spreadsheets. This code converts a file of CHEMKIN solution.out files so that they can easily be plotted or potentially be automatically filtered, joined and saved to one excel spreadsheet. Filtering data for a certain X value (reaction chamber depth) or by other parameters (including custom added parameters) is possible. Plotting options allow for the selection of a legend, colour settings and for the numerical results to be plotted against experimental results. 
+This code also helps avoid the process of sorting, joining and filtering many excel spreadsheets, by coverting a folder of CHEMKIN solution.out files so that they can easily be plotted or saved to one processed excel spreadsheet. Filtering data for a certain X value (reaction chamber depth) across many files or by other parameters (including custom added parameters) is possible. Plotting options allow for the selection of a legend, colour settings and for the numerical results to be plotted against experimental results. 
 
 Please note that only the generation of the input.inp file is considered in the script. The mechanism, thermal, transport and .dtd files for the considered flame should be acquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
 
 Also, please note that this code is a personal open-source project and is intended to act as a helper tool for users that already have licenses and an installation of CHEMKIN software. This project is not created by ANSYS and is no way affiliated with this company. It is a personal project and not intended to perform to commerical standards. 
 
+## Main Libraries Used
+- pandas and numpy for converting data and filtering data (from .out format)
+- matplotlib for plotting data
+- pdocs for generating documentation (in progress...)
 
 ## To Install and Use
 1. Install Python3 (if you havn't installed it before) : <https://www.python.org/downloads/>
