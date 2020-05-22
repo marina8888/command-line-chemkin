@@ -1,20 +1,24 @@
-# Chemkin Plot Premix - Due to be completed 20th May 2020
+# Chemkin Plot Premix
 
 ### Overview
-In ANSYS CHEMKIN modelling, often a range of input conditions need to be tested for an overall impression of flame bahaviour. The process can be accelerated through generating a spreadsheet with all required conditions and launching them to command line. Furthermore, post-processing CHEMKIN files to extract the critical information can be time consuming. 
+When conducting combustion analysis with CHEMKIN software, often a range of input conditions need to be tested. 
 
-When complete, this script should allow for excel spreadsheet input of conditions to generate chemkin command line input files for the premixed stagnation flame model. Once the results have been generated, they can be post-processed to calculate the flame product gases at each condition. Plotting options allow for the selection of a legend, colour settings and for the results to be plotted against experimental results. 
+This code accelerates this process. The user a inputs a spreadsheet with all required conditions (or values aquired from an experiment). These values can be used to automatically generate input files and launch all the files to chemkin through the command line. Furthermore, post-processing CHEMKIN files to extract the critical information can be time consuming. 
 
-Note only the generation of the input.inp file is considered in the script and the mechanism, thermal and transport data for the considered flame should be aquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
+This code also includes capability for post-processing and plotting the data. Filtering data for a certain X value (reaction chamber depth) or by other parameters (including custom added parameters) is possible. Plotting options allow for the selection of a legend, colour settings and for the numerical results to be plotted against experimental results. 
 
-### To Do:
+Note only the generation of the input.inp file is considered in the script. The mechanism, thermal, transport and .dtd files for the considered flame should be acquired from the author of the mechanism or a reputable database (e.g GRI-Mech 3.0). 
+
+Please note that this code is a personal open-source project and is intended to act as a helper tool for users that already have licenses and an installation of CHEMKIN software. This project is not created by ANSYS and is no way affiliated with this company. It is a personal project and not intended to perform to commerical standards. 
+
+### To Do List:
 - [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
 - [x] Generate an csv file that includes all the conditions required for input. 
 - [x] Use python to create new input (.inp) files from the BigWorkbook csv file.
 - [x] Generate a bash file that launches all files in input folder
-- [ ] Generate a class for sorting the solution to dataframe
-- [ ] Generate a class for plotting solution (with optional legend, title, axies titles, conditions used)
-- [ ] Add capability for plotting experimental results on same graph 
+- [x] Generate a class for sorting the solution to dataframe
+- [x] Generate a class for plotting solution (with optional legend, title, axies titles, conditions used)
+- [x] Add capability for plotting experimental results on same graph 
 - [ ] Rearrange folders and filepaths for ease of use
 - [ ] Add website, tutorial and launch documentation 
 - [ ] Add sensitivity printing options to file 
