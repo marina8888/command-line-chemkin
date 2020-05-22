@@ -4,7 +4,6 @@ import re
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import numpy as np
-import scipy.interpolate as interpolate
 
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
@@ -36,6 +35,7 @@ class Solution():
         col_tuple = [()]
         previous: str = ""
         row = []
+
         for line in enumerate(lines):
             if line[1].startswith('    1   '):
                 # get list of keys from row above the row starting with "    1   "

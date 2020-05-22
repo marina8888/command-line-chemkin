@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module graphs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>graphs</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/marina/Developer/GitHub/chemkin-plot-premix/src/IO_files_creator/graphs.py">/Users/marina/Developer/GitHub/chemkin-plot-premix/src/IO_files_creator/graphs.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+<a href="posixpath.html">posixpath</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="matplotlib.ticker.html">matplotlib.ticker</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="graphs.html#Graph">Graph</a>
+</font></dt><dt><font face="helvetica, arial"><a href="graphs.html#Solution">Solution</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Graph">class <strong>Graph</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Graph">Graph</a>(x_axis_label:&nbsp;str,&nbsp;y_axis_label:&nbsp;str,&nbsp;title:&nbsp;str,&nbsp;x_graph_size:&nbsp;int&nbsp;=&nbsp;6,&nbsp;y_graph_size:&nbsp;int&nbsp;=&nbsp;6.5)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Graph-__init__"><strong>__init__</strong></a>(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6, y_graph_size: int = 6.5)</dt><dd><tt>Initialise&nbsp;a&nbsp;graph,&nbsp;based&nbsp;on&nbsp;<a href="builtins.html#object">object</a>&nbsp;arguments.&nbsp;One&nbsp;figure&nbsp;is&nbsp;created&nbsp;per&nbsp;new&nbsp;graph&nbsp;<a href="builtins.html#object">object</a>.<br>
+Any&nbsp;data&nbsp;added&nbsp;will&nbsp;be&nbsp;plotted&nbsp;on&nbsp;same&nbsp;graph.&nbsp;Call&nbsp;the&nbsp;add_scatter()&nbsp;and&nbsp;add_line_of_best_fit()&nbsp;for&nbsp;every&nbsp;set&nbsp;of&nbsp;data&nbsp;you&nbsp;intend&nbsp;to&nbsp;plot.<br>
+:param&nbsp;x_axis_label:<br>
+:param&nbsp;y_axis_label:<br>
+:param&nbsp;title:&nbsp;the&nbsp;title&nbsp;that&nbsp;will&nbsp;be&nbsp;set&nbsp;for&nbsp;the&nbsp;graph<br>
+:param&nbsp;x_graph_size:&nbsp;default&nbsp;to&nbsp;almost&nbsp;square&nbsp;size&nbsp;6&nbsp;(increase&nbsp;number&nbsp;to&nbsp;change&nbsp;size&nbsp;ratio&nbsp;or&nbsp;increase&nbsp;resolution)<br>
+:param&nbsp;y_graph_size:&nbsp;and&nbsp;default&nbsp;to&nbsp;almost&nbsp;square&nbsp;size&nbsp;6.5&nbsp;(increase&nbsp;number&nbsp;to&nbsp;change&nbsp;size&nbsp;ratio&nbsp;or&nbsp;increase&nbsp;resolution)</tt></dd></dl>
+
+<dl><dt><a name="Graph-add_best_fit_line"><strong>add_best_fit_line</strong></a>(self, x, y, colour=None)</dt><dd><tt>converts&nbsp;x&nbsp;and&nbsp;y&nbsp;data&nbsp;to&nbsp;np.array,&nbsp;sorts&nbsp;in&nbsp;order&nbsp;of&nbsp;x,&nbsp;converts&nbsp;to&nbsp;dataframe,&nbsp;removes&nbsp;duplicate&nbsp;x&nbsp;values&nbsp;and&nbsp;plots&nbsp;a&nbsp;polyfit&nbsp;line.<br>
+:param&nbsp;x:&nbsp;x&nbsp;data&nbsp;list/set/Series<br>
+:param&nbsp;y:&nbsp;x&nbsp;data&nbsp;list/set/Series<br>
+:param&nbsp;colour:&nbsp;colour&nbsp;of&nbsp;line<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-add_error_bar"><strong>add_error_bar</strong></a>(self, x: str, y: str, y_error: str, colour)</dt><dd><tt>adds&nbsp;error&nbsp;bars<br>
+:param&nbsp;self:<br>
+:param&nbsp;x:&nbsp;x&nbsp;data&nbsp;as&nbsp;Series/list/array<br>
+:param&nbsp;y:&nbsp;y&nbsp;data&nbsp;as&nbsp;Series/list/array<br>
+:param&nbsp;y_error:&nbsp;y&nbsp;error&nbsp;data&nbsp;as&nbsp;Series/list/array<br>
+:param&nbsp;colour:&nbsp;colour&nbsp;of&nbsp;error&nbsp;bars<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-add_format"><strong>add_format</strong></a>(self)</dt><dd><tt>Format&nbsp;graph.&nbsp;Add&nbsp;title,&nbsp;axies,&nbsp;tight&nbsp;layout,&nbsp;padding&nbsp;and&nbsp;grid.<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-add_scatter_sol"><strong>add_scatter_sol</strong></a>(self, solution: graphs.Solution, x: str, y: str, name='', legend='', colour='darkgrey', filter_condition=None, filter_value=None, X_value: int = None, number_of_points=1, best_fit_line: bool = False)</dt><dd><tt>:param&nbsp;solution:&nbsp;name&nbsp;of&nbsp;instance&nbsp;when&nbsp;generating&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;<a href="#Solution">Solution</a>()&nbsp;class&nbsp;(used&nbsp;for&nbsp;chemkin&nbsp;output&nbsp;folder&nbsp;data)<br>
+:param&nbsp;x:&nbsp;exact&nbsp;name&nbsp;of&nbsp;column&nbsp;for&nbsp;the&nbsp;x&nbsp;data<br>
+:param&nbsp;y:&nbsp;exact&nbsp;name&nbsp;of&nbsp;column&nbsp;for&nbsp;the&nbsp;y&nbsp;data<br>
+:param&nbsp;name:&nbsp;if&nbsp;present,&nbsp;will&nbsp;search&nbsp;and&nbsp;plot&nbsp;data&nbsp;from&nbsp;a&nbsp;specific&nbsp;.out&nbsp;file.&nbsp;Must&nbsp;remove&nbsp;.out&nbsp;file&nbsp;extension&nbsp;-&nbsp;just&nbsp;write&nbsp;the&nbsp;file&nbsp;name<br>
+:param&nbsp;legend:&nbsp;legend&nbsp;label<br>
+:param&nbsp;colour:&nbsp;colour&nbsp;of&nbsp;line&nbsp;and&nbsp;if&nbsp;selected,&nbsp;line&nbsp;of&nbsp;best&nbsp;fit<br>
+:param&nbsp;filter_condition:&nbsp;name&nbsp;of&nbsp;column&nbsp;used&nbsp;as&nbsp;a&nbsp;filter&nbsp;for&nbsp;values<br>
+:param&nbsp;filter_value:&nbsp;the&nbsp;value&nbsp;the&nbsp;filter_column&nbsp;should&nbsp;have&nbsp;for&nbsp;plotting&nbsp;data<br>
+:param&nbsp;X_value:&nbsp;assumes&nbsp;filter&nbsp;condition&nbsp;is&nbsp;X(cm)&nbsp;and&nbsp;filter&nbsp;value&nbsp;is&nbsp;the&nbsp;X_value.<br>
+:param&nbsp;number_of_points:&nbsp;repressents&nbsp;n&nbsp;for&nbsp;plotting&nbsp;every&nbsp;nth&nbsp;point&nbsp;in&nbsp;the&nbsp;data.&nbsp;Use&nbsp;for&nbsp;very&nbsp;large&nbsp;datasets<br>
+:param&nbsp;best_fit_line:&nbsp;if&nbsp;True&nbsp;will&nbsp;add&nbsp;a&nbsp;line&nbsp;of&nbsp;best&nbsp;fit<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-add_scatter_spreadsheet"><strong>add_scatter_spreadsheet</strong></a>(self, path_to_sheet: str, x: str, y: str, legend='', colour='darkgrey', filter_condition=None, filter_value=None, X_value: int = None, round_filter_to_dp: int = None, y_error: str = None, error_colour='darkgray', best_fit_line: bool = False)</dt><dd><tt>Based&nbsp;on&nbsp;spreadsheet&nbsp;input&nbsp;(csv&nbsp;or&nbsp;excel),&nbsp;plot&nbsp;scatter&nbsp;plot&nbsp;on&nbsp;a&nbsp;figure&nbsp;belonging&nbsp;to&nbsp;the&nbsp;<a href="#Graph">Graph</a>()&nbsp;instance.<br>
+Can&nbsp;be&nbsp;used&nbsp;to&nbsp;plot&nbsp;multiple&nbsp;datasets&nbsp;on&nbsp;the&nbsp;same&nbsp;graph<br>
+:param&nbsp;path_to_sheet:&nbsp;full&nbsp;path&nbsp;as&nbsp;string&nbsp;including&nbsp;extension&nbsp;.csv&nbsp;or&nbsp;.xls*<br>
+:param&nbsp;x:&nbsp;exact&nbsp;name&nbsp;of&nbsp;column&nbsp;in&nbsp;spreadsheet&nbsp;for&nbsp;the&nbsp;x&nbsp;data<br>
+:param&nbsp;y:&nbsp;exact&nbsp;name&nbsp;of&nbsp;column&nbsp;in&nbsp;spreadsheet&nbsp;for&nbsp;the&nbsp;y&nbsp;data<br>
+:param&nbsp;legend:&nbsp;legend&nbsp;label<br>
+:param&nbsp;colour:&nbsp;of&nbsp;line&nbsp;and&nbsp;if&nbsp;selected,&nbsp;line&nbsp;of&nbsp;best&nbsp;fit<br>
+:param&nbsp;filter_condition:&nbsp;name&nbsp;of&nbsp;spreadsheet&nbsp;column&nbsp;used&nbsp;as&nbsp;a&nbsp;filter&nbsp;for&nbsp;values<br>
+:param&nbsp;filter_value:&nbsp;the&nbsp;value&nbsp;the&nbsp;filter_column&nbsp;should&nbsp;have&nbsp;for&nbsp;plotting&nbsp;data<br>
+:param&nbsp;X_value:&nbsp;assumes&nbsp;filter&nbsp;condition&nbsp;is&nbsp;X(cm)&nbsp;and&nbsp;filter&nbsp;value&nbsp;is&nbsp;the&nbsp;X_value.&nbsp;For&nbsp;specialist&nbsp;spreadsheets&nbsp;only.<br>
+:param&nbsp;round_filter_to_dp:&nbsp;rounds&nbsp;the&nbsp;filter&nbsp;column&nbsp;values&nbsp;to&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places.&nbsp;Use&nbsp;negative&nbsp;values&nbsp;for&nbsp;0s&nbsp;(nearest&nbsp;10,&nbsp;100&nbsp;etc)<br>
+:param&nbsp;y_error:&nbsp;column&nbsp;name&nbsp;for&nbsp;y&nbsp;error&nbsp;bars&nbsp;-&nbsp;if&nbsp;present&nbsp;will&nbsp;add&nbsp;error&nbsp;bars&nbsp;to&nbsp;plot<br>
+:param&nbsp;error_colour:&nbsp;error&nbsp;bar&nbsp;colour<br>
+:param&nbsp;best_fit_line:&nbsp;if&nbsp;True&nbsp;will&nbsp;add&nbsp;a&nbsp;line&nbsp;of&nbsp;best&nbsp;fit<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-set_grid_ticks"><strong>set_grid_ticks</strong></a>(self)</dt><dd><tt>sets&nbsp;maximum&nbsp;number&nbsp;of&nbsp;ticks&nbsp;and&nbsp;formats&nbsp;grid.<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Graph-show_and_save"><strong>show_and_save</strong></a>(self, path_of_save_folder: str, name: str)</dt><dd><tt>shows&nbsp;and&nbsp;saves&nbsp;the&nbsp;figure&nbsp;-&nbsp;must&nbsp;be&nbsp;called&nbsp;to&nbsp;show&nbsp;the&nbsp;figure&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;plotting<br>
+:param&nbsp;self:<br>
+:param&nbsp;path_of_save_folder:&nbsp;save&nbsp;figures&nbsp;to&nbsp;this&nbsp;folder<br>
+:param&nbsp;name:&nbsp;save&nbsp;figures&nbsp;under&nbsp;this&nbsp;name<br>
+:return:</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Solution">class <strong>Solution</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Solution">Solution</a>(path_to_solution_folder)<br>
+&nbsp;<br>
+This&nbsp;takes&nbsp;a&nbsp;folder&nbsp;of&nbsp;.out&nbsp;files&nbsp;amnd&nbsp;converts&nbsp;them&nbsp;to&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;pandas&nbsp;DataFrames.<br>
+Create&nbsp;2&nbsp;new&nbsp;dataframe&nbsp;columns&nbsp;for&nbsp;name1&nbsp;and&nbsp;name2&nbsp;as&nbsp;additional&nbsp;filtering&nbsp;criteria.<br>
+Write&nbsp;the&nbsp;names&nbsp;of&nbsp;failed&nbsp;runs&nbsp;to&nbsp;a&nbsp;file&nbsp;in&nbsp;the&nbsp;same&nbsp;folder&nbsp;called&nbsp;ERROR_RUNS.txt&nbsp;as&nbsp;these&nbsp;cannot&nbsp;be&nbsp;plotted.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Solution-__init__"><strong>__init__</strong></a>(self, path_to_solution_folder)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Solution-add_name_cols"><strong>add_name_cols</strong></a>(self, out_file_name, df: pandas.core.frame.DataFrame)</dt><dd><tt>Add&nbsp;name1&nbsp;and&nbsp;name2&nbsp;columns&nbsp;to&nbsp;dataframe&nbsp;for&nbsp;filtering&nbsp;purposes.&nbsp;Use&nbsp;the&nbsp;actual&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;to&nbsp;extract&nbsp;them.<br>
+:param&nbsp;out_file_name:&nbsp;The&nbsp;name&nbsp;of&nbsp;solution&nbsp;.out&nbsp;file&nbsp;for&nbsp;processing<br>
+:param&nbsp;df:&nbsp;The&nbsp;dataframe.<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Solution-filter_txt"><strong>filter_txt</strong></a>(self, lines, add_X_col: bool = False)</dt><dd><tt>Use&nbsp;RegEx&nbsp;expression&nbsp;to&nbsp;find&nbsp;DataFrame&nbsp;col&nbsp;values&nbsp;and&nbsp;data&nbsp;and&nbsp;save&nbsp;them&nbsp;as&nbsp;two&nbsp;lists&nbsp;from&nbsp;.out&nbsp;file.<br>
+:param&nbsp;lines:&nbsp;.out&nbsp;file&nbsp;formatted&nbsp;as&nbsp;'/n'&nbsp;seperated&nbsp;list&nbsp;of&nbsp;strings<br>
+:param&nbsp;add_X_col:&nbsp;True&nbsp;adds&nbsp;an&nbsp;extra&nbsp;X(cm)&nbsp;column&nbsp;header.<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="Solution-sol_to_df"><strong>sol_to_df</strong></a>(self)</dt><dd><tt>prints&nbsp;all&nbsp;failed&nbsp;files&nbsp;to&nbsp;a&nbsp;text&nbsp;file&nbsp;and&nbsp;transfers&nbsp;all&nbsp;other&nbsp;files&nbsp;to&nbsp;a&nbsp;DataFrame.&nbsp;Initialises&nbsp;an&nbsp;ERROR_RUNS.TXT&nbsp;file.<br>
+Writes&nbsp;all&nbsp;file&nbsp;names&nbsp;with&nbsp;errors&nbsp;to&nbsp;these&nbsp;files&nbsp;instead&nbsp;of&nbsp;converting&nbsp;them&nbsp;to&nbsp;a&nbsp;DataFrame.<br>
+:return:</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-listdir"><strong>listdir</strong></a>(path=None)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;containing&nbsp;the&nbsp;names&nbsp;of&nbsp;the&nbsp;files&nbsp;in&nbsp;the&nbsp;directory.<br>
+&nbsp;<br>
+path&nbsp;can&nbsp;be&nbsp;specified&nbsp;as&nbsp;either&nbsp;str,&nbsp;bytes,&nbsp;or&nbsp;a&nbsp;path-like&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;If&nbsp;path&nbsp;is&nbsp;bytes,<br>
+&nbsp;&nbsp;the&nbsp;filenames&nbsp;returned&nbsp;will&nbsp;also&nbsp;be&nbsp;bytes;&nbsp;in&nbsp;all&nbsp;other&nbsp;circumstances<br>
+&nbsp;&nbsp;the&nbsp;filenames&nbsp;returned&nbsp;will&nbsp;be&nbsp;str.<br>
+If&nbsp;path&nbsp;is&nbsp;None,&nbsp;uses&nbsp;the&nbsp;path='.'.<br>
+On&nbsp;some&nbsp;platforms,&nbsp;path&nbsp;may&nbsp;also&nbsp;be&nbsp;specified&nbsp;as&nbsp;an&nbsp;open&nbsp;file&nbsp;descriptor;\<br>
+&nbsp;&nbsp;the&nbsp;file&nbsp;descriptor&nbsp;must&nbsp;refer&nbsp;to&nbsp;a&nbsp;directory.<br>
+&nbsp;&nbsp;If&nbsp;this&nbsp;functionality&nbsp;is&nbsp;unavailable,&nbsp;using&nbsp;it&nbsp;raises&nbsp;NotImplementedError.<br>
+&nbsp;<br>
+The&nbsp;list&nbsp;is&nbsp;in&nbsp;arbitrary&nbsp;order.&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;include&nbsp;the&nbsp;special<br>
+entries&nbsp;'.'&nbsp;and&nbsp;'..'&nbsp;even&nbsp;if&nbsp;they&nbsp;are&nbsp;present&nbsp;in&nbsp;the&nbsp;directory.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__warningregistry__</strong> = {'version': 14}</td></tr></table>
+</body></html>
