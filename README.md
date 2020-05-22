@@ -1,4 +1,4 @@
-# Chemkin Plot Premix
+# Command Line CHEMKIN
 
 ### Overview
 When conducting combustion analysis with CHEMKIN software, often a range of input conditions need to be tested. 
