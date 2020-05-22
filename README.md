@@ -173,7 +173,7 @@ if __name__ == "__main__":
 ```
 
 ### Example Graph: 
-![](/Users/marina/Developer/GitHub/chemkin-plot-premix/notes/website_images/graphstest.png)
+![](/Users/marina/Developer/GitHub/chemkin-plot-premix/notes/graphstest.png)
 
 
 
