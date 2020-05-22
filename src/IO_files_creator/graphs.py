@@ -303,26 +303,26 @@ class Graph():
         :param colour: colour of line
         :return:
         """
-            #convert data into numpy arrays:
-            array_x, array_y = np.array(x), np.array(y)
-            # sort x and y by x value
-            order = np.argsort(array_x)
-            xsort, ysort = array_x[order], array_y[order]
+        #convert data into numpy arrays:
+        array_x, array_y = np.array(x), np.array(y)
+        # sort x and y by x value
+        order = np.argsort(array_x)
+        xsort, ysort = array_x[order], array_y[order]
 
-            #create a dataframe and add 2 columns for your x and y data:
-            df = pd.DataFrame()
-            df['xsort'] = xsort
-            df['ysort'] = ysort
-            #create new dataframe with no duplicate x values and corresponding mean values in all other cols:
-            mean = df.groupby('xsort').mean()
-            df_x = mean.index
-            df_y = mean['ysort']
-            # poly1d to create a polynomial line from coefficient inputs:
-            trend = np.polyfit(df_x, df_y, 8)
-            trendpoly = np.poly1d(trend)
-            # plot polyfit line:
-            plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
-                         color=colour, zorder=9, figure=self.fig)
+        #create a dataframe and add 2 columns for your x and y data:
+        df = pd.DataFrame()
+        df['xsort'] = xsort
+        df['ysort'] = ysort
+        #create new dataframe with no duplicate x values and corresponding mean values in all other cols:
+        mean = df.groupby('xsort').mean()
+        df_x = mean.index
+        df_y = mean['ysort']
+        # poly1d to create a polynomial line from coefficient inputs:
+        trend = np.polyfit(df_x, df_y, 8)
+        trendpoly = np.poly1d(trend)
+        # plot polyfit line:
+        plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
+                     color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: str, y: str, y_error: str, colour):
         """
