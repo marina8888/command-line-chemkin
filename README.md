@@ -171,12 +171,6 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
-### Example Graph: 
-![](/Users/marina/Developer/GitHub/chemkin-plot-premix/notes/graphstest.png)
-
-
-
 ### To Do List [Project in Progress]:
 - [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
 - [x] Generate an csv file that includes all the conditions required for input. 
