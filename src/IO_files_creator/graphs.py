@@ -173,8 +173,7 @@ class Graph():
         plt.xticks(rotation=70)
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
-                                filter_condition=None,
-                                filter_value=None, X_value: int = None, round_filter_to_dp: int = None,
+                                filter_condition: dict = None, X_value: int = None,
                                 y_error: str = None, error_colour='darkgray', best_fit_line: bool = False):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
@@ -184,10 +183,11 @@ class Graph():
         :param y: exact name of column in spreadsheet for the y data
         :param legend: legend label
         :param colour: of line and if selected, line of best fit
-        :param filter_condition: name of spreadsheet column used as a filter for values
-        :param filter_value: the value the filter_column should have for plotting data
+
+        :type filter_condition: dict
+        :param filter_condition: name of spreadsheet column (dictionary key value) which is filtered for values (dictionary values).
+
         :param X_value: assumes filter condition is X(cm) and filter value is the X_value. For specialist spreadsheets only.
-        :param round_filter_to_dp: rounds the filter column values to number of decimal places. Use negative values for 0s (nearest 10, 100 etc)
         :param y_error: column name for y error bars - if present will add error bars to plot
         :param error_colour: error bar colour
         :param best_fit_line: if True will add a line of best fit
@@ -195,12 +195,10 @@ class Graph():
         """
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
         my_filter_condition = filter_condition
-        my_filter_value = filter_value
         data = pd.DataFrame()
 
         if X_value is not None:
-            my_filter_condition = 'X(cm)'
-            my_filter_value = str(X_value)
+            my_filter_condition = {'X(cm)': str(X_value)}
 
         # if data input is an excel or csv spreadsheet:
         if 'xls' in path_to_sheet:
@@ -209,18 +207,16 @@ class Graph():
             data = pd.read_csv(path_to_sheet)
 
         if 'xls' or 'csv' in path_to_sheet:
-            if round_filter_to_dp is not None:
-                series = data[my_filter_condition]
-                data[my_filter_condition] = series.round(decimals=round_filter_to_dp)
-            if filter_condition is None:
+            if my_filter_condition is None:
                 x_data = data[x]
                 x_data = x_data.astype('float64')
                 y_data = data[y]
                 y_data = y_data.astype('float64')
             else:
-                x_data = (data[x][(data[my_filter_condition] == my_filter_value)])
+                new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+                x_data = new_data[x]
                 x_data = x_data.astype('float64')
-                y_data = (data[y][(data[my_filter_condition] == my_filter_value)])
+                y_data = new_data[y]
                 y_data = y_data.astype('float64')
 
         # for if an input is a dictionary of dataframes:
@@ -230,9 +226,10 @@ class Graph():
             plt.legend(loc="upper left")
 
         if y_error is not None and filter_condition is not None:
-            error = (data[y_error][(data[my_filter_condition] == my_filter_value)])
+            new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+            print(new_data)
+            error = new_data[y_error]
             error = error.astype('float64')
-
             self.add_error_bar(x_data, y_data, error, error_colour)
 
         if best_fit_line is True:
@@ -244,8 +241,7 @@ class Graph():
             self.add_error_bar(x_data, y_data, error, error_colour)
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
-                        filter_condition=None,
-                        filter_value=None, X_value: int = None, number_of_points=1, best_fit_line: bool= False):
+                        filter_condition:dict = None, X_value: int = None, number_of_points=1, best_fit_line: bool= False):
         """
 
         :param solution: name of instance when generating the data from the Solution() class (used for chemkin output folder data)
@@ -254,8 +250,10 @@ class Graph():
         :param name: if present, will search and plot data from a specific .out file. Must remove .out file extension - just write the file name
         :param legend: legend label
         :param colour: colour of line and if selected, line of best fit
-        :param filter_condition: name of column used as a filter for values
-        :param filter_value: the value the filter_column should have for plotting data
+
+        :type filter_condition: dict
+        :param filter_condition: name of spreadsheet column (dictionary key value) which is filtered for values (dictionary values
+
         :param X_value: assumes filter condition is X(cm) and filter value is the X_value.
         :param number_of_points: repressents n for plotting every nth point in the data. Use for very large datasets
         :param best_fit_line: if True will add a line of best fit
@@ -272,10 +270,12 @@ class Graph():
                 y_data = df[y][(df.index % number_of_points == 1)]
                 y_data = y_data.astype('float64')
             else:
-                x_data = (df[x][(df[filter_condition] == filter_value)])
+                new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
+                x_data = new_data[x]
                 x_data = x_data.astype('float64')
-                y_data = (df[y][(df[filter_condition] == filter_value)])
+                y_data = new_data[y]
                 y_data = y_data.astype('float64')
+
         elif name == "" and X_value != None:
             df_dict = solution.df_dict
             # for key, df in df_dict.items():
