@@ -264,6 +264,7 @@ class Graph():
             df = solution.df_dict.get(name, 'no such value')
             if 'no such value' in df:
                 raise IndexError("No file was found. Check the name doesn't contain a file extension")
+
             if filter_condition is None:
                 x_data = df[x][(df.index % number_of_points == 1)]
                 x_data = x_data.astype('float64')
@@ -285,8 +286,17 @@ class Graph():
             y_data = (df[y][(df['X(cm)'] == str(X_value))])
             y_data = y_data.astype('float64')
 
+        elif name == "" and X_value == None:
+            df_dict = solution.df_dict
+            # for key, df in df_dict.items():
+            df = pd.concat(df_dict)
+            new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
+            x_data = new_data[x]
+            x_data = x_data.astype('float64')
+            y_data = new_data[y]
+            y_data = y_data.astype('float64')
         else:
-            raise IndexError("Please input a filename or an X value")
+            raise IndexError("Conditions not recognised. Please provide more specific conditions for plotting.")
 
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
         if legend != "":
