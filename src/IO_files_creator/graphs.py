@@ -239,22 +239,20 @@ class Graph():
             error = data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
-
-
         if best_fit_line is True:
-            if best_fit_line_filter == None:
+            if best_fit_line_filter is None:
                 x_data = data[x]
                 x_data = x_data.astype('float64')
                 y_data = data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour = colour)
+                self.add_best_fit_line(x_data, y_data, colour = 'slategrey')
             else:
-                new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+                new_data = pd.DataFrame(data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour=colour)
+                self.add_best_fit_line(x_data, y_data, colour='slategrey')
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
@@ -345,12 +343,13 @@ class Graph():
         mean = df.groupby('xsort').mean()
         df_x = mean.index
         df_y = mean['ysort']
+        if df_x.empty is False:
         # poly1d to create a polynomial line from coefficient inputs:
-        trend = np.polyfit(df_x, df_y, 16)
-        trendpoly = np.poly1d(trend)
-        # plot polyfit line:
-        plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
-                     color=colour, zorder=9, figure=self.fig)
+            trend = np.polyfit(df_x, df_y, 16)
+            trendpoly = np.poly1d(trend)
+            # plot polyfit line:
+            plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
+                         color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: pd.Series, y: pd.Series, y_error: pd.Series, colour):
         """
@@ -375,3 +374,4 @@ class Graph():
         """
         full_path = path.join(path_of_save_folder, name)
         plt.savefig(full_path)
+        plt.close(self.fig)
