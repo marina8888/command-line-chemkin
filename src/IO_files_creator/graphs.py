@@ -145,6 +145,7 @@ class Graph():
 
         self.add_format()
         self.set_grid_ticks()
+        plt.tight_layout()
 
     def add_format(self):
         """
@@ -177,7 +178,7 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='darkgray', best_fit_line: bool = False, best_fit_line_filter:dict = None):
+                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False, best_fit_line_filter:dict = None):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -228,12 +229,17 @@ class Graph():
         if legend != "":
             plt.legend()
 
-        if y_error is not None and filter_condition is not None:
+        if y_error is not None and my_filter_condition is not None:
             new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
-            print(new_data)
             error = new_data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
+
+        elif y_error is not None and my_filter_condition is None:
+            error = data[y_error]
+            error = error.astype('float64')
+            self.add_error_bar(x_data, y_data, error, error_colour)
+
 
         if best_fit_line is True:
             if best_fit_line_filter == None:
@@ -250,10 +256,6 @@ class Graph():
                 y_data = y_data.astype('float64')
                 self.add_best_fit_line(x_data, y_data, colour=colour)
 
-        elif y_error is not None and filter_condition is None:
-            error = data[y_error]
-            error = error.astype('float64')
-            self.add_error_bar(x_data, y_data, error, error_colour)
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
                         filter_condition:dict = None, X_value: int = None, number_of_points=1, best_fit_line: bool= False):
@@ -330,6 +332,7 @@ class Graph():
         """
         #convert data into numpy arrays:
         array_x, array_y = np.array(x), np.array(y)
+        array_x = array_x.round(2)
         # sort x and y by x value
         order = np.argsort(array_x)
         xsort, ysort = array_x[order], array_y[order]
@@ -349,7 +352,7 @@ class Graph():
         plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
                      color=colour, zorder=9, figure=self.fig)
 
-    def add_error_bar(self, x: str, y: str, y_error: str, colour):
+    def add_error_bar(self, x: pd.Series, y: pd.Series, y_error: pd.Series, colour):
         """
         adds error bars
         :param self:
@@ -370,5 +373,5 @@ class Graph():
         :param name: save figures under this name
         :return:
         """
-        plt.show()
-        plt.savefig(path_of_save_folder + name)
+        full_path = path.join(path_of_save_folder, name)
+        plt.savefig(full_path)
