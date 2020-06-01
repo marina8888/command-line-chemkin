@@ -96,6 +96,8 @@ class Solution():
                             error_file.write("\n" + file)
                     else:
                         whole_doc = ' '.join(lines)
+                        print(whole_doc)
+                        print(full_path)
                         whole_doc = whole_doc.split(' TWOPNT: ', 1)[0]
 
                         # create new dataframe and a super new dataframe for every slice of data seperated by 'MOLE FRACTION'
@@ -103,6 +105,7 @@ class Solution():
                         filtered_lines = whole_doc.split("MOLE FRACTION")
                         for i in range(len(filtered_lines)):
                             split_filtered = filtered_lines[i].split('\n')
+                            print(split_filtered[i])
 
                             if i == 0:
                                 key_list, col_list = self.filter_txt(split_filtered, add_X_col=False)
@@ -174,7 +177,7 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='darkgray', best_fit_line: bool = False):
+                                y_error: str = None, error_colour='darkgray', best_fit_line: bool = False, best_fit_line_filter:dict = None):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -223,7 +226,7 @@ class Graph():
         plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
 
         if legend != "":
-            plt.legend(loc="upper left")
+            plt.legend()
 
         if y_error is not None and filter_condition is not None:
             new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
@@ -233,7 +236,19 @@ class Graph():
             self.add_error_bar(x_data, y_data, error, error_colour)
 
         if best_fit_line is True:
-            self.add_best_fit_line(x_data, y_data, colour = colour)
+            if best_fit_line_filter == None:
+                x_data = data[x]
+                x_data = x_data.astype('float64')
+                y_data = data[y]
+                y_data = y_data.astype('float64')
+                self.add_best_fit_line(x_data, y_data, colour = colour)
+            else:
+                new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+                x_data = new_data[x]
+                x_data = x_data.astype('float64')
+                y_data = new_data[y]
+                y_data = y_data.astype('float64')
+                self.add_best_fit_line(x_data, y_data, colour=colour)
 
         elif y_error is not None and filter_condition is None:
             error = data[y_error]
@@ -328,7 +343,7 @@ class Graph():
         df_x = mean.index
         df_y = mean['ysort']
         # poly1d to create a polynomial line from coefficient inputs:
-        trend = np.polyfit(df_x, df_y, 8)
+        trend = np.polyfit(df_x, df_y, 16)
         trendpoly = np.poly1d(trend)
         # plot polyfit line:
         plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',

@@ -7,7 +7,6 @@
 #IDE metadata
 **.idea/**
 
-src/chemkin_launch_files/graphs
 import_files/
 excel_external/
 chemin_external/
@@ -18,3 +17,4 @@ lib/
 __pycache__/
 src/chemkin_launch_files/solutions
 src/chemkin_launch_files/input_files
+src/chemkin_launch_files/graphs
