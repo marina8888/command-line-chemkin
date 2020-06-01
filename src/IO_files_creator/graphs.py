@@ -245,14 +245,14 @@ class Graph():
                 x_data = x_data.astype('float64')
                 y_data = data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour = 'slategrey')
+                self.add_best_fit_line(x_data, y_data, colour = error_colour)
             else:
                 new_data = pd.DataFrame(data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour='slategrey')
+                self.add_best_fit_line(x_data, y_data, colour=error_colour)
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
@@ -345,7 +345,7 @@ class Graph():
         df_y = mean['ysort']
         if df_x.empty is False:
         # poly1d to create a polynomial line from coefficient inputs:
-            trend = np.polyfit(df_x, df_y, 16)
+            trend = np.polyfit(df_x, df_y, 12)
             trendpoly = np.poly1d(trend)
             # plot polyfit line:
             plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
