@@ -80,8 +80,12 @@ class Solution():
 
         # initalise an error file:
         txt_path = path.join(self.sol, "ERROR_RUNS.txt")
+        txt_path2 = path.join(self.sol, "PASSED_RUNS.txt")
         with open(txt_path, "w") as error_file:
             error_file.write("The following files have errors and cannot be plotted: ")
+
+        with open(txt_path2, "w") as pass_file:
+            pass_file.write("The following files have successfully been plotted: ")
 
         # go through all .out files in solutions folder:
         for file in listdir(self.sol):
@@ -95,9 +99,10 @@ class Solution():
                         with open(txt_path, "a") as error_file:
                             error_file.write("\n" + file)
                     else:
+                        with open(txt_path2, "a") as pass_file:
+                            pass_file.write("\n" + file)
+
                         whole_doc = ' '.join(lines)
-                        print(whole_doc)
-                        print(full_path)
                         whole_doc = whole_doc.split(' TWOPNT: ', 1)[0]
 
                         # create new dataframe and a super new dataframe for every slice of data seperated by 'MOLE FRACTION'
@@ -105,7 +110,6 @@ class Solution():
                         filtered_lines = whole_doc.split("MOLE FRACTION")
                         for i in range(len(filtered_lines)):
                             split_filtered = filtered_lines[i].split('\n')
-                            print(split_filtered[i])
 
                             if i == 0:
                                 key_list, col_list = self.filter_txt(split_filtered, add_X_col=False)
@@ -284,22 +288,23 @@ class Graph():
                 x_data = df[x][(df.index % number_of_points == 1)]
                 x_data = x_data.astype('float64')
                 y_data = df[y][(df.index % number_of_points == 1)]
-                y_data = y_data.astype('float64')
+                y_data = 1000000 * (y_data.astype('float64'))
             else:
                 new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
-                y_data = y_data.astype('float64')
+                y_data = 1000000 * (y_data.astype('float64'))
 
         elif name == "" and X_value != None:
             df_dict = solution.df_dict
             # for key, df in df_dict.items():
-            df = pd.concat(df_dict)
+            # df = pd.concat(df_dict)
+            df = pd.concat(df_dict.values(), ignore_index = True)
             x_data = (df[x][(df['X(cm)'] == str(X_value))])
             x_data = x_data.astype('float64')
             y_data = (df[y][(df['X(cm)'] == str(X_value))])
-            y_data = y_data.astype('float64')
+            y_data = 1000000 * (y_data.astype('float64'))
 
         elif name == "" and X_value == None:
             df_dict = solution.df_dict
@@ -308,7 +313,7 @@ class Graph():
             new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
             x_data = new_data[x]
             x_data = x_data.astype('float64')
-            y_data = new_data[y]
+            y_data = 1000000 * (new_data[y])
             y_data = y_data.astype('float64')
         else:
             raise IndexError("Conditions not recognised. Please provide more specific conditions for plotting.")

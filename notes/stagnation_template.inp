@@ -21,8 +21,8 @@ TMAX 1853.142   ! Maximum Temperature for Initial Profile (K)
 CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
 GRAD 0.5   ! Adaptive Grid Control Based On Solution Gradient
 NADP 100   ! Number of Adaptive Grid Points
-NPTS 100   ! Number of Uniform Grid Points
-NTOT 4000   ! Maximum Number of Grid Points Allowed
+NPTS 2000   ! Number of Uniform Grid Points
+NTOT 3000   ! Maximum Number of Grid Points Allowed
 PCAD 0.75   ! Percent of Grids for Adaptation
 RGTC 1.0   ! Ratio of Gradient to Curvature Adaptation
 XEND 2.0   ! Ending Axial Position (cm)
