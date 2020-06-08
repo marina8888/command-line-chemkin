@@ -206,7 +206,7 @@ class Graph():
         data = pd.DataFrame()
 
         if X_value is not None:
-            my_filter_condition = {'X(cm)': str(X_value)}
+            my_filter_condition['X(cm)'] = str(X_value)
 
         # if data input is an excel or csv spreadsheet:
         if 'xls' in path_to_sheet:
@@ -278,42 +278,37 @@ class Graph():
         :param best_fit_line: if True will add a line of best fit
         :return:
         """
+        my_filter_condition = filter_condition
+
+        if X_value is not None:
+            my_filter_condition['X(cm)'] = str(X_value)
+
         # input type is the name of a file/df stored in a dictionary:
         if name != "":
             df = solution.df_dict.get(name, 'no such value')
             if 'no such value' in df:
                 raise IndexError("No file was found. Check the name doesn't contain a file extension")
 
-            if filter_condition is None:
+            if my_filter_condition is None:
                 x_data = df[x][(df.index % number_of_points == 1)]
                 x_data = x_data.astype('float64')
                 y_data = df[y][(df.index % number_of_points == 1)]
-                y_data = 1000000 * (y_data.astype('float64'))
+                y_data = y_data.astype('float64')
             else:
                 new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
-                y_data = 1000000 * (y_data.astype('float64'))
+                y_data = y_data.astype('float64')
 
-        elif name == "" and X_value != None:
-            df_dict = solution.df_dict
-            # for key, df in df_dict.items():
-            # df = pd.concat(df_dict)
-            df = pd.concat(df_dict.values(), ignore_index = True)
-            x_data = (df[x][(df['X(cm)'] == str(X_value))])
-            x_data = x_data.astype('float64')
-            y_data = (df[y][(df['X(cm)'] == str(X_value))])
-            y_data = 1000000 * (y_data.astype('float64'))
-
-        elif name == "" and X_value == None:
+        elif name == "":
             df_dict = solution.df_dict
             # for key, df in df_dict.items():
             df = pd.concat(df_dict)
             new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
             x_data = new_data[x]
             x_data = x_data.astype('float64')
-            y_data = 1000000 * (new_data[y])
+            y_data = new_data[y]
             y_data = y_data.astype('float64')
         else:
             raise IndexError("Conditions not recognised. Please provide more specific conditions for plotting.")
