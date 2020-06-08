@@ -182,7 +182,7 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False, best_fit_line_filter:dict = None):
+                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -229,8 +229,8 @@ class Graph():
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
 
-        # for if an input is a dictionary of dataframes:
-        plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+        if scatter == True:
+            plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
 
         if legend != "":
             plt.legend()
@@ -265,7 +265,7 @@ class Graph():
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
-                        filter_condition:dict = None, X_value: int = None, number_of_points=1, best_fit_line: bool= False):
+                        filter_condition:dict = None, X_value: int = None, number_of_points=1, multip:int = 1, scatter: bool = True, best_fit_line: bool= False):
         """
 
         :param solution: name of instance when generating the data from the Solution() class (used for chemkin output folder data)
@@ -298,13 +298,13 @@ class Graph():
                 x_data = df[x][(df.index % number_of_points == 1)]
                 x_data = x_data.astype('float64')
                 y_data = df[y][(df.index % number_of_points == 1)]
-                y_data = y_data.astype('float64')
+                y_data = multip * (y_data.astype('float64'))
             else:
                 new_data = pd.DataFrame(df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
-                y_data = y_data.astype('float64')
+                y_data = multip * (y_data.astype('float64'))
 
         elif name == "":
             df_dict = solution.df_dict
@@ -314,11 +314,12 @@ class Graph():
             x_data = new_data[x]
             x_data = x_data.astype('float64')
             y_data = new_data[y]
-            y_data = y_data.astype('float64')
+            y_data = multip * (y_data.astype('float64'))
         else:
             raise IndexError("Conditions not recognised. Please provide more specific conditions for plotting.")
 
-        plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+        if scatter == True:
+            plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
         if legend != "":
             plt.legend(loc="upper left")
 
