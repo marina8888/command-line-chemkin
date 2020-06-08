@@ -221,9 +221,11 @@ class Graph():
                 y_data = data[y]
                 y_data = y_data.astype('float64')
             else:
+                print(data['mean_heaty'])
                 new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
+
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
 
@@ -234,15 +236,18 @@ class Graph():
             plt.legend()
 
         if y_error is not None and my_filter_condition is not None:
+            print("y err not none and filter not none")
             new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
             error = new_data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
 
         elif y_error is not None and my_filter_condition is None:
+            print('yerr not none but filter is none')
             error = data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
+
         if best_fit_line is True:
             if best_fit_line_filter is None:
                 x_data = data[x]
@@ -295,7 +300,7 @@ class Graph():
                 y_data = df[y][(df.index % number_of_points == 1)]
                 y_data = y_data.astype('float64')
             else:
-                new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
+                new_data = pd.DataFrame(df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
@@ -305,7 +310,7 @@ class Graph():
             df_dict = solution.df_dict
             # for key, df in df_dict.items():
             df = pd.concat(df_dict)
-            new_data = pd.DataFrame(df.loc[(df[list(filter_condition)] == pd.Series(filter_condition)).all(axis=1)])
+            new_data = pd.DataFrame(df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
             x_data = new_data[x]
             x_data = x_data.astype('float64')
             y_data = new_data[y]
