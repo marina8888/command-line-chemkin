@@ -149,7 +149,6 @@ class Graph():
 
         self.add_format()
         self.set_grid_ticks()
-        plt.tight_layout()
 
     def add_format(self):
         """
@@ -254,14 +253,14 @@ class Graph():
                 x_data = x_data.astype('float64')
                 y_data = data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour = error_colour)
+                self.add_best_fit_line(x_data, y_data, colour = colour)
             else:
                 new_data = pd.DataFrame(data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour=error_colour)
+                self.add_best_fit_line(x_data, y_data, colour=colour)
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
@@ -354,7 +353,7 @@ class Graph():
             trend = np.polyfit(df_x, df_y, 12)
             trendpoly = np.poly1d(trend)
             # plot polyfit line:
-            plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='0.8',
+            plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='1.3',
                          color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: pd.Series, y: pd.Series, y_error: pd.Series, colour):
@@ -379,5 +378,5 @@ class Graph():
         :return:
         """
         full_path = path.join(path_of_save_folder, name)
-        plt.savefig(full_path)
+        plt.savefig(full_path, dpi=300, bbox_inches = "tight")
         plt.close(self.fig)
