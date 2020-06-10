@@ -159,7 +159,6 @@ class Graph():
         plt.title(self.title, pad=15, figure=self.fig)
         plt.xlabel(self.x_axis_label, figure=self.fig)
         plt.ylabel(self.y_axis_label, figure=self.fig)
-        plt.tight_layout()
 
     def set_grid_ticks(self):
         """
@@ -201,6 +200,7 @@ class Graph():
         :return:
         """
         # adding arguments globally to function so that they can be modified based on user input combination (e.g input type):
+        print("plotting graphs...")
         my_filter_condition = filter_condition
         data = pd.DataFrame()
 
@@ -220,7 +220,6 @@ class Graph():
                 y_data = data[y]
                 y_data = y_data.astype('float64')
             else:
-                print(data['mean_heaty'])
                 new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
@@ -235,14 +234,12 @@ class Graph():
             plt.legend()
 
         if y_error is not None and my_filter_condition is not None:
-            print("y err not none and filter not none")
             new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
             error = new_data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
 
         elif y_error is not None and my_filter_condition is None:
-            print('yerr not none but filter is none')
             error = data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
@@ -283,7 +280,7 @@ class Graph():
         :return:
         """
         my_filter_condition = filter_condition
-
+        print("plotting graphs...")
         if X_value is not None:
             my_filter_condition['X(cm)'] = str(X_value)
 
@@ -318,12 +315,14 @@ class Graph():
             raise IndexError("Conditions not recognised. Please provide more specific conditions for plotting.")
 
         if scatter == True:
-            plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
-        if legend != "":
-            plt.legend(loc="upper left")
+            plt.scatter(x_data, y_data, color=colour, zorder=10, s=10, label=legend, figure=self.fig)
 
         if best_fit_line is True:
             self.add_best_fit_line(x_data, y_data, colour = colour)
+
+        if legend != "":
+            plt.legend()
+
 
     def add_best_fit_line(self, x, y, colour=None):
         """

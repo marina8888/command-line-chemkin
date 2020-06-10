@@ -6,64 +6,44 @@ def main():
     sol1 = graphs.Solution(
         '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/okafor-solution')
     heat_ratio = ['0.1', '0.2', '0.3', '0.4', '0.6', '1.0']
-    colour_list = ['red', 'red', 'red', 'red', 'red', 'red']
-    colour_list2 = ['b', 'b', 'b', 'b', 'b', 'b']
-    full_gas_list = ['CO2', 'CO', 'H2O', 'NO', 'NO2', 'N2O', 'NH3']
+    full_gas_list = ['CO2', 'CO', 'H2O', 'NO', 'NO2', 'N2O', 'NH3', 'HCN']
+    c_list = ['gold', 'cyan', 'lime', 'magenta', 'slategrey', 'red']
+    c2_list = ['peru', 'steelblue', 'darkgreen','darkviolet', 'black','maroon']
+    c3_list = ['darkgoldenrod', 'dodgerblue', 'mediumaquamarine','violet','lightgrey','salmon']
     for gas in full_gas_list:
-        for h in heat_ratio:
-            graphy = graphs.Graph('equivalence ratio', gas + ' Concentration, ppmv',
-                                  gas + ' Concentration for ' + h + ' Heat Ratio')
-            graphy.add_scatter_sol(sol1, 'name1', gas, legend="Okafor stagnation model", colour='red',
-                                   filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=1000000,
-                                   scatter=False, best_fit_line=True)
+        graphy = graphs.Graph('equivalence ratio', gas + ' Concentration, ppmv',
+                              gas + ' Concentration')
+        for h, c, c2, c3 in zip(heat_ratio, c_list, c2_list, c3_list):
+            # graphy.add_scatter_sol(sol1, 'name1', gas, legend="Okafor et al, "+ h + " heat ratio", colour=c2,
+            #                        filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=1000000,
+            #                        scatter=True, best_fit_line=True)
             graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='blue', filter_condition={'mean_heaty': float(h), 'Datey': 1},
+                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/hcn_filtered.xlsx',
+                x='mean_eqy', y='X_' + gas, colour=c, filter_condition={'mean_heaty': float(h)},
                 y_error='delta_X_' + gas,
-                legend='first experiment', best_fit_line=True,
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 1})
-            graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='orange', y_error='delta_X_' + gas,
-                filter_condition={'mean_heaty': float(h), 'Datey': 2},
-                legend='second experiment', best_fit_line=True,
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 2})
-            graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='green', y_error='delta_X_' + gas,
-                filter_condition={'mean_heaty': float(h), 'Datey': 3}, best_fit_line=True, legend='third experiment',
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 3})
-
-            string = gas + 'date_' + h + '.png'
-            graphy.show_and_save('chemkin_launch_files/graphs/', string)
+                legend='Experiment,' + h + " heat ratio", best_fit_line=True,
+                best_fit_line_filter={'mean_heaty': float(h)})
+        string = gas + 'all.png'
+        graphy.show_and_save('chemkin_launch_files/graphs/', string)
 
     second_list = ['H2', 'O2']
     for gas in second_list:
-        for h in heat_ratio:
-            graphy = graphs.Graph('equivalence ratio', gas + ' Concentration, %',
-                                  gas + ' Concentration for ' + h + ' Heat Ratio')
-            graphy.add_scatter_sol(sol1, 'name1', gas, legend="Okafor stagnation model", colour='red',
-                                   filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=100,
-                                   scatter = False, best_fit_line=True)
+        graphy = graphs.Graph('equivalence ratio', gas + ' Concentration, %',
+                              gas + ' Concentration')
+        for h, c, c2, c3 in zip(heat_ratio, c_list, c2_list, c3_list):
+            # graphy.add_scatter_sol(sol1, 'name1', gas, legend="Okafor et al, "+ h +" heat ratio", colour=c2,
+            #                        filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=100,
+            #                        scatter = True, best_fit_line=True)
             graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='blue', filter_condition={'mean_heaty': float(h), 'Datey': 1},
+                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/hcn_filtered.xlsx',
+                x='mean_eqy', y='X_' + gas, colour=c, filter_condition={'mean_heaty': float(h)},
                 y_error='delta_X_' + gas,
-                legend='first experiment', best_fit_line=True,
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 1})
-            graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='orange', y_error='delta_X_' + gas,
-                filter_condition={'mean_heaty': float(h), 'Datey': 2},
-                legend='second experiment', best_fit_line=True,
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 2})
-            graphy.add_scatter_spreadsheet(
-                '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/all_results_ever.xlsx',
-                x='mean_eqy', y='X_' + gas, colour='green', y_error='delta_X_' + gas,
-                filter_condition={'mean_heaty': float(h), 'Datey': 3}, best_fit_line=True, legend='third experiment',
-                best_fit_line_filter={'mean_heaty': float(h), 'Datey': 3})
-            string = gas + 'date_' + h + '.png'
-            graphy.show_and_save('chemkin_launch_files/graphs/', string)
+                legend='Experiment,' + h + " heat ratio", best_fit_line=True,
+                best_fit_line_filter={'mean_heaty': float(h)})
+        string = gas + 'all.png'
+        graphy.show_and_save('chemkin_launch_files/graphs/', string)
+
+
 
 if __name__ == "__main__":
     main()
