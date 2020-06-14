@@ -1,0 +1,64 @@
+!
+! problem type definitionn
+!
+AXIS   ! Cylindrical Coordinates
+ENRG   ! Solve Gas Energy Equation
+FLUX   ! Flux Balance for Inlet Species
+MIX   ! Use Mixture-averaged Transport
+PLAT   ! Plateau Profile for Initial Guess
+STAGNATION_FLAME   ! Stagnation Flame Reactor
+!
+! physical property
+!
+PRES 1.0   ! Pressure (atm)
+TINF 298.0   ! Ambient Temperature (K)
+TINL StagPlane 700.0   ! Stagnation Plane Temperature (K)
+TMAX 2200.0   ! Maximum Temperature for Initial Profile (K)
+!
+! reactor dimension definition
+!
+CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.1   ! Adaptive Grid Control Based On Solution Gradient
+NADP 30   ! Number of Adaptive Grid Points
+NPTS 500   ! Number of Uniform Grid Points
+NTOT 1000   ! Maximum Number of Grid Points Allowed
+XEND 2.0   ! Ending Axial Position (cm)
+!
+! solver control
+!
+GFAC 1.0   ! Gas Reaction Rate Multiplier
+PRNT 1.0   ! Print Level Control
+ASEN TEMP ! Temperature Sensitivities
+!
+! physical property
+!
+AINL C1_Inlet1 0.0   ! Radial Gradient in Inlet Velocity (1/sec)
+TINL C1_Inlet1 298.886082   ! Inlet Temperature (K)
+UINL C1_Inlet1 34.283317   ! Inlet Velocity (cm/sec)
+!
+! species property
+!
+REAC C1_Inlet1 N2 45.458187   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 NH3 1.0   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 CH4 3.554232   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 O2 12.089943   ! Reactant Fraction (mole fraction)
+INLET C1_Inlet1 1   ! Inlet Stream
+!
+! physical property
+!
+INLET StagPlane 1
+! Number of Continuation 5   ! Continuation Count
+CNTN   ! Continuation
+END   ! End
+CURV 0.1   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.07   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.02   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.01   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End

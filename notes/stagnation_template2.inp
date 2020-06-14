@@ -1,0 +1,211 @@
+!
+! problem type definitionn
+!
+AXIS   ! Cylindrical Coordinates
+ENRG   ! Solve Gas Energy Equation
+FLUX   ! Flux Balance for Inlet Species
+MIX   ! Use Mixture-averaged Transport
+PLAT   ! Plateau Profile for Initial Guess
+STAGNATION_FLAME   ! Stagnation Flame Reactor
+!
+! physical property
+!
+PRES 1.0   ! Pressure (atm)
+TINF 298.0   ! Ambient Temperature (K)
+TINL StagPlane 700.0   ! Stagnation Plane Temperature (K)
+TMAX 2200.0   ! Maximum Temperature for Initial Profile (K)
+!
+! reactor dimension definition
+!
+CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.1   ! Adaptive Grid Control Based On Solution Gradient
+NADP 100   ! Number of Adaptive Grid Points
+NPTS 500   ! Number of Uniform Grid Points
+NTOT 1000   ! Maximum Number of Grid Points Allowed
+XEND 2.0   ! Ending Axial Position (cm)
+!
+! solver control
+!
+ATIM 1.0E-9   ! Absolute Tolerance for Pseudo Timestepping
+ATOL 1.0E-9   ! Absolute Tolerance
+DTMN 1.0E-10   ! Minimum Pseudo Time Step (sec)
+DTMX 0.01   ! Maximum Pseudo Time Step (sec)
+IRET 25   ! Number Time Steps Before Increasing
+ISTP 0   ! Number of Initial Pseudo Time Steps
+MAXTIME 100   ! Maximum Number of Pseudo Time Stepping Operations Allowed
+NDPR 100   ! Output Frequency during Integration
+NJAC 20   ! Number of Iterations before Updating Jacobian
+RTIM 0.0001   ! Relative Tolerance for Pseudo Timestepping
+RTOL 0.0001   ! Relative Tolerance
+SFLR -0.0001   ! Minimum Bounds on Species Fractions
+SPOS 0.0   ! Positive Value to Reset Species Fractions
+SSMAXITER 100   ! Maximum Number of Iterations per Steady State Search
+TIM1 100.0 1.0E-6   ! Pseudo Time Steps (Fixed Temperature) (none, sec)
+TIM2 100.0 1.0E-6   ! Pseudo Time Steps (Energy Equation) (none, sec)
+TJAC 20   ! Number of Transient Iterations before Updating Jacobian
+TRMAXITER 25   ! Maximum Number of Iterations per Pseudo Time Step
+WDIF   ! Windward Differencing
+!
+! output control and other misc. property
+!
+ASEN ALL   ! All A-factor Sensitivity
+ASEN AR   ! A-factor Sensitivity
+ASEN C   ! A-factor Sensitivity
+ASEN C2H   ! A-factor Sensitivity
+ASEN C2H2   ! A-factor Sensitivity
+ASEN C2H3   ! A-factor Sensitivity
+ASEN C2H4   ! A-factor Sensitivity
+ASEN C2H5   ! A-factor Sensitivity
+ASEN C2H6   ! A-factor Sensitivity
+ASEN C3H7   ! A-factor Sensitivity
+ASEN C3H8   ! A-factor Sensitivity
+ASEN CH   ! A-factor Sensitivity
+ASEN CH2   ! A-factor Sensitivity
+ASEN CH2(S)   ! A-factor Sensitivity
+ASEN CH2CHO   ! A-factor Sensitivity
+ASEN CH2CO   ! A-factor Sensitivity
+ASEN CH2O   ! A-factor Sensitivity
+ASEN CH2OH   ! A-factor Sensitivity
+ASEN CH3   ! A-factor Sensitivity
+ASEN CH3CHO   ! A-factor Sensitivity
+ASEN CH3O   ! A-factor Sensitivity
+ASEN CH3OH   ! A-factor Sensitivity
+ASEN CH4   ! A-factor Sensitivity
+ASEN CN   ! A-factor Sensitivity
+ASEN CO   ! A-factor Sensitivity
+ASEN CO2   ! A-factor Sensitivity
+ASEN H   ! A-factor Sensitivity
+ASEN H2   ! A-factor Sensitivity
+ASEN H2CN   ! A-factor Sensitivity
+ASEN H2NO   ! A-factor Sensitivity
+ASEN H2O   ! A-factor Sensitivity
+ASEN H2O2   ! A-factor Sensitivity
+ASEN HCCO   ! A-factor Sensitivity
+ASEN HCCOH   ! A-factor Sensitivity
+ASEN HCN   ! A-factor Sensitivity
+ASEN HCNN   ! A-factor Sensitivity
+ASEN HCNO   ! A-factor Sensitivity
+ASEN HCO   ! A-factor Sensitivity
+ASEN HNCO   ! A-factor Sensitivity
+ASEN HNO   ! A-factor Sensitivity
+ASEN HO2   ! A-factor Sensitivity
+ASEN HOCN   ! A-factor Sensitivity
+ASEN HONO   ! A-factor Sensitivity
+ASEN N   ! A-factor Sensitivity
+ASEN N2   ! A-factor Sensitivity
+ASEN N2H2   ! A-factor Sensitivity
+ASEN N2H3   ! A-factor Sensitivity
+ASEN N2H4   ! A-factor Sensitivity
+ASEN N2O   ! A-factor Sensitivity
+ASEN NCO   ! A-factor Sensitivity
+ASEN NH   ! A-factor Sensitivity
+ASEN NH2   ! A-factor Sensitivity
+ASEN NH2OH   ! A-factor Sensitivity
+ASEN NH3   ! A-factor Sensitivity
+ASEN NNH   ! A-factor Sensitivity
+ASEN NO   ! A-factor Sensitivity
+ASEN NO2   ! A-factor Sensitivity
+ASEN O   ! A-factor Sensitivity
+ASEN O2   ! A-factor Sensitivity
+ASEN OH   ! A-factor Sensitivity
+DFAC 2.0   ! Time Step Decrement Factor
+EPSS 0.001   ! Threshold for Species Sensitivity
+GFAC 1.0   ! Gas Reaction Rate Multiplier
+HSEN ALL   ! All Heat of Formation Sensitivity
+HSEN AR   ! Heat of Formation Sensitivity
+HSEN C   ! Heat of Formation Sensitivity
+HSEN C2H   ! Heat of Formation Sensitivity
+HSEN C2H2   ! Heat of Formation Sensitivity
+HSEN C2H3   ! Heat of Formation Sensitivity
+HSEN C2H4   ! Heat of Formation Sensitivity
+HSEN C2H5   ! Heat of Formation Sensitivity
+HSEN C2H6   ! Heat of Formation Sensitivity
+HSEN C3H7   ! Heat of Formation Sensitivity
+HSEN C3H8   ! Heat of Formation Sensitivity
+HSEN CH   ! Heat of Formation Sensitivity
+HSEN CH2   ! Heat of Formation Sensitivity
+HSEN CH2(S)   ! Heat of Formation Sensitivity
+HSEN CH2CHO   ! Heat of Formation Sensitivity
+HSEN CH2CO   ! Heat of Formation Sensitivity
+HSEN CH2O   ! Heat of Formation Sensitivity
+HSEN CH2OH   ! Heat of Formation Sensitivity
+HSEN CH3   ! Heat of Formation Sensitivity
+HSEN CH3CHO   ! Heat of Formation Sensitivity
+HSEN CH3O   ! Heat of Formation Sensitivity
+HSEN CH3OH   ! Heat of Formation Sensitivity
+HSEN CH4   ! Heat of Formation Sensitivity
+HSEN CN   ! Heat of Formation Sensitivity
+HSEN CO   ! Heat of Formation Sensitivity
+HSEN CO2   ! Heat of Formation Sensitivity
+HSEN H   ! Heat of Formation Sensitivity
+HSEN H2   ! Heat of Formation Sensitivity
+HSEN H2CN   ! Heat of Formation Sensitivity
+HSEN H2NO   ! Heat of Formation Sensitivity
+HSEN H2O   ! Heat of Formation Sensitivity
+HSEN H2O2   ! Heat of Formation Sensitivity
+HSEN HCCO   ! Heat of Formation Sensitivity
+HSEN HCCOH   ! Heat of Formation Sensitivity
+HSEN HCN   ! Heat of Formation Sensitivity
+HSEN HCNN   ! Heat of Formation Sensitivity
+HSEN HCNO   ! Heat of Formation Sensitivity
+HSEN HCO   ! Heat of Formation Sensitivity
+HSEN HNCO   ! Heat of Formation Sensitivity
+HSEN HNO   ! Heat of Formation Sensitivity
+HSEN HO2   ! Heat of Formation Sensitivity
+HSEN HOCN   ! Heat of Formation Sensitivity
+HSEN HONO   ! Heat of Formation Sensitivity
+HSEN N   ! Heat of Formation Sensitivity
+HSEN N2   ! Heat of Formation Sensitivity
+HSEN N2H2   ! Heat of Formation Sensitivity
+HSEN N2H3   ! Heat of Formation Sensitivity
+HSEN N2H4   ! Heat of Formation Sensitivity
+HSEN N2O   ! Heat of Formation Sensitivity
+HSEN NCO   ! Heat of Formation Sensitivity
+HSEN NH   ! Heat of Formation Sensitivity
+HSEN NH2   ! Heat of Formation Sensitivity
+HSEN NH2OH   ! Heat of Formation Sensitivity
+HSEN NH3   ! Heat of Formation Sensitivity
+HSEN NNH   ! Heat of Formation Sensitivity
+HSEN NO   ! Heat of Formation Sensitivity
+HSEN NO2   ! Heat of Formation Sensitivity
+HSEN O   ! Heat of Formation Sensitivity
+HSEN O2   ! Heat of Formation Sensitivity
+HSEN OH   ! Heat of Formation Sensitivity
+HSEN TEMP   ! Temperature Heat of Formation Sensitivity
+PRNT 1   ! Print Level Control
+SAVETRAN   ! Save Transport Linking Data
+SIZE 100000000   ! Solution Data Block Size (bytes)
+UFAC 2.0   ! Time Step Increment Factor
+!
+! physical property
+!
+AINL C1_Inlet1 0.0   ! Radial Gradient in Inlet Velocity (1/sec)
+TINL C1_Inlet1 300.0   ! Inlet Temperature (K)
+UINL C1_Inlet1 20.0   ! Inlet Velocity (cm/sec)
+!
+! species property
+!
+REAC C1_Inlet1 CH4 0.084630605   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 N2 0.704388872   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 NH3 0.023839607   ! Reactant Fraction (mole fraction)
+REAC C1_Inlet1 O2 0.187140916   ! Reactant Fraction (mole fraction)
+INLET C1_Inlet1 1   ! Inlet Stream
+!
+! physical property
+!
+INLET StagPlane 1
+! Number of Continuation 5   ! Continuation Count
+CNTN   ! Continuation
+END   ! End
+CURV 0.1   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.07   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.02   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
+CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.01   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End

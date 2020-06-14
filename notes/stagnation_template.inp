@@ -19,10 +19,10 @@ TMAX 1853.142   ! Maximum Temperature for Initial Profile (K)
 ! reactor dimension definition
 !
 CURV 0.5   ! Adaptive Grid Control Based On Solution Curvature
-GRAD 0.5   ! Adaptive Grid Control Based On Solution Gradient
+GRAD 0.3   ! Adaptive Grid Control Based On Solution Gradient
 NADP 100   ! Number of Adaptive Grid Points
-NPTS 2000   ! Number of Uniform Grid Points
-NTOT 3000   ! Maximum Number of Grid Points Allowed
+NPTS 3000   ! Number of Uniform Grid Points
+NTOT 5000   ! Maximum Number of Grid Points Allowed
 PCAD 0.75   ! Percent of Grids for Adaptation
 RGTC 1.0   ! Ratio of Gradient to Curvature Adaptation
 XEND 2.0   ! Ending Axial Position (cm)
@@ -57,14 +57,14 @@ INLET StagPlane 1
 CNTN   ! Continuation
 END   ! End
 CURV 0.1   ! Adaptive Grid Control Based On Solution Curvature
-GRAD 0.1   ! Adaptive Grid Control Based On Solution Gradient
-CNTN   ! Continuation
-END   ! End
-CURV 0.07   ! Adaptive Grid Control Based On Solution Curvature
 GRAD 0.07   ! Adaptive Grid Control Based On Solution Gradient
 CNTN   ! Continuation
 END   ! End
+CURV 0.07   ! Adaptive Grid Control Based On Solution Curvature
+GRAD 0.04   ! Adaptive Grid Control Based On Solution Gradient
+CNTN   ! Continuation
+END   ! End
 CURV 0.05   ! Adaptive Grid Control Based On Solution Curvature
-GRAD 0.05   ! Adaptive Grid Control Based On Solution Gradient
+GRAD 0.03   ! Adaptive Grid Control Based On Solution Gradient
 CNTN   ! Continuation
 END   ! End
