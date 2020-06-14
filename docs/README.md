@@ -16,28 +16,10 @@ Also, please note that this code is a personal open-source project and is intend
 - matplotlib for plotting data
 - pdocs for generating documentation (in progress...)
 
-## To Install and Use
-1. Install Python3 (if you havn't installed it before) : <https://www.python.org/downloads/>
+## How To Install on MacOS:
 
-2. Install pip (if you havn't installed it before) by typing `pip install pip` in MacOS. For further information: <https://pypi.org/project/pip/> ; or in Windows use `python get-pip.py`. For further information: <https://www.liquidweb.com/kb/install-pip-windows/>
 
-3. If using a Windows computer, set up git for your operating system by following the video tutorials: <https://confluence.atlassian.com/bitbucket/clone-a-repository-223217891.html>. If MacOS, git should already be installed. 
-
-4. Go to the directory where you want to save the project folder by typing : `cd path/to/directory/`
-
-5. In your terminal/command line type : `git clone https://github.com/marina8888/command-line-chemkin.git`
-
-6. If you do not have an environment module that you already use, it is recommended to install one by typing: `pip3 install virtualenv`
-
-7. Once installed, set up an environment so that all the libraries you install for this project do not potentially interfere with other code. In the terminal/cmd go to the folder where the project is stored: `cd path/to/directory/command-line-chemkin` and create the environemnt by typing `virtualenv --python=python3.7 .` (Don't forget the end dot!)
-
-8. Finally, in the same directory, activate the environment by typing `source bin/activate`
-
-9. To install all libraries and modules used in the project, type: `pip install -r requirements.txt`
-
-10. You should now be set up to run the code. Choose an text editor of your choice (PyCharm, Atom, Sublime Text...) and open the project. The source directory is src and the project is run from the src/main.py file. Ensure that the text editor is configured to recognise the environment, source directory etc.
-
-11. By typing different options in the main function in main.py, it is now possible to run this code.  
+## How To Install on Windows:
 
 ## Functions
 ### For Generating Input Files From Spreadsheet
