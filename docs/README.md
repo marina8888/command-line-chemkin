@@ -17,9 +17,16 @@ Also, please note that this code is a personal open-source project and is intend
 - pdocs for generating documentation (in progress...)
 
 ## How To Install on MacOS:
-
+1. Download the following file to the directory where you want to save the project: [macOS installation file](/Users/marina/Developer/GitHub/chemkin-plot-premix/install_files/install_mac.sh)
+2. Go to terminal and type `cd path/to/where/your/installation/script/is/saved` to go to the directory with the installation script
+3. Once in this directory, type `./install_mac.sh` to install the project and its dependencies 
+4. Once the installation in complete, enter the folder by typing: `cd command-line-chemkin`
+5. Activate your python environment by typing: `cd source bin/activate`
+6. You can now launch the project from your text editor of choice (pycharm, Atom, Sublime text etc.) src is the root directory.
+7. Please type any instruction commands in src/main.py. Full list is included in the Functions section. 
 
 ## How To Install on Windows:
+To complete... 
 
 ## Functions
 ### For Generating Input Files From Spreadsheet
@@ -163,8 +170,8 @@ if __name__ == "__main__":
 - [x] Add capability for plotting experimental results on same graph 
 - [ ] Rearrange folders and filepaths for ease of use
 - [x] Add website, tutorial and launch documentation 
-- [ ] Add job files for pipe and parallel processing
-- [ ] Add sensitivity printing options to file 
+- [x] Add job files for pipe and parallel processing - only use pipe as parallel does not work so well
+- [ ] Add sensitivity printing options to file - now as a seperate repo
 - [ ] Add interface
 - [ ] Test max temp, stag temp, and inlet velocity effect  on output.  
 
