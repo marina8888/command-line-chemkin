@@ -9,7 +9,7 @@
 
 import_files/
 excel_external/
-chemin_external/*
+chemkin_external/*
 bin/
 env/
 include/
