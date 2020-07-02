@@ -47,28 +47,6 @@ Also, please note that this code is a personal open-source project and is intend
 
 9.Modify the src/main.py file as per the sample code and press run. 
 
-## To Install Directory on Windows (New Users)
-
-1.Install Python3 using the web-based installer from Windows 64 or 32x86 web-based installer: [install python](https://www.python.org/downloads/release/python-383/). During the installation process tick "Add Python 3.x to PATH " and press "Install Now".
-
-2.Configure python to your path (if it is not already configured): 
-[path configuration guide](https://projects.raspberrypi.org/en/projects/using-pip-on-windows/4)
-
-3.In your cmd, get python to install pip by typing: `python -m pip install -U pip`, and then upgrade to the latest version of pip by typing  `python -m pip install –upgrade pip`. Your computer is now configured for python programming. 
-
-4.Install a python friendly text editor, for example PyCharm (community) is recommended: [download PyCharm](https://www.jetbrains.com/pycharm/download/#section=mac)
-
-5.To work with the GitHub command line download Git Bash: [download Git Bash](https://gitforwindows.org/)
-
-6.If required, make a folder where you want to store the project. Open the just installed Git BASH and type `cd path/to/folder` then type `git clone https://github.com/marina8888/command-line-chemkin.git` to clone the repo to your computer. 
-
-7. Use your text editor to set up and environment, configuration and libraries from requirements.txt folder are installed. Find the install the required packages heading: 
-[PyCharm initial configuration](https://www.jetbrains.com/help/pycharm/creating-and-running-your-first-python-project.html) and [install the required packages](https://www.jetbrains.com/help/pycharm/managing-dependencies.html)
-
-8.Select 'Mark directory as Sources Root' on the src folder: [Mark directory as sources root](https://www.jetbrains.com/help/pycharm/configuring-folders-within-a-content-root.html#unmark)
-
-9. Modify the src/main.py file as per the sample code and press run.
-
 ## Functions
 ### For Generating Input Files From Spreadsheet
 Generating chemkin input files from spreadsheets: 
@@ -83,19 +61,11 @@ Generating chemkin input files from spreadsheets:
 
 5. Go the source directory from which you will be running the job (for example through logging into the supercomputer and finding your user directory). Add a folder named solutions to this folder. Go back to the source directory add another folder named input_files. Drop all the recently created input files into the input_files folder. Also add a job_files folder.
 
-6. Return to your source directory and add the following relevant files:
-- run_jobs.sh file (copy from the src/chemkin_launch_files directory)
-- build_jobs.sh file (copy from the src/chemkin_launch_files directory)
-- thermo.dat (from mechanism author - may not be required depending on model)
-- transport.dat (from mechanism author)
-- mechanism.inp (from mechanism author)
-- chemkin-data.dtd (list of chemkin setup settings from previous runs)
-- filter.py (postprocesses solution.out files, copy from src/chemkin_launch_files )
-- filter.sh (launches filter.py, copy from src/chemkin_launch_files)
+6. Return to your source directory and add all the files from src/chemkin_launch_files/other_chemkin_input_files plus all the mechanism files. 
 
-7.The job files MUST be modified to contain the correct project names, paths, and to load the correct model. This is the most likely source of error and should be checked carefully. Current .sh files are built as an example of one set of supercomputer settings. 
+7.The job file is run_pipe2.sh and MUST be modified to contain the correct project names, paths, and to load the correct model. This is the most likely source of error and should be checked carefully. Current .sh files are built as an example of one set of supercomputer settings. 
 
-8.In the source directory, submit the run_jobs.sh file. Once this is complete, submit the filter.sh file. 
+8.In the source directory, submit the run_jobs.sh file. Once this is complete, copy the file of interest to a solutions folder and submit the filter.sh file (by simply typing ./filter.sh for Linux supercomputers). 
  
 9.All files will be saved in name1_name2_inputname.out format in the solutions folder. 
 
@@ -201,20 +171,6 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-### To Do List [Project in Progress]:
-- [x] Generate input file that launches the correct solver with the suitable temperature conditions and allows a custom name for the output file. 
-- [x] Generate an csv file that includes all the conditions required for input. 
-- [x] Use python to create new input (.inp) files from the BigWorkbook csv file.
-- [x] Generate a bash file that launches all files in input folder
-- [x] Generate a class for sorting the solution to dataframe
-- [x] Generate a class for plotting solution (with optional legend, title, axies titles, conditions used)
-- [x] Add capability for plotting experimental results on same graph 
-- [ ] Rearrange folders and filepaths for ease of use
-- [x] Add website, tutorial and launch documentation 
-- [x] Add job files for pipe and parallel processing - only use pipe as parallel does not work so well
-- [ ] Add sensitivity printing options to file - now as a seperate repo
-- [ ] Add interface
-- [ ] Test max temp, stag temp, and inlet velocity effect  on output.  
 
 ### Contributions
 To contribute please raise an issue then open a pull request for review. Specifically, notes folder contributions of chemkin example input files would be very welcome. Please raise any errors as GitHub issues. 
