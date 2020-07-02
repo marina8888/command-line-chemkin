@@ -180,7 +180,7 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None):
+                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None, mean = False):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -203,6 +203,8 @@ class Graph():
         print("plotting graphs...")
         my_filter_condition = filter_condition
         data = pd.DataFrame()
+        y_data = pd.Series
+        x_data = pd.Series
 
         if X_value is not None:
             my_filter_condition['X(cm)'] = str(X_value)
@@ -226,6 +228,23 @@ class Graph():
 
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
+
+        if mean is True:
+            # convert data into numpy arrays:
+            array_x, array_y = np.array(x_data), np.array(y_data)
+            array_x = array_x.round(2)
+            # sort x and y by x value
+            order = np.argsort(array_x)
+            xsort, ysort = array_x[order], array_y[order]
+
+            # create a dataframe and add 2 columns for your x and y data:
+            df = pd.DataFrame()
+            df['xsort'] = xsort
+            df['ysort'] = ysort
+            # create new dataframe with no duplicate x values and corresponding mean values in all other cols:
+            mean = df.groupby('xsort').mean()
+            x_data = mean.index
+            y_data = mean['ysort']
 
         if scatter == True:
             plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
@@ -251,6 +270,7 @@ class Graph():
                 y_data = data[y]
                 y_data = y_data.astype('float64')
                 self.add_best_fit_line(x_data, y_data, colour = colour)
+
             else:
                 new_data = pd.DataFrame(data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
                 x_data = new_data[x]
@@ -258,6 +278,7 @@ class Graph():
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
                 self.add_best_fit_line(x_data, y_data, colour=colour)
+
 
 
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
@@ -347,6 +368,7 @@ class Graph():
         mean = df.groupby('xsort').mean()
         df_x = mean.index
         df_y = mean['ysort']
+
         if df_x.empty is False:
         # poly1d to create a polynomial line from coefficient inputs:
             trend = np.polyfit(df_x, df_y, 12)
