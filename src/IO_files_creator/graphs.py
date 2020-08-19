@@ -8,7 +8,6 @@ import numpy as np
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
 
-
 class Solution():
     """
     This takes a folder of .out files amnd converts them to a dictionary of pandas DataFrames.
@@ -124,7 +123,7 @@ class Solution():
                     new_df = self.add_name_cols(file, new_df)
                     self.df_dict[name] = new_df
 
-
+class GraphWithAxis()
 class Graph():
     def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
                  y_graph_size: int = 6.5):
@@ -180,7 +179,7 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='slategrey', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None, mean = False):
+                                y_error: str = None, error_colour='silver', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None, mean = False):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -247,7 +246,7 @@ class Graph():
             y_data = mean['ysort']
 
         if scatter == True:
-            plt.scatter(x_data, y_data, color=colour, zorder=10, s=20, label=legend, figure=self.fig)
+            plt.scatter(x_data, y_data, color=colour, zorder=10, s=10, label=legend, figure=self.fig)
 
         if legend != "":
             plt.legend()
