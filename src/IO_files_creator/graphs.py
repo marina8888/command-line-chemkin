@@ -8,6 +8,7 @@ import numpy as np
 # set a global style for all graphs:
 plt.style.use('seaborn-notebook')
 
+
 class Solution():
     """
     This takes a folder of .out files amnd converts them to a dictionary of pandas DataFrames.
@@ -123,7 +124,7 @@ class Solution():
                     new_df = self.add_name_cols(file, new_df)
                     self.df_dict[name] = new_df
 
-class GraphWithAxis()
+
 class Graph():
     def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
                  y_graph_size: int = 6.5):
@@ -170,7 +171,7 @@ class Graph():
         self.ax.get_xaxis().set_minor_locator(plticker.MaxNLocator(50))
         self.ax.get_yaxis().set_minor_locator(plticker.MaxNLocator(50))
 
-        #format ticks and rotate the labels:
+        # format ticks and rotate the labels:
         self.ax.grid(b=True, which='major', linestyle='-', linewidth='1.0', color='gainsboro', zorder=0,
                      figure=self.fig)
         self.ax.grid(b=True, which='minor', linestyle=':', linewidth='0.5', color='silver', zorder=0, figure=self.fig)
@@ -179,7 +180,8 @@ class Graph():
 
     def add_scatter_spreadsheet(self, path_to_sheet: str, x: str, y: str, legend="", colour='darkgrey',
                                 filter_condition: dict = None, X_value: int = None,
-                                y_error: str = None, error_colour='silver', best_fit_line: bool = False,  scatter: bool = True, best_fit_line_filter:dict = None, mean = False):
+                                y_error: str = None, error_colour='silver', best_fit_line: bool = False,
+                                scatter: bool = True, best_fit_line_filter: dict = None, mean=False):
         """
         Based on spreadsheet input (csv or excel), plot scatter plot on a figure belonging to the Graph() instance.
         Can be used to plot multiple datasets on the same graph
@@ -221,7 +223,8 @@ class Graph():
                 y_data = data[y]
                 y_data = y_data.astype('float64')
             else:
-                new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+                new_data = pd.DataFrame(
+                    data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
 
@@ -252,7 +255,8 @@ class Graph():
             plt.legend()
 
         if y_error is not None and my_filter_condition is not None:
-            new_data = pd.DataFrame(data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+            new_data = pd.DataFrame(
+                data.loc[(data[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
             error = new_data[y_error]
             error = error.astype('float64')
             self.add_error_bar(x_data, y_data, error, error_colour)
@@ -268,20 +272,20 @@ class Graph():
                 x_data = x_data.astype('float64')
                 y_data = data[y]
                 y_data = y_data.astype('float64')
-                self.add_best_fit_line(x_data, y_data, colour = colour)
+                self.add_best_fit_line(x_data, y_data, colour=colour)
 
             else:
-                new_data = pd.DataFrame(data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
+                new_data = pd.DataFrame(
+                    data.loc[(data[list(best_fit_line_filter)] == pd.Series(best_fit_line_filter)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
                 y_data = y_data.astype('float64')
                 self.add_best_fit_line(x_data, y_data, colour=colour)
 
-
-
     def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
-                        filter_condition:dict = None, X_value: int = None, number_of_points=1, multip:int = 1, scatter: bool = True, best_fit_line: bool= False):
+                        filter_condition: dict = None, X_value: int = None, number_of_points=1, multip: int = 1,
+                        scatter: bool = True, best_fit_line: bool = False):
         """
 
         :param solution: name of instance when generating the data from the Solution() class (used for chemkin output folder data)
@@ -316,7 +320,8 @@ class Graph():
                 y_data = df[y][(df.index % number_of_points == 1)]
                 y_data = multip * (y_data.astype('float64'))
             else:
-                new_data = pd.DataFrame(df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+                new_data = pd.DataFrame(
+                    df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
                 x_data = new_data[x]
                 x_data = x_data.astype('float64')
                 y_data = new_data[y]
@@ -326,7 +331,8 @@ class Graph():
             df_dict = solution.df_dict
             # for key, df in df_dict.items():
             df = pd.concat(df_dict)
-            new_data = pd.DataFrame(df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
+            new_data = pd.DataFrame(
+                df.loc[(df[list(my_filter_condition)] == pd.Series(my_filter_condition)).all(axis=1)])
             x_data = new_data[x]
             x_data = x_data.astype('float64')
             y_data = new_data[y]
@@ -338,11 +344,10 @@ class Graph():
             plt.scatter(x_data, y_data, color=colour, zorder=10, s=10, label=legend, figure=self.fig)
 
         if best_fit_line is True:
-            self.add_best_fit_line(x_data, y_data, colour = colour)
+            self.add_best_fit_line(x_data, y_data, colour=colour)
 
         if legend != "":
             plt.legend()
-
 
     def add_best_fit_line(self, x, y, colour=None):
         """
@@ -352,29 +357,29 @@ class Graph():
         :param colour: colour of line
         :return:
         """
-        #convert data into numpy arrays:
+        # convert data into numpy arrays:
         array_x, array_y = np.array(x), np.array(y)
         array_x = array_x.round(2)
         # sort x and y by x value
         order = np.argsort(array_x)
         xsort, ysort = array_x[order], array_y[order]
 
-        #create a dataframe and add 2 columns for your x and y data:
+        # create a dataframe and add 2 columns for your x and y data:
         df = pd.DataFrame()
         df['xsort'] = xsort
         df['ysort'] = ysort
-        #create new dataframe with no duplicate x values and corresponding mean values in all other cols:
+        # create new dataframe with no duplicate x values and corresponding mean values in all other cols:
         mean = df.groupby('xsort').mean()
         df_x = mean.index
         df_y = mean['ysort']
 
         if df_x.empty is False:
-        # poly1d to create a polynomial line from coefficient inputs:
+            # poly1d to create a polynomial line from coefficient inputs:
             trend = np.polyfit(df_x, df_y, 12)
             trendpoly = np.poly1d(trend)
             # plot polyfit line:
             plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='1.3',
-                         color=colour, zorder=9, figure=self.fig)
+                     color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: pd.Series, y: pd.Series, y_error: pd.Series, colour):
         """
@@ -398,5 +403,17 @@ class Graph():
         :return:
         """
         full_path = path.join(path_of_save_folder, name)
-        plt.savefig(full_path, dpi=300, bbox_inches = "tight")
+        plt.savefig(full_path, dpi=300, bbox_inches="tight")
         plt.close(self.fig)
+
+
+class GraphSetAxis(Graph):
+    """
+    Make a new graph object. Same as graph class but axis and background can be specified.
+    Plot lines are formatted so that they follow paper format - experiment results are single plot points (or dotted lines) and numerical results are smooth shaded lines.
+    :param x_axis_label:
+    :param y_axis_label:
+    :param title: the title that will be set for the graph
+    :param x_graph_size: default to almost square size 6 (increase number to change size ratio or increase resolution)
+    :param y_graph_size: and default to almost square size 6.5 (increase number to change size ratio or increase resolution)
+    """
