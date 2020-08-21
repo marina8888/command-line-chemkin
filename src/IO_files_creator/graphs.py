@@ -419,13 +419,15 @@ class GraphSetAxis(Graph):
     """
     def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
                  y_graph_size: int = 6.5):
+        pass
 
         def set_grid_ticks(self):
             """
             sets maximum number of ticks and formats grid.
             :return:
             """
-            pass
+            self.plt.set_xlim(0.65, 1.35)
+            self.plt.set_ylim(0)
 
 
 
