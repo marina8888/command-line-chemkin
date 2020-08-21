@@ -375,7 +375,7 @@ class Graph():
 
         if df_x.empty is False:
             # poly1d to create a polynomial line from coefficient inputs:
-            trend = np.polyfit(df_x, df_y, 12)
+            trend = np.polyfit(df_x, df_y, 16)
             trendpoly = np.poly1d(trend)
             # plot polyfit line:
             plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='1.3',
@@ -417,3 +417,15 @@ class GraphSetAxis(Graph):
     :param x_graph_size: default to almost square size 6 (increase number to change size ratio or increase resolution)
     :param y_graph_size: and default to almost square size 6.5 (increase number to change size ratio or increase resolution)
     """
+    def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
+                 y_graph_size: int = 6.5):
+
+        def set_grid_ticks(self):
+            """
+            sets maximum number of ticks and formats grid.
+            :return:
+            """
+            pass
+
+
+

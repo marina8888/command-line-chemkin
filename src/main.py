@@ -8,7 +8,7 @@ def main():
     gas = ['CO2', 'CO', 'H2O', 'NO', 'N2O', 'NO2', 'NH3', 'HCN']
 
     # create graphs ppmv:
-    auto_graph.plot_exp_num_ppm_by_gas('/Users/marina/Developer/GitHub/chemkin-plot-premix/src/chemkin_launch_files/input_files/augall.xlsx', h, colour, gas)
+    auto_graph.plot_exp_num_ppm_by_gas('/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/augall.xlsx', h, colour, gas)
 
     # create graphs %:
 
