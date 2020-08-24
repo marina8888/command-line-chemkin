@@ -417,17 +417,25 @@ class GraphSetAxis(Graph):
     :param x_graph_size: default to almost square size 6 (increase number to change size ratio or increase resolution)
     :param y_graph_size: and default to almost square size 6.5 (increase number to change size ratio or increase resolution)
     """
+
     def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
                  y_graph_size: int = 6.5):
-        pass
+        super().__init__(x_axis_label, y_axis_label, title, x_graph_size,
+                     y_graph_size)
 
-        def set_grid_ticks(self):
-            """
-            sets maximum number of ticks and formats grid.
-            :return:
-            """
-            self.plt.set_xlim(0.65, 1.35)
-            self.plt.set_ylim(0)
+    def set_grid_ticks(self):
+        """
+        override original formatting for plot
+        :return:
+        """
+        print("Calling sub class")
+        self.ax.set_xlim(0.65, 1.35)
+        self.ax.set_ylim(0)
 
+        # set font family for plots:
 
+        font = {'family': 'normal',
+                'weight': 'bold',
+                'size': 22}
 
+        plt.rc('font', **font)
