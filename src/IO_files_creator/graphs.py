@@ -349,7 +349,7 @@ class Graph():
         if legend != "":
             plt.legend()
 
-    def add_best_fit_line(self, x, y, colour=None):
+    def add_best_fit_line(self, x, y, colour=None, l='solid'):
         """
         converts x and y data to np.array, sorts in order of x, converts to dataframe, removes duplicate x values and plots a polyfit line.
         :param x: x data list/set/Series
@@ -378,7 +378,7 @@ class Graph():
             trend = np.polyfit(df_x, df_y, 16)
             trendpoly = np.poly1d(trend)
             # plot polyfit line:
-            plt.plot(df_x, trendpoly(df_x), linestyle=':', dashes=(6, 5), linewidth='1.3',
+            plt.plot(df_x, trendpoly(df_x), linestyle=l, dashes=(6, 5), linewidth='1.3',
                      color=colour, zorder=9, figure=self.fig)
 
     def add_error_bar(self, x: pd.Series, y: pd.Series, y_error: pd.Series, colour):
