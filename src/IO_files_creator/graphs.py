@@ -148,7 +148,6 @@ class Graph():
         self.title = title
 
         self.add_format()
-        self.set_grid_ticks()
 
     def add_format(self):
         """
@@ -249,7 +248,7 @@ class Graph():
             y_data = mean['ysort']
 
         if scatter == True:
-            plt.scatter(x_data, y_data, color=colour, zorder=10, s=10, label=legend, figure=self.fig)
+            plt.scatter(x_data, y_data, color=colour, zorder=10, s=14, label=legend, figure=self.fig)
 
         if legend != "":
             plt.legend()
@@ -349,6 +348,8 @@ class Graph():
         if legend != "":
             plt.legend()
 
+        self.set_grid_ticks()
+
     def add_best_fit_line(self, x, y, colour=None, l='solid'):
         """
         converts x and y data to np.array, sorts in order of x, converts to dataframe, removes duplicate x values and plots a polyfit line.
@@ -419,7 +420,10 @@ class GraphSetAxis(Graph):
     """
 
     def __init__(self, x_axis_label: str, y_axis_label: str, title: str, x_graph_size: int = 6,
-                 y_graph_size: int = 6.5):
+                 y_graph_size: int = 6.5, ylim_min: float = None, ylim_max: float = None):
+        self.ylim_min = ylim_min
+        self.ylim_max = ylim_max
+
         super().__init__(x_axis_label, y_axis_label, title, x_graph_size,
                      y_graph_size)
 
@@ -428,14 +432,20 @@ class GraphSetAxis(Graph):
         override original formatting for plot
         :return:
         """
-        print("Calling sub class")
-        self.ax.set_xlim(0.65, 1.35)
-        self.ax.set_ylim(0)
+        # print("Calling sub class")
+        if self.ylim_min and self.ylim is not None:
+            self.ax.set_ylim(bottom = self.ylim_min, top = self.ylim_max)
+
+        if self.ylim_min is not None :
+            self.ax.set_ylim(bottom = self.ylim_min)
+
+        if self.ylim_max is not None :
+            self.ax.set_ylim(top = self.ylim_ax)
 
         # set font family for plots:
 
-        font = {'family': 'normal',
-                'weight': 'bold',
+        font = {'family': 'sans-serif',
+                'weight': 'normal',
                 'size': 22}
 
         plt.rc('font', **font)

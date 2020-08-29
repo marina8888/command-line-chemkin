@@ -34,11 +34,11 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
 
             if unit == 'ppm':
                 m = 1000000
-                graphy = graphs.Graph('equivalence ratio', f'{g} concentration, ppmv',
-                                      f'{g} Concentration for {h} Heat Ratio')
+                graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, ppmv',
+                                      f'{g} Concentration for {h} Heat Ratio', ylim_min= 0)
             else:
                 m = 100
-                graphy = graphs.Graph('equivalence ratio', f'{g} concentration, %',
+                graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, %',
                                       f'{g} Concentration for {h} Heat Ratio')
 
             # create a new graph for every iteration of gas and heat ratio:
@@ -54,12 +54,3 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
             graphy.add_scatter_sol(gri, 'name1', g, legend=f"GRI-Mech3.0, {h} heat ratio", filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=m,
             scatter=True, best_fit_line=True, colour = 'g')
             graphy.show_and_save('chemkin_launch_files/graphs/', f'test_{g}_{h}.png')
-
-# graphy def plot_exp_by_gas(path_to_exp_sheet: str, heatr_list: [], colour_list: [], gas_list: [], unit: str):= graphs.Graph('equivalence ratio', 'temperature, K', 'Actual Wall Temperature vs Equivalence Ratio')
-# for h,c in zip(heatr, colour):
-#     # graphy.add_scatter_spreadsheet('chemkin_launch_files/input_files/hcn_super_filtered.xlsx','mean_eqy', 'Tw[K]', legend=h +' heat ratio', colour=c,
-#     #     filter_condition={'mean_heaty': float(h)}, best_fit_line=True, best_fit_line_filter={'mean_heaty': float(h)})
-#     graphy.add_scatter_spreadsheet('chemkin_launch_files/input_files/hcn_super_filtered.xlsx','mean_eqy', 'Actual Plate temp', legend=h + ' heat ratio', colour=c,
-#                                    filter_condition={'mean_heaty': float(h)}, best_fit_line=True,
-#                                    best_fit_line_filter={'mean_heaty': float(h)})
-# graphy.show_and_save('chemkin_launch_files/graphs/', 'temptest.png')
