@@ -1,5 +1,4 @@
 from IO_files_creator import graphs
-import os
 
 def plot_exp_by_gas(path_to_exp_sheet: str, heatr_list: [], colour_list: [], gas_list: [], unit: str):
     """
@@ -42,7 +41,7 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
     # create mechanisms from input folders:
     okafor = graphs.PremixSolution(
         '/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/okafor-solution')
-    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/gric')
+    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/gri')
 
     for g in gas_list:
 
@@ -52,7 +51,7 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
             if unit == 'ppm':
                 m = 1000000
                 graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, ppmv',
-                                      f'{g} Concentration for {h} Heat Ratio', ylim_min= 0)
+                                      f'{g} Concentration for {h} Heat Ratio', ylim_min= -10, ylim_max=300)
             else:
                 m = 100
                 graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, %',

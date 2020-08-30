@@ -120,16 +120,25 @@ class PremixSolution():
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
                                 super_new_df.drop('Index', axis=1, inplace=True)
                                 new_df = new_df.merge(super_new_df, on='X(cm)')
-                    name = file.strip('.out')
-                    new_df = self.add_name_cols(file, new_df)
-                    self.df_dict[name] = new_df
+                    self.df_dict[file.strip('.out')] = self.add_name_cols(file, new_df)
 
-class LaminarPremixSolution(PremixSolution):
-    """
-    This takes a folder of .out files amnd converts them to a dictionary of pandas DataFrames from the laminar flame calc.
-    Create 2 new dataframe columns for name1 and name2 as additional filtering criteria.
-    Write the names of failed runs to a file in the same folder called ERROR_RUNS.txt as these cannot be plotted.
-    """
+    def merge_by_row(self, rownum:int):
+        """
+        prints
+        :param self:
+        :return:
+        """
+        new_file = pd.DataFrame()  # Create an empty dataframe, this will be your final dataframe
+        print('getting first')
+        for key, sub_df in self.df_dict.items():
+            self.df_dict[key] = self.df_dict[key].iloc[rownum]
+            print(self.df_dict[key])
+
+        for key, sub_df in self.df_dict.items():
+            new_file = new_file.append(sub_df, ignore_index=False)  # Add your sub_df one by one
+        print(new_file)
+
+        new_file.to_csv('/Users/marina/Documents/Work/Tohoku-Uni/H2-NH3/han_lam_out_files/solutions/test.csv')
 
 
 class Graph():
@@ -442,7 +451,7 @@ class GraphSetAxis(Graph):
         :return:
         """
         # print("Calling sub class")
-        if self.ylim_min and self.ylim is not None:
+        if self.ylim_min and self.ylim_max is not None:
             self.ax.set_ylim(bottom = self.ylim_min, top = self.ylim_max)
 
         if self.ylim_min is not None :

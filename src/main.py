@@ -1,24 +1,8 @@
-from IO_files_creator import input, graphs, auto_graph
+from IO_files_creator import input, graphs, auto_graph, extra_funcs
 
 def main():
-    # define heat ratio, gas and colours:
-    h = ['0.1', '0.2', '0.3', '0.4', '0.6']
-    colour = ['b', 'r', 'g', 'orange', 'cyan']
-    gas = ['CO2', 'CO', 'H2O', 'NO', 'N2O', 'NO2', 'NH3', 'HCN']
+    han = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku-Uni/H2-NH3/han_lam_out_files/solutions')
+    han.merge_by_row(-1)
 
-    # create graphs ppmv:
-    auto_graph.plot_exp_by_gas('/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/repeatfinal4.xlsx', h,
-                               colour, gas, 'ppm')
-    auto_graph.plot_all_by_gas_by_heat(
-        '/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/repeatfinal4.xlsx', h, colour, gas, 'ppm')
-
-    # create graphs %:
-    gas = ['O2', 'H2']
-    auto_graph.plot_all_by_gas_by_heat(
-        '/Users/marina/Developer/GitHub/chemkin-plot-premix/import_files/repeatfinal4.xlsx', h, colour, gas, 'percent')
-
-
-if __name__ == "__main__":
-    main()
 if __name__ == "__main__":
     main()
