@@ -41,8 +41,8 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
     """
     # create mechanisms from input folders:
     okafor = graphs.PremixSolution(
-        '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/okafor-solution')
-    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/gri')
+        '/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/okafor-solution')
+    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/gric')
 
     for g in gas_list:
 
