@@ -1,14 +1,22 @@
 from IO_files_creator import graphs
-
+import os
 
 def plot_exp_by_gas(path_to_exp_sheet: str, heatr_list: [], colour_list: [], gas_list: [], unit: str):
-
+    """
+    Given a set of data from a workbook spreadsheet, and colour, heat and gas list, will auto plot just the experimental results
+    :param path_to_exp_sheet:
+    :param heatr_list:
+    :param colour_list:
+    :param gas_list:
+    :param unit:
+    :return:
+    """
     for g in gas_list:
         if unit == 'ppm':
-            graphy = graphs.Graph('equivalence ratio', g + ' concentration, ppmv',
+            graphy = graphs.GraphSetAxis('equivalence ratio', g + ' concentration, ppmv',
                                   g + ' Concentration for all Heat Ratios')
         else:
-            graphy = graphs.Graph('equivalence ratio', g + ' concentration, %',
+            graphy = graphs.GraphSetAxis('equivalence ratio', g + ' concentration, %',
                                       g + ' Concentration for all Heat Ratios')
 
         for h, c in zip(heatr_list, colour_list):
@@ -22,10 +30,19 @@ def plot_exp_by_gas(path_to_exp_sheet: str, heatr_list: [], colour_list: [], gas
 
 
 def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list: [], gas_list: [], unit: str):
+    """
+    Given a set of data from a workbook spreadsheet, and colour, heat and gas list, will auto plot just the experimental results with the list of mechansisms added in the input folders (start of function).
+    :param path_to_exp_sheet:
+    :param heatr_list:
+    :param colour_list:
+    :param gas_list:
+    :param unit:
+    :return:
+    """
     # create mechanisms from input folders:
-    okafor = graphs.Solution(
+    okafor = graphs.PremixSolution(
         '/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/okafor-solution')
-    gri = graphs.Solution('/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/gri')
+    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/strain stabiolised product gas/chemkin_plots/gri')
 
     for g in gas_list:
 
@@ -54,3 +71,10 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
             graphy.add_scatter_sol(gri, 'name1', g, legend=f"GRI-Mech3.0, {h} heat ratio", filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=m,
             scatter=True, best_fit_line=True, colour = 'g')
             graphy.show_and_save('chemkin_launch_files/graphs/', f'test_{g}_{h}.png')
+
+def filter_out(path_to_folder):
+    for file in os.listdir(path_to_folder, "w"):
+        if file.endswith(".out"):
+            file = path.join(self.sol, file)"".join(contents.split('FINAL SOLUTION:')[-1].splitlines(True)[2:])
+    with open('./solutions/' + file, 'w') as fd:
+        fd.write(filtered)

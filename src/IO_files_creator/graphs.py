@@ -9,7 +9,7 @@ import numpy as np
 plt.style.use('seaborn-notebook')
 
 
-class Solution():
+class PremixSolution():
     """
     This takes a folder of .out files amnd converts them to a dictionary of pandas DataFrames.
     Create 2 new dataframe columns for name1 and name2 as additional filtering criteria.
@@ -123,6 +123,13 @@ class Solution():
                     name = file.strip('.out')
                     new_df = self.add_name_cols(file, new_df)
                     self.df_dict[name] = new_df
+
+class LaminarPremixSolution(PremixSolution):
+    """
+    This takes a folder of .out files amnd converts them to a dictionary of pandas DataFrames from the laminar flame calc.
+    Create 2 new dataframe columns for name1 and name2 as additional filtering criteria.
+    Write the names of failed runs to a file in the same folder called ERROR_RUNS.txt as these cannot be plotted.
+    """
 
 
 class Graph():
@@ -282,7 +289,9 @@ class Graph():
                 y_data = y_data.astype('float64')
                 self.add_best_fit_line(x_data, y_data, colour=colour)
 
-    def add_scatter_sol(self, solution: Solution, x: str, y: str, name="", legend="", colour='darkgrey',
+        self.set_grid_ticks()
+
+    def add_scatter_sol(self, solution: PremixSolution, x: str, y: str, name="", legend="", colour='darkgrey',
                         filter_condition: dict = None, X_value: int = None, number_of_points=1, multip: int = 1,
                         scatter: bool = True, best_fit_line: bool = False):
         """
@@ -440,7 +449,7 @@ class GraphSetAxis(Graph):
             self.ax.set_ylim(bottom = self.ylim_min)
 
         if self.ylim_max is not None :
-            self.ax.set_ylim(top = self.ylim_ax)
+            self.ax.set_ylim(top = self.ylim_max)
 
         # set font family for plots:
 
