@@ -120,7 +120,7 @@ class PremixSolution():
                                 super_new_df = pd.DataFrame(col_list, columns=key_list)
                                 super_new_df.drop('Index', axis=1, inplace=True)
                                 new_df = new_df.merge(super_new_df, on='X(cm)')
-                    self.df_dict[file.strip('.out')] = self.add_name_cols(file, new_df)
+                        self.df_dict[file.strip('.out')] = self.add_name_cols(file, new_df)
 
     def merge_by_row(self, rownum:int):
         """
@@ -136,7 +136,6 @@ class PremixSolution():
                 series = sub_df.iloc[rownum,:]
                 df = pd.DataFrame(series).transpose()
                 new_file = pd.concat([new_file, df])  # Add your sub_df one by one
-                print(key)
 
         new_file.to_csv('/Users/marina/Documents/Work/Tohoku-Uni/H2-NH3/han_lam_out_files/solutions/test.csv')
 
