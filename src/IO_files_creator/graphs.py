@@ -128,12 +128,14 @@ class PremixSolution():
         :param self:
         :return:
         """
-        new_file = pd.DataFrame()  # Create an empty dataframe, this will be your final dataframe
+        new_file = pd.DataFrame()
+        df = pd.DataFrame()  # Create an empty dataframe, this will be your final dataframe
         print('getting first')
         for key, sub_df in self.df_dict.items():
             if not sub_df.empty:
-                print(sub_df)
-                df = sub_df.iloc[rownum,:]
+                df= sub_df.iloc[rownum,:]
+                df.set_index()
+                df.transpose()
                 new_file = pd.concat([new_file, df])  # Add your sub_df one by one
                 print(key)
 
