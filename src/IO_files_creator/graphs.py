@@ -133,9 +133,8 @@ class PremixSolution():
         print('getting first')
         for key, sub_df in self.df_dict.items():
             if not sub_df.empty:
-                df= sub_df.iloc[rownum,:]
-                df.set_index()
-                df.transpose()
+                series = sub_df.iloc[rownum,:]
+                df = pd.DataFrame(series).transpose()
                 new_file = pd.concat([new_file, df])  # Add your sub_df one by one
                 print(key)
 
