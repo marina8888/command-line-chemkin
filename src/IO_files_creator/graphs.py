@@ -131,10 +131,11 @@ class PremixSolution():
         new_file = pd.DataFrame()  # Create an empty dataframe, this will be your final dataframe
         print('getting first')
         for key, sub_df in self.df_dict.items():
-            print(key)
-            df = self.df_dict[key].iloc[:,rownum]
-            new_file = new_file.append(df, ignore_index=False)  # Add your sub_df one by one
-            print(key)
+            if not sub_df.empty:
+                print(sub_df)
+                df = sub_df.iloc[rownum,:]
+                new_file = pd.concat([new_file, df])  # Add your sub_df one by one
+                print(key)
 
         new_file.to_csv('/Users/marina/Documents/Work/Tohoku-Uni/H2-NH3/han_lam_out_files/solutions/test.csv')
 
