@@ -6,7 +6,7 @@ def main():
     # for item, value in han.df_dict.items():
     #     print(item)
     #     print(value)
-    han.merge_by_row(1)
+    han.merge_by_row(0)
 
 if __name__ == "__main__":
     main()
