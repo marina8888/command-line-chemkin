@@ -40,8 +40,8 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
     """
     # create mechanisms from input folders:
     okafor = graphs.PremixSolution(
-        '/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/okafor-solution')
-    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku Uni/CH4-NH3/chemkin_plots/gri')
+        '/Users/marina/Documents/Work/Tohoku-Uni/CH4-NH3/chemkin_plots/okafor-solution')
+    gri = graphs.PremixSolution('/Users/marina/Documents/Work/Tohoku-Uni/CH4-NH3/chemkin_plots/gri')
 
     for g in gas_list:
 
@@ -51,7 +51,7 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
             if unit == 'ppm':
                 m = 1000000
                 graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, ppmv',
-                                      f'{g} Concentration for {h} Heat Ratio', ylim_min= -10, ylim_max=300)
+                                      f'{g} Concentration for {h} Heat Ratio', ylim_min= 0, ylim_max=500)
             else:
                 m = 100
                 graphy = graphs.GraphSetAxis('equivalence ratio', f'{g} concentration, %',
@@ -70,3 +70,14 @@ def plot_all_by_gas_by_heat(path_to_exp_sheet: str, heatr_list: [], colour_list:
             graphy.add_scatter_sol(gri, 'name1', g, legend=f"GRI-Mech3.0, {h} heat ratio", filter_condition={'name2': h}, X_value='2.0000', number_of_points=1, multip=m,
             scatter=True, best_fit_line=True, colour = 'g')
             graphy.show_and_save('chemkin_launch_files/graphs/', f'test_{g}_{h}.png')
+
+
+    # for g in gas:
+    #     graphy = graphs.GraphSetAxis('heat ratio', g + ' concentration, ppm',
+    #                                          g + ' Concentration at 0.85 Equivalence Ratio')
+    #             # create a new graph for every iteration of gas:
+    #     graphy.add_scatter_spreadsheet('/Users/marina/Developer/GitHub/chemkin-plot-premix/src/chemkin_launch_files/input_files/repeatfinal4.xlsx', 'mean_heaty', y='X_' + g,
+    #                                            colour='b', filter_condition={'mean_eqy': float(0.85)}, best_fit_line=True,
+    #                                            y_error='delta_X_' + g, error_colour='darkgrey',
+    #                                            best_fit_line_filter={'mean_eqy': float(0.85)})
+    #     graphy.show_and_save('chemkin_launch_files/graphs/', f'heat_{g}.png')
